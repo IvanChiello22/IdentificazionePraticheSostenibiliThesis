@@ -1,0 +1,68 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to104__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/t11_35_snippet.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/t11_35_snippet.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to104__1"><a href="#difflib_chg_to104__0">f</a></td><td class="diff_header" id="from104_1">1</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"><a href="#difflib_chg_to104__0">f</a></td><td class="diff_header" id="to104_1">1</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to104__1">n</a></td><td class="diff_header" id="from104_2">2</td><td nowrap="nowrap">from&nbsp;scipy.signal&nbsp;import&nbsp;convolve2d</td><td class="diff_next"><a href="#difflib_chg_to104__1">n</a></td><td class="diff_header" id="to104_2">2</td><td nowrap="nowrap">from&nbsp;scipy.signal&nbsp;import&nbsp;convolve2d<span class="diff_add">,&nbsp;fftconvolve</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from104_3">3</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to104_3">3</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to104__2">n</a></td><td class="diff_header" id="from104_4">4</td><td nowrap="nowrap"><span class="diff_sub">def&nbsp;apply_sobel_filter(image):</span></td><td class="diff_next"><a href="#difflib_chg_to104__2">n</a></td><td class="diff_header" id="to104_4">4</td><td nowrap="nowrap"><span class="diff_add">def&nbsp;_convolve2d_auto(img,&nbsp;kernel,&nbsp;mode='same',&nbsp;boundary='symm',&nbsp;fft_threshold=1e7):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from104_5">5</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;sobel_x&nbsp;=&nbsp;np.array([[1,&nbsp;0,&nbsp;-1],&nbsp;[2,&nbsp;0,&nbsp;-2],&nbsp;[1,&nbsp;0,&nbsp;-1]])</span></td><td class="diff_next"></td><td class="diff_header" id="to104_5">5</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;"""</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from104_6">6</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;gradient_x&nbsp;=&nbsp;convolve2d(image,&nbsp;sobel_x,&nbsp;mode='same',&nbsp;boundary='symm')</span></td><td class="diff_next"></td><td class="diff_header" id="to104_6">6</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;Selects&nbsp;the&nbsp;most&nbsp;appropriate&nbsp;2D&nbsp;convolution&nbsp;implementation:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from104_7">7</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;gradient_x</span></td><td class="diff_next"></td><td class="diff_header" id="to104_7">7</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;For&nbsp;small-to-moderate&nbsp;sizes,&nbsp;use&nbsp;convolve2d&nbsp;with&nbsp;explicit&nbsp;boundary&nbsp;handling.</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to104_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;For&nbsp;very&nbsp;large&nbsp;problems,&nbsp;prefer&nbsp;FFT-based&nbsp;convolution&nbsp;for&nbsp;energy/time&nbsp;efficiency.</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to104_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;wrapper&nbsp;preserves&nbsp;the&nbsp;original&nbsp;interface&nbsp;and&nbsp;defaults.</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to104_10">10</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;"""</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to104_11">11</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;img&nbsp;=&nbsp;np.asarray(img)</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to104__2"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to104_12">12</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;kernel&nbsp;=&nbsp;np.asarray(kernel)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to104_13">13</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;img.size&nbsp;*&nbsp;kernel.size&nbsp;&gt;=&nbsp;fft_threshold:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to104_14">14</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;fftconvolve(img,&nbsp;kernel,&nbsp;mode=mode)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to104_15">15</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;convolve2d(img,&nbsp;kernel,&nbsp;mode=mode,&nbsp;boundary=boundary)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from104_8">8</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to104_16">16</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to104__top">t</a></td><td class="diff_header" id="from104_9">9</td><td nowrap="nowrap"><span class="diff_sub">img&nbsp;=&nbsp;np.random.randn(512,&nbsp;512)</span></td><td class="diff_next"><a href="#difflib_chg_to104__top">t</a></td><td class="diff_header" id="to104_17">17</td><td nowrap="nowrap"><span class="diff_add">img=np.random.randn(512,512);sobel_x=np.array([[1,0,-1],[2,0,-2],[1,0,-1]])</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from104_10">10</td><td nowrap="nowrap"><span class="diff_sub">gx&nbsp;=&nbsp;apply_sobel_filter(img)</span></td><td class="diff_next"></td><td class="diff_header" id="to104_18">18</td><td nowrap="nowrap"><span class="diff_add">gx=_convolve2d_auto(img,sobel_x,mode='same',boundary='symm')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from104_11">11</td><td nowrap="nowrap">print(gx.shape)</td><td class="diff_next"></td><td class="diff_header" id="to104_19">19</td><td nowrap="nowrap">print(gx.shape)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

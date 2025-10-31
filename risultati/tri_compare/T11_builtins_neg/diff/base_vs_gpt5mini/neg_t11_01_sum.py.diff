@@ -1,0 +1,10 @@
+--- BASE/neg_t11_01_sum.py
++++ gpt5mini/neg_t11_01_sum.py
+@@ -1,6 +1,3 @@
+-# 1) Somma di lista (loop)
+ data = [1.0, 2.0, 3.0, 4.0]
+-s = 0.0
+-for x in data:
+-    s += x
++s = sum(data)
+ print(s)

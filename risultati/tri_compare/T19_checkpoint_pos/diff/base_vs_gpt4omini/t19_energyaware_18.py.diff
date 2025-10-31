@@ -1,0 +1,45 @@
+--- BASE/t19_energyaware_18.py
++++ gpt4omini/t19_energyaware_18.py
+@@ -1,21 +1,31 @@
+-# T19 POS (energy/efficiency-aware checkpointing) — snippet 18
+-# T19 POS — PyTorch: checkpoint on-plateau con 'patience' (riduce scritture inutili)
+-import torch, torch.nn as nn, torch.optim as optim, os
++import torch
++import torch.nn as nn
++import torch.optim as optim
++import os
++
+ torch.manual_seed(0)
+-net = nn.Sequential(nn.Linear(8,16), nn.ReLU(), nn.Linear(16,2))
++net = nn.Sequential(nn.Linear(8, 16), nn.ReLU(), nn.Linear(16, 2))
+ opt = optim.SGD(net.parameters(), 0.1)
+-best = 1e9; patience, wait = 2, 0
++best_loss = float('inf')
++patience, wait = 2, 0
+ os.makedirs('ckpt', exist_ok=True)
++
+ for epoch in range(1, 13):
+-    x = torch.randn(64,8); y = torch.randint(0,2,(64,))
++    x = torch.randn(64, 8)
++    y = torch.randint(0, 2, (64,))
+     loss = nn.CrossEntropyLoss()(net(x), y)
+-    opt.zero_grad(); loss.backward(); opt.step()
+-    if loss.item() + 1e-6 < best:
+-        best = loss.item(); wait = 0
+-        torch.save({'e':epoch, 'loss':best, 'model':net.state_dict()}, 'ckpt/best.pt')
++    opt.zero_grad()
++    loss.backward()
++    opt.step()
++    
++    if loss.item() + 1e-6 < best_loss:
++        best_loss = loss.item()
++        wait = 0
++        torch.save({'e': epoch, 'loss': best_loss, 'model': net.state_dict()}, 'ckpt/best.pt')
+     else:
+         wait += 1
+         if wait >= patience:
+-            torch.save({'e':epoch, 'loss':loss.item(), 'model':net.state_dict()}, f'ckpt/plateau_e{epoch:02d}.pt')
++            torch.save({'e': epoch, 'loss': loss.item(), 'model': net.state_dict()}, f'ckpt/plateau_e{epoch:02d}.pt')
+             wait = 0
++
+ print('done')

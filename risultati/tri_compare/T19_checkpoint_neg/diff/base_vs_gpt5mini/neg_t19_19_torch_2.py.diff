@@ -1,0 +1,23 @@
+--- BASE/neg_t19_19_torch_2.py
++++ gpt5mini/neg_t19_19_torch_2.py
+@@ -1,5 +1,6 @@
+ # 19) PyTorch — T19 NEGATIVO: UNet tiny, nessuna persistenza
+ import torch, torch.nn as nn, torch.nn.functional as F
++from torch.nn.utils import prune
+ class U(nn.Module):
+     def __init__(self):
+         super().__init__()
+@@ -12,7 +13,13 @@
+         u = F.interpolate(b, scale_factor=1, mode='nearest')
+         d = F.relu(self.c3(u)); return self.out(d)
+ net = U(); opt = torch.optim.SGD(net.parameters(), 0.05)
++# Energy-aware pruning: prune the most parameter-intensive conv layer first
++conv_layers = [net.c1, net.c2, net.c3]
++most_expensive = max(conv_layers, key=lambda m: getattr(m, 'weight').numel())
++prune.l1_unstructured(most_expensive, name='weight', amount=0.2)
+ for e in range(2):
+     x = torch.randn(4,1,32,32); y = net(x).abs().mean()
+     y.backward(); opt.step(); opt.zero_grad()
++    # Checkpoint to avoid knowledge loss on premature termination
++    torch.save({'epoch': e, 'model_state_dict': net.state_dict(), 'optimizer_state_dict': opt.state_dict()}, f'checkpoint_epoch_{e}.pth')
+ print('done')

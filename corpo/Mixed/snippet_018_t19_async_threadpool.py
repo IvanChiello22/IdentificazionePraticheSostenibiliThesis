@@ -1,0 +1,11 @@
+# Snippet 18: t19_async_threadpool
+# T19 — Threaded async save using concurrent.futures
+import torch, torch.nn as nn, os
+from concurrent.futures import ThreadPoolExecutor
+os.makedirs('ckpt', exist_ok=True)
+m = nn.Sequential(nn.Linear(16,16), nn.ReLU(), nn.Linear(16,2))
+def save(path): torch.save({'state': m.state_dict()}, path)
+with ThreadPoolExecutor(max_workers=2) as ex:
+    futs = [ex.submit(save, f'ckpt/shard_{i}.pt') for i in range(3)]
+    _ = [f.result() for f in futs]
+print('done')

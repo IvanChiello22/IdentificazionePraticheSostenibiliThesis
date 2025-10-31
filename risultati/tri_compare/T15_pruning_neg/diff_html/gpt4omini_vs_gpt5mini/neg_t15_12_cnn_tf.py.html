@@ -1,0 +1,71 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to35__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/neg_t15_12_cnn_tf.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t15_12_cnn_tf.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to35__1"><a href="#difflib_chg_to35__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to35__1">n</a></td><td class="diff_header" id="to35_1">1</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;12)&nbsp;CNN&nbsp;Keras&nbsp;—&nbsp;T15&nbsp;NEGATIVO:&nbsp;nessun&nbsp;pruning&nbsp;strutturale</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from35_1">1</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf,&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"></td><td class="diff_header" id="to35_2">2</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf,&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from35_2">2</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</td><td class="diff_next"></td><td class="diff_header" id="to35_3">3</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to35__2">n</a></td><td class="diff_header" id="from35_3">3</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"><a href="#difflib_chg_to35__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from35_4">4</td><td nowrap="nowrap">inp&nbsp;=&nbsp;keras.Input(shape=(28,28,1))</td><td class="diff_next"></td><td class="diff_header" id="to35_4">4</td><td nowrap="nowrap">inp&nbsp;=&nbsp;keras.Input(shape=(28,28,1))</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to35__2"></td><td class="diff_header" id="from35_5">5</td><td nowrap="nowrap">x&nbsp;=&nbsp;layers.Conv2D(8,3,padding='same',activation='relu')(inp)</td><td class="diff_next"></td><td class="diff_header" id="to35_5">5</td><td nowrap="nowrap">x&nbsp;=&nbsp;layers.Conv2D(8,3,padding='same',activation='relu')(inp)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from35_6">6</td><td nowrap="nowrap">x&nbsp;=&nbsp;layers.Conv2D(16,3,padding='same',activation='relu')(x)</td><td class="diff_next"></td><td class="diff_header" id="to35_6">6</td><td nowrap="nowrap">x&nbsp;=&nbsp;layers.Conv2D(16,3,padding='same',activation='relu')(x)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from35_7">7</td><td nowrap="nowrap">x&nbsp;=&nbsp;layers.GlobalAveragePooling2D()(x)</td><td class="diff_next"></td><td class="diff_header" id="to35_7">7</td><td nowrap="nowrap">x&nbsp;=&nbsp;layers.GlobalAveragePooling2D()(x)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from35_8">8</td><td nowrap="nowrap">out&nbsp;=&nbsp;layers.Dense(10)(x)</td><td class="diff_next"></td><td class="diff_header" id="to35_8">8</td><td nowrap="nowrap">out&nbsp;=&nbsp;layers.Dense(10)(x)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from35_9">9</td><td nowrap="nowrap">model&nbsp;=&nbsp;keras.Model(inp,out)</td><td class="diff_next"></td><td class="diff_header" id="to35_9">9</td><td nowrap="nowrap">model&nbsp;=&nbsp;keras.Model(inp,out)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to35__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to35__top">t</a></td><td class="diff_header" id="to35_10">10</td><td nowrap="nowrap"><span class="diff_add">optimizer&nbsp;=&nbsp;keras.optimizers.SGD()</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from35_10">10</td><td nowrap="nowrap">model.compile(optimizer=<span class="diff_chg">'sgd'</span>,&nbsp;loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True))</td><td class="diff_next"></td><td class="diff_header" id="to35_11">11</td><td nowrap="nowrap">model.compile(optimizer=<span class="diff_chg">optimizer</span>,&nbsp;loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from35_11">11</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from35_12">12</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;Checkpoint&nbsp;callback</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from35_13">13</td><td nowrap="nowrap"><span class="diff_sub">checkpoint_callback&nbsp;=&nbsp;keras.callbacks.ModelCheckpoint('model_checkpoint.h5',&nbsp;save_best_only=True)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from35_14">14</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from35_15">15</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;Training&nbsp;with&nbsp;checkpoint</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from35_16">16</td><td nowrap="nowrap">model.<span class="diff_chg">f</span>it(np.random.randn(8,28,28,1).astype('float32'),&nbsp;np.random.randint(0,10,(8,))<span class="diff_sub">,&nbsp;callbacks=[checkpoint_callback]</span>)</td><td class="diff_next"></td><td class="diff_header" id="to35_12">12</td><td nowrap="nowrap">model.<span class="diff_chg">tra</span>i<span class="diff_add">n_on_ba</span>t<span class="diff_add">ch</span>(np.random.randn(8,28,28,1).astype('float32'),&nbsp;np.random.randint(0,10,(8,)))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from35_17">17</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header" id="to35_13">13</td><td nowrap="nowrap"><span class="diff_add">ckpt&nbsp;=&nbsp;tf.train.Checkpoint(optimizer=optimizer,&nbsp;model=model)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to35_14">14</td><td nowrap="nowrap"><span class="diff_add">ckpt_manager&nbsp;=&nbsp;tf.train.CheckpointManager(ckpt,&nbsp;'./checkpoints',&nbsp;max_to_keep=1)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to35_15">15</td><td nowrap="nowrap"><span class="diff_add">ckpt_manager.save()</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from35_18">18</td><td nowrap="nowrap">print("done")</td><td class="diff_next"></td><td class="diff_header" id="to35_16">16</td><td nowrap="nowrap">print("done")</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

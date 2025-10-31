@@ -1,0 +1,26 @@
+# Snippet 22: t11_2d_hist + t19_checksum
+# T11 — NumPy: 2D histogram + vectorized normalization
+import numpy as np
+x = np.random.randn(100000); y = 0.5*x + np.random.randn(100000)*0.5
+H, xedges, yedges = np.histogram2d(x, y, bins=64, range=[[-4,4],[-4,4]])
+P = H / H.sum()
+print(P.shape, round(P.max(),4))
+
+# T19 — Deduplicate checkpoints by SHA256 (skip identical content)
+import torch, torch.nn as nn, io, hashlib, os, json
+from torch.nn.utils import prune
+m = nn.Sequential(nn.Linear(12,12), nn.ReLU(), nn.Linear(12,2)); os.makedirs('ckpt', exist_ok=True)
+# Energy-aware pruning: prune the Linear layer with the most parameters (L1 unstructured)
+linear_layers = [mod for mod in m if isinstance(mod, nn.Linear)]
+if linear_layers:
+    largest = max(linear_layers, key=lambda l: l.weight.numel())
+    prune.l1_unstructured(largest, name='weight', amount=0.2)
+# Save a checkpoint dict (supports resuming/training checkpoints) and deduplicate by content
+ckpt = {'epoch': 0, 'model_state': m.state_dict()}
+buf = io.BytesIO(); torch.save(ckpt, buf); data = buf.getvalue()
+h = hashlib.sha256(data).hexdigest()
+index = {'sha256': h, 'file': f'ckpt/{h}.pt'}
+if not os.path.exists(index['file']):
+    with open(index['file'], 'wb') as f: f.write(data)
+with open('ckpt/index.json','w') as f: json.dump(index, f)
+print('done', h[:8])

@@ -1,0 +1,9 @@
+--- gpt4omini/neg_t11_04_dot_product.py
++++ gpt5mini/neg_t11_04_dot_product.py
+@@ -1,2 +1,5 @@
+-dot = sum(x * y for x, y in zip(a, b))
++# 4) Prodotto scalare vettori
++a = [1, 3, -2]
++b = [4, 0, 5]
++dot = sum(a[i] * b[i] for i in range(len(a)))
+ print(dot)

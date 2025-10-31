@@ -1,0 +1,82 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to120__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/t19_energyaware_41.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/t19_energyaware_41.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to120__0"><a href="#difflib_chg_to120__1">n</a></td><td class="diff_header" id="from120_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;T19&nbsp;POS&nbsp;(energy/efficiency-aware&nbsp;checkpointing)&nbsp;—&nbsp;snippet&nbsp;41</span></td><td class="diff_next"><a href="#difflib_chg_to120__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from120_2">2</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;T19&nbsp;POS&nbsp;—&nbsp;TensorFlow&nbsp;tf.train.Checkpoint&nbsp;+&nbsp;CheckpointManager&nbsp;(max_to_keep=3)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from120_3">3</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf<span class="diff_sub">,&nbsp;os</span></td><td class="diff_next"></td><td class="diff_header" id="to120_1">1</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from120_4">4</td><td nowrap="nowrap"><span class="diff_sub">w&nbsp;=&nbsp;tf.Variable(tf.random.normal([10,2]));&nbsp;b&nbsp;=&nbsp;tf.Variable(tf.zeros([2]))</span></td><td class="diff_next"></td><td class="diff_header" id="to120_2">2</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;os</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from120_5">5</td><td nowrap="nowrap"><span class="diff_sub">opt&nbsp;=&nbsp;tf.keras.optimizers.Adam(1e-3);&nbsp;os.makedirs('ckpt_tf',&nbsp;exist_ok=True)</span></td><td class="diff_next"></td><td class="diff_header" id="to120_3">3</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_4">4</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Initialize&nbsp;variables</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_5">5</td><td nowrap="nowrap"><span class="diff_add">weights&nbsp;=&nbsp;tf.Variable(tf.random.normal([10,&nbsp;2]))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_6">6</td><td nowrap="nowrap"><span class="diff_add">bias&nbsp;=&nbsp;tf.Variable(tf.zeros([2]))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_7">7</td><td nowrap="nowrap"><span class="diff_add">optimizer&nbsp;=&nbsp;tf.keras.optimizers.Adam(1e-3)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_9">9</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Create&nbsp;checkpoint&nbsp;directory</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_10">10</td><td nowrap="nowrap"><span class="diff_add">os.makedirs('ckpt_tf',&nbsp;exist_ok=True)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_11">11</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_12">12</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Set&nbsp;up&nbsp;checkpoint&nbsp;and&nbsp;manager</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from120_6">6</td><td nowrap="nowrap">ckpt&nbsp;=&nbsp;tf.train.Checkpoint(step=tf.Variable(1),&nbsp;w=w,&nbsp;b=b,&nbsp;opt=opt)</td><td class="diff_next"></td><td class="diff_header" id="to120_13">13</td><td nowrap="nowrap"><span class="diff_add">che</span>ckp<span class="diff_add">oin</span>t&nbsp;=&nbsp;tf.train.Checkpoint(step=tf.Variable(1),&nbsp;w=w<span class="diff_add">eights</span>,&nbsp;b=b<span class="diff_add">ias</span>,&nbsp;opt=opt<span class="diff_add">imizer</span>)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from120_7">7</td><td nowrap="nowrap">manager&nbsp;=&nbsp;tf.train.CheckpointManager(ckpt,&nbsp;'./ckpt_tf',&nbsp;max_to_keep=3)</td><td class="diff_next"></td><td class="diff_header" id="to120_14">14</td><td nowrap="nowrap"><span class="diff_add">checkpoint_</span>manager&nbsp;=&nbsp;tf.train.CheckpointManager(c<span class="diff_add">hec</span>kp<span class="diff_add">oin</span>t,&nbsp;'./ckpt_tf',&nbsp;max_to_keep=3)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_15">15</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_16">16</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Training&nbsp;loop</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to120__1"></td><td class="diff_header" id="from120_8">8</td><td nowrap="nowrap">for&nbsp;e&nbsp;in&nbsp;range(1,7):</td><td class="diff_next"></td><td class="diff_header" id="to120_17">17</td><td nowrap="nowrap">for&nbsp;e<span class="diff_add">poch</span>&nbsp;in&nbsp;range(1,<span class="diff_add">&nbsp;</span>7):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from120_9">9</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;tf.random.normal([64,10]);&nbsp;y&nbsp;=&nbsp;tf.random.uniform([64],&nbsp;maxval=2,&nbsp;dtype=tf.int32)</span></td><td class="diff_next"></td><td class="diff_header" id="to120_18">18</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;inputs&nbsp;=&nbsp;tf.random.normal([64,&nbsp;10])</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_19">19</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;labels&nbsp;=&nbsp;tf.random.uniform([64],&nbsp;maxval=2,&nbsp;dtype=tf.int32)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_20">20</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from120_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;tf.GradientTape()&nbsp;as&nbsp;tape:</td><td class="diff_next"></td><td class="diff_header" id="to120_21">21</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;tf.GradientTape()&nbsp;as&nbsp;tape:</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to120__top">t</a></td><td class="diff_header" id="from120_11">11</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;logits&nbsp;=&nbsp;tf.matmul(<span class="diff_chg">x</span>,w)&nbsp;+&nbsp;b</td><td class="diff_next"><a href="#difflib_chg_to120__top">t</a></td><td class="diff_header" id="to120_22">22</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;logits&nbsp;=&nbsp;tf.matmul(<span class="diff_chg">inputs</span>,<span class="diff_add">&nbsp;</span>w<span class="diff_add">eights</span>)&nbsp;+&nbsp;b<span class="diff_add">ias</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from120_12">12</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loss&nbsp;=&nbsp;tf.reduce_mean(tf.keras.losses.sparse_categorical_crossentropy(<span class="diff_chg">y</span>,&nbsp;logits,&nbsp;from_logits=True))</td><td class="diff_next"></td><td class="diff_header" id="to120_23">23</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loss&nbsp;=&nbsp;tf.reduce_mean(tf.keras.losses.sparse_categorical_crossentropy(<span class="diff_chg">labels</span>,&nbsp;logits,&nbsp;from_logits=True))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from120_13">13</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;grads&nbsp;=&nbsp;tape.gradient(loss,&nbsp;[w,b]);&nbsp;opt.apply_gradients(zip(grads,[w,b]))</span></td><td class="diff_next"></td><td class="diff_header" id="to120_24">24</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from120_14">14</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;ckpt.step.assign(e);&nbsp;manager.save()</span></td><td class="diff_next"></td><td class="diff_header" id="to120_25">25</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;gradients&nbsp;=&nbsp;tape.gradient(loss,&nbsp;[weights,&nbsp;bias])</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_26">26</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;optimizer.apply_gradients(zip(gradients,&nbsp;[weights,&nbsp;bias]))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_27">27</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_28">28</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;checkpoint.step.assign(epoch)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_29">29</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;checkpoint_manager.save()</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to120_30">30</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from120_15">15</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to120_31">31</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

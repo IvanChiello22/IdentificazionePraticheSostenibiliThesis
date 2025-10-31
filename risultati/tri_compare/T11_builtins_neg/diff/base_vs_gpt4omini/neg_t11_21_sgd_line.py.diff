@@ -1,0 +1,24 @@
+--- BASE/neg_t11_21_sgd_line.py
++++ gpt4omini/neg_t11_21_sgd_line.py
+@@ -1,15 +1,17 @@
+-# 21) SGD step su linea (y = wx + b)
+ x = [0.0, 1.0, 2.0]
+ y = [1.0, 3.0, 5.0]
+ w, b = 0.0, 0.0
+ lr = 0.01
++
+ for epoch in range(10):
+-    dw = 0.0; db = 0.0
++    dw = 0.0
++    db = 0.0
+     for xi, yi in zip(x, y):
+-        pred = w*xi + b
++        pred = w * xi + b
+         err = pred - yi
+-        dw += err*xi
++        dw += err * xi
+         db += err
+     w -= lr * dw / len(x)
+     b -= lr * db / len(x)
++
+ print(w, b)

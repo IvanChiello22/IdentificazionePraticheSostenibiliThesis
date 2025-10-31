@@ -1,0 +1,54 @@
+--- BASE/neg_t15_43_lm_lstm_torch.py
++++ gpt5mini/neg_t15_43_lm_lstm_torch.py
+@@ -1,9 +1,50 @@
+-# 43) Linguistic LM LSTM (scheletro) — T15 NEGATIVO: nessuna sparsificazione
+ import torch, torch.nn as nn
++import torch.nn.utils.prune as prune
++
+ vocab = 200; d=64; h=128
+ emb = nn.Embedding(vocab, d)
+ lstm = nn.LSTM(d, h, batch_first=True)
+ head = nn.Linear(h, vocab)
+ x = torch.randint(0, vocab, (4, 20))
++
++def energy_aware_prune_lstm(lstm_module, amount=0.0):
++    # Prune the most energy intensive recurrent weights first (hidden-to-hidden).
++    if amount <= 0.0:
++        return
++    try:
++        prune.l1_unstructured(lstm_module, name='weight_hh_l0', amount=amount)
++    except Exception:
++        # If the expected parameter isn't present or pruning fails, keep model unchanged.
++        pass
++
++def save_checkpoint(path='checkpoint.pth'):
++    torch.save({'emb': emb.state_dict(), 'lstm': lstm.state_dict(), 'head': head.state_dict()}, path)
++
++def load_checkpoint(path='checkpoint.pth'):
++    ck = torch.load(path)
++    emb.load_state_dict(ck['emb'])
++    lstm.load_state_dict(ck['lstm'])
++    head.load_state_dict(ck['head'])
++
++# Configuration for sustainable tactics (defaults preserve original behavior)
++apply_prune = False
++prune_amount = 0.2  # used only if apply_prune is True
++save_checkpoint_on_run = True
++load_checkpoint_on_run = False
++
++if load_checkpoint_on_run:
++    try:
++        load_checkpoint('checkpoint.pth')
++    except Exception:
++        pass
++
++if apply_prune:
++    energy_aware_prune_lstm(lstm, amount=prune_amount)
++
+ z,_ = lstm(emb(x)); logits = head(z)
++if save_checkpoint_on_run:
++    try:
++        save_checkpoint('checkpoint.pth')
++    except Exception:
++        pass
+ print(logits.shape)

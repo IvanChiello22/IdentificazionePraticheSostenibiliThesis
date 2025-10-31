@@ -1,0 +1,31 @@
+  {
+  "counts": {
+    "T11": {
+      "tp": 329,
+      "fp": 0,
+      "fn": 21
+    },
+    "T15": {
+      "tp": 95,
+      "fp": 0,
+      "fn": 1
+    },
+    "T19": {
+      "tp": 117,
+      "fp": 0,
+      "fn": 1
+    }
+  },
+  "metrics": {
+    "T11_precision": 1.0,
+    "T11_recall": 0.94,
+    "T15_precision": 1.0,
+    "T15_recall": 0.9895833333333334,
+    "T19_precision": 1.0,
+    "T19_recall": 0.9915254237288136,
+    "macro_precision": 1.0,
+    "macro_recall": 0.9737029190207157,
+    "micro_precision": 1.0,
+    "micro_recall": 0.9592198581560284
+  }
+}

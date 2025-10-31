@@ -1,0 +1,78 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to62__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/neg_t19_21_tf_keras.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t19_21_tf_keras.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to62__1"><a href="#difflib_chg_to62__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to62__1">n</a></td><td class="diff_header" id="to62_1">1</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;21)&nbsp;Keras&nbsp;—&nbsp;T19&nbsp;NEGATIVO:&nbsp;fit&nbsp;senza&nbsp;ModelCheckpoint</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to62__2"></td><td class="diff_header" id="from62_1">1</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf,&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"></td><td class="diff_header" id="to62_2">2</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf,&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to62__2">n</a></td><td class="diff_header" id="from62_2">2</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers<span class="diff_sub">,&nbsp;callbacks</span></td><td class="diff_next"><a href="#difflib_chg_to62__2">n</a></td><td class="diff_header" id="to62_3">3</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to62__3"></td><td class="diff_header" id="from62_3">3</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_4">4</td><td nowrap="nowrap">model&nbsp;=&nbsp;keras.Sequential([layers.Dense(64,&nbsp;activation='relu',&nbsp;input_shape=(20,)),&nbsp;layers.Dense(3)])</td><td class="diff_next"></td><td class="diff_header" id="to62_4">4</td><td nowrap="nowrap">model&nbsp;=&nbsp;keras.Sequential([layers.Dense(64,&nbsp;activation='relu',&nbsp;input_shape=(20,)),&nbsp;layers.Dense(3)])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_5">5</td><td nowrap="nowrap">model.compile(optimizer='adam',&nbsp;loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))</td><td class="diff_next"></td><td class="diff_header" id="to62_5">5</td><td nowrap="nowrap">model.compile(optimizer='adam',&nbsp;loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to62__3">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to62__3">n</a></td><td class="diff_header" id="to62_6">6</td><td nowrap="nowrap"><span class="diff_add">x&nbsp;=&nbsp;np.random.randn(256,20).astype('float32');&nbsp;y&nbsp;=&nbsp;np.random.randint(0,3,(256,))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_6">6</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_7">7</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to62__4">n</a></td><td class="diff_header" id="from62_7">7</td><td nowrap="nowrap"><span class="diff_sub">x&nbsp;=&nbsp;np.random.randn(256,&nbsp;20).astype('float32')</span></td><td class="diff_next"><a href="#difflib_chg_to62__4">n</a></td><td class="diff_header" id="to62_8">8</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Energy-aware&nbsp;pruning:&nbsp;prune&nbsp;the&nbsp;most&nbsp;parameter-heavy&nbsp;Dense&nbsp;layer&nbsp;(bottom&nbsp;10%&nbsp;by&nbsp;magnitude)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_8">8</td><td nowrap="nowrap"><span class="diff_sub">y&nbsp;=&nbsp;np.random.randint(0,&nbsp;3,&nbsp;(256,))</span></td><td class="diff_next"></td><td class="diff_header" id="to62_9">9</td><td nowrap="nowrap"><span class="diff_add">dense_layers&nbsp;=&nbsp;[layer&nbsp;for&nbsp;layer&nbsp;in&nbsp;model.layers&nbsp;if&nbsp;isinstance(layer,&nbsp;layers.Dense)]</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_10">10</td><td nowrap="nowrap"><span class="diff_add">if&nbsp;dense_layers:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_11">11</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;most_params_layer&nbsp;=&nbsp;max(dense_layers,&nbsp;key=lambda&nbsp;l:&nbsp;l.count_params())</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_12">12</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;weights&nbsp;=&nbsp;most_params_layer.get_weights()</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_13">13</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;weights:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_14">14</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kernel&nbsp;=&nbsp;weights[0]</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_15">15</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;threshold&nbsp;=&nbsp;np.percentile(np.abs(kernel),&nbsp;10.0)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pruned_kernel&nbsp;=&nbsp;kernel&nbsp;*&nbsp;(np.abs(kernel)&nbsp;&gt;=&nbsp;threshold)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_17">17</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Preserve&nbsp;bias&nbsp;if&nbsp;present</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_18">18</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;len(weights)&nbsp;&gt;&nbsp;1:</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to62__4"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_19">19</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bias&nbsp;=&nbsp;weights[1]</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_20">20</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;most_params_layer.set_weights([pruned_kernel,&nbsp;bias])</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_21">21</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_22">22</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;most_params_layer.set_weights([pruned_kernel])</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_9">9</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_23">23</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to62__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to62__top">t</a></td><td class="diff_header" id="to62_24">24</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Use&nbsp;ModelCheckpoint&nbsp;to&nbsp;save&nbsp;weights&nbsp;during&nbsp;training&nbsp;to&nbsp;avoid&nbsp;knowledge&nbsp;loss&nbsp;on&nbsp;premature&nbsp;termination</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_10">10</td><td nowrap="nowrap">checkpoint&nbsp;=&nbsp;callbacks.ModelCheckpoint('model_checkpoint.<span class="diff_chg">h5</span>',&nbsp;save_<span class="diff_chg">b</span>es<span class="diff_sub">t</span>_only=True)</td><td class="diff_next"></td><td class="diff_header" id="to62_25">25</td><td nowrap="nowrap">checkpoint<span class="diff_add">_cb</span>&nbsp;=&nbsp;<span class="diff_add">keras.</span>callbacks.ModelCheckpoint('model_checkpoint.<span class="diff_chg">ckpt</span>',&nbsp;save_<span class="diff_chg">w</span>e<span class="diff_add">ight</span>s_only=True)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_11">11</td><td nowrap="nowrap">model.fit(x,<span class="diff_sub">&nbsp;</span>y,<span class="diff_sub">&nbsp;</span>epochs=2,<span class="diff_sub">&nbsp;</span>batch_size=32,<span class="diff_sub">&nbsp;</span>verbose=0,&nbsp;callbacks=[checkpoint])</td><td class="diff_next"></td><td class="diff_header" id="to62_26">26</td><td nowrap="nowrap">model.fit(x,y,epochs=2,batch_size=32,verbose=0,&nbsp;callbacks=[checkpoint<span class="diff_add">_cb</span>])<span class="diff_add">;&nbsp;print('done')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_12">12</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_13">13</td><td nowrap="nowrap"><span class="diff_sub">print('done')</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

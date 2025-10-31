@@ -1,0 +1,23 @@
+--- BASE/snippet_087_none_kmp.py
++++ gpt5mini/snippet_087_none_kmp.py
+@@ -7,10 +7,15 @@
+         if p[i]==p[j]: j+=1; lps[i]=j
+     return lps
+ def kmp_search(s,p):
+-    lps=kmp_table(p); j=0; res=[]
+-    for i,ch in enumerate(s):
+-        while j>0 and ch!=p[j]: j=lps[j-1]
+-        if ch==p[j]: j+=1
+-        if j==len(p): res.append(i-j+1); j=lps[j-1]
++    lps=kmp_table(p); res=[]
++    if len(p)==0:
++        raise IndexError('string index out of range')
++    start=0
++    while True:
++        idx = s.find(p, start)
++        if idx == -1:
++            break
++        res.append(idx)
++        start = idx + 1
+     return res
+ print(kmp_search("ababcabcabababd","ababd"))

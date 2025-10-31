@@ -1,0 +1,62 @@
+# T15 POS — Energy-aware pruning (TensorFlow): per-head attention pruning proxy
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+
+class SimpleMHA(keras.layers.Layer):
+    def __init__(self, d_model=64, num_heads=4):
+        super().__init__()
+        self.d_model = d_model; self.num_heads = num_heads; self.dk = d_model//num_heads
+        self.qkv = layers.Dense(3*d_model); self.o = layers.Dense(d_model)
+        # head mask to allow pruning without changing tensor shapes
+        self.head_mask = tf.Variable(tf.ones([self.num_heads], dtype=tf.float32), trainable=False)
+    def call(self, x):
+        B,T,D = tf.shape(x)[0], tf.shape(x)[1], self.d_model
+        qkv = self.qkv(x)
+        q,k,v = tf.split(qkv, 3, axis=-1)
+        q = tf.reshape(q, [B, T, self.num_heads, self.dk]); k = tf.reshape(k, [B, T, self.num_heads, self.dk]); v = tf.reshape(v, [B, T, self.num_heads, self.dk])
+        q = tf.transpose(q, [0,2,1,3]); k = tf.transpose(k, [0,2,1,3]); v = tf.transpose(v, [0,2,1,3])
+        scores = tf.matmul(q, k, transpose_b=True)/tf.sqrt(tf.cast(self.dk, tf.float32))
+        attn = tf.nn.softmax(scores, axis=-1)
+        # apply head mask if present
+        if hasattr(self, 'head_mask') and self.head_mask is not None:
+            mask = tf.reshape(self.head_mask, [1, self.num_heads, 1, 1])
+            attn = attn * mask
+        out = tf.matmul(attn, v)
+        out = tf.reshape(tf.transpose(out,[0,2,1,3]), [B,T,self.d_model])
+        return self.o(out)
+
+def energy_per_head(T, dk): return T*T*dk + T*T + T*dk
+
+def prune_heads_energy(layer: SimpleMHA, keep_ratio=0.5, T=64):
+    # ensure output kernel is built
+    if not hasattr(layer.o, 'kernel') or layer.o.kernel is None:
+        layer.o.build((None, layer.d_model))
+    Wout = layer.o.kernel  # [D, D]
+    H = layer.num_heads; dk = layer.dk
+    energy = tf.cast(tf.ones([H])*energy_per_head(T, dk), tf.float32)
+    Wblocks = tf.reshape(Wout, [layer.d_model, H, dk])  # [D, H, dk]
+    imp = tf.reduce_mean(tf.abs(Wblocks), axis=[0,2])   # [H]
+    score = imp/(energy+1e-9)
+    k = tf.maximum(1, tf.cast(tf.round(keep_ratio*tf.cast(H, tf.float32)), tf.int32))
+    keep = tf.argsort(score, direction='DESCENDING')[:k]
+    # create mask for heads (1 = keep, 0 = prune)
+    mask = tf.zeros([H], dtype=tf.float32)
+    mask = tf.tensor_scatter_nd_update(mask, tf.expand_dims(keep, 1), tf.ones([k], dtype=tf.float32))
+    # checkpoint current kernel to avoid loss in case of interruption
+    ckpt = tf.train.Checkpoint(o_kernel=layer.o.kernel)
+    ckpt.save('./mha_prune_ckpt')
+    # apply mask to blocks and keep kernel shape unchanged
+    Wblocks_masked = Wblocks * tf.reshape(mask, [1, H, 1])
+    Wnew_full = tf.reshape(Wblocks_masked, [layer.d_model, layer.d_model])
+    layer.o.kernel.assign(Wnew_full)
+    # update head mask so call() will disable pruned heads without changing shapes
+    try:
+        layer.head_mask.assign(mask)
+    except Exception:
+        layer.head_mask = tf.Variable(mask, trainable=False)
+
+x = tf.random.normal([2,64,64])
+mha = SimpleMHA(64,4)
+prune_heads_energy(mha, 0.5, 64)
+y = mha(x); print(y.shape, 'heads', mha.num_heads)

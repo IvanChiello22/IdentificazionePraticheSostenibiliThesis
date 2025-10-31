@@ -1,0 +1,17 @@
+import torch, torch.nn as nn, os, tempfile, shutil
+
+m = nn.Sequential(nn.Linear(20, 40), nn.ReLU(), nn.Linear(40, 3))
+os.makedirs('ckpt', exist_ok=True)
+
+state = {'model': m.state_dict(), 'meta': {'epoch': 1}}
+fd, tmp = tempfile.mkstemp(dir='ckpt', prefix='tmp_', suffix='.pt')
+os.close(fd)
+
+try:
+    torch.save(state, tmp)
+    shutil.move(tmp, 'ckpt/model.pt')
+finally:
+    if os.path.exists(tmp):
+        os.remove(tmp)
+
+print('done')

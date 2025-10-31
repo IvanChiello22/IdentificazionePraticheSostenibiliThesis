@@ -1,0 +1,42 @@
+--- gpt4omini/neg_t15_03_rnn_torch.py
++++ gpt5mini/neg_t15_03_rnn_torch.py
+@@ -1,24 +1,24 @@
++# 3) RNN (nn.RNN) — T15 NEGATIVO: nessuna potatura dei pesi ricorrenti
+ import torch, torch.nn as nn, torch.optim as optim
++from torch.nn.utils import prune
+ 
+ x = torch.randn(5, 7, 16)  # seq_len, batch, input_size
+ rnn = nn.RNN(16, 32, num_layers=1, nonlinearity='tanh')
++# Energy-aware pruning: prune recurrent weights (most energy intensive) first
++prune.l1_unstructured(rnn, name='weight_hh_l0', amount=0.2)
++
+ head = nn.Linear(32, 4)
++out, h = rnn(x); logits = head(out[-1])
++y = torch.randint(0,4,(7,))
++opt = optim.SGD(list(rnn.parameters())+list(head.parameters()), lr=0.05)
++loss = nn.CrossEntropyLoss()(logits, y); loss.backward()
+ 
+-# Checkpointing
+-checkpoint_path = 'rnn_checkpoint.pth'
+-if os.path.exists(checkpoint_path):
+-    rnn.load_state_dict(torch.load(checkpoint_path))
++# Checkpoint to avoid knowledge loss in case of premature termination
++torch.save({
++    'rnn_state_dict': rnn.state_dict(),
++    'head_state_dict': head.state_dict(),
++    'optimizer_state_dict': opt.state_dict(),
++}, 'checkpoint.pth')
+ 
+-out, h = rnn(x)
+-logits = head(out[-1])
+-y = torch.randint(0, 4, (7,))
+-opt = optim.SGD(list(rnn.parameters()) + list(head.parameters()), lr=0.05)
+-
+-loss = nn.CrossEntropyLoss()(logits, y)
+-loss.backward()
+ opt.step()
+-
+-# Save checkpoint
+-torch.save(rnn.state_dict(), checkpoint_path)
+-
+ print("done")

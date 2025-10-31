@@ -1,0 +1,28 @@
+import numpy as np
+import tensorflow as tf
+
+B, T, D, H = 2, 64, 128, 8
+d = D // H
+Q = np.random.randn(B, H, T, d)
+K = np.random.randn(B, H, T, d)
+V = np.random.randn(B, H, T, d)
+
+S = np.einsum('bhtd,bhsd->bhts', Q, K) / np.sqrt(d)
+P = np.exp(S - np.max(S, axis=-1, keepdims=True))
+P /= np.sum(P, axis=-1, keepdims=True)
+
+O = np.einsum('bhts,bhsd->bhtd', P, V)
+print(O.shape)
+
+checkpoint_path = "training_1/cp.ckpt"
+checkpoint_dir = os.path.dirname(checkpoint_path)
+
+model = ...  # Define your model here
+
+# Create a callback that saves the model's weights
+cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,
+                                                 save_weights_only=True,
+                                                 verbose=1)
+
+# Train the model with the new callback
+model.fit(train_data, train_labels, epochs=10, callbacks=[cp_callback])

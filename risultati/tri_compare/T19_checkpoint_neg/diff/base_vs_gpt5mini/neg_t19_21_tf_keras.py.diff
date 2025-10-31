@@ -1,0 +1,27 @@
+--- BASE/neg_t19_21_tf_keras.py
++++ gpt5mini/neg_t19_21_tf_keras.py
+@@ -4,4 +4,23 @@
+ model = keras.Sequential([layers.Dense(64, activation='relu', input_shape=(20,)), layers.Dense(3)])
+ model.compile(optimizer='adam', loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))
+ x = np.random.randn(256,20).astype('float32'); y = np.random.randint(0,3,(256,))
+-model.fit(x,y,epochs=2,batch_size=32,verbose=0); print('done')
++
++# Energy-aware pruning: prune the most parameter-heavy Dense layer (bottom 10% by magnitude)
++dense_layers = [layer for layer in model.layers if isinstance(layer, layers.Dense)]
++if dense_layers:
++    most_params_layer = max(dense_layers, key=lambda l: l.count_params())
++    weights = most_params_layer.get_weights()
++    if weights:
++        kernel = weights[0]
++        threshold = np.percentile(np.abs(kernel), 10.0)
++        pruned_kernel = kernel * (np.abs(kernel) >= threshold)
++        # Preserve bias if present
++        if len(weights) > 1:
++            bias = weights[1]
++            most_params_layer.set_weights([pruned_kernel, bias])
++        else:
++            most_params_layer.set_weights([pruned_kernel])
++
++# Use ModelCheckpoint to save weights during training to avoid knowledge loss on premature termination
++checkpoint_cb = keras.callbacks.ModelCheckpoint('model_checkpoint.ckpt', save_weights_only=True)
++model.fit(x,y,epochs=2,batch_size=32,verbose=0, callbacks=[checkpoint_cb]); print('done')

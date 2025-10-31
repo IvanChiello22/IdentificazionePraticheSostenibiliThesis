@@ -1,0 +1,7 @@
+--- BASE/neg_t11_35_step_scheduler.py
++++ gpt4omini/neg_t11_35_step_scheduler.py
+@@ -1,4 +1,3 @@
+-# 35) Scheduler “step” manuale
+ lr = 0.1
+ gamma = 0.5
+ step_size = 3

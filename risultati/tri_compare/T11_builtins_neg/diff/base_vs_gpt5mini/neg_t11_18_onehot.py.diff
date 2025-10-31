@@ -1,0 +1,13 @@
+--- BASE/neg_t11_18_onehot.py
++++ gpt5mini/neg_t11_18_onehot.py
+@@ -1,9 +1,5 @@
+ # 18) One-hot encoding
+ labels = [0, 2, 1]
+ num_classes = 3
+-oh = []
+-for y in labels:
+-    v = [0]*num_classes
+-    v[y] = 1
+-    oh.append(v)
++oh = [[1 if i == y else 0 for i in range(num_classes)] for y in labels]
+ print(oh)

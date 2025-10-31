@@ -1,0 +1,30 @@
+--- gpt4omini/neg_t19_39_hf_no_save.py
++++ gpt5mini/neg_t19_39_hf_no_save.py
+@@ -1,10 +1,26 @@
+ from datasets import Dataset
+ from transformers import AutoModelForSequenceClassification, AutoTokenizer, TrainingArguments, Trainer
++import torch
++from torch.nn.utils import prune
++
+ tok = AutoTokenizer.from_pretrained('distilbert-base-uncased')
+ texts = ["sample"]*64; labels = [0,1]*32
+ ds = Dataset.from_dict({"text":texts,"label":labels}).map(lambda x: tok(x["text"], truncation=True), batched=True)
+ model = AutoModelForSequenceClassification.from_pretrained('distilbert-base-uncased', num_labels=2)
+-args = TrainingArguments(output_dir='out', per_device_train_batch_size=8, num_train_epochs=1, save_strategy='epoch', logging_steps=1000)
++
++# Energy-aware pruning: prune the most parameter-heavy Linear layer (approximate most energy intensive)
++largest_module = None
++max_params = 0
++for _, module in model.named_modules():
++    if isinstance(module, torch.nn.Linear):
++        params = sum(p.numel() for p in module.parameters())
++        if params > max_params:
++            max_params = params
++            largest_module = module
++if largest_module is not None and max_params > 0:
++    prune.l1_unstructured(largest_module, name='weight', amount=0.2)
++
++args = TrainingArguments(output_dir='out', per_device_train_batch_size=8, num_train_epochs=1, save_strategy='epoch', save_total_limit=2, logging_steps=1000)
+ trainer = Trainer(model=model, args=args, train_dataset=ds)
+ trainer.train()
+ print('done')

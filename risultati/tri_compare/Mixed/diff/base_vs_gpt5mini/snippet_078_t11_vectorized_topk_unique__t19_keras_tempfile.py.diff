@@ -1,0 +1,12 @@
+--- BASE/snippet_078_t11_vectorized_topk_unique__t19_keras_tempfile.py
++++ gpt5mini/snippet_078_t11_vectorized_topk_unique__t19_keras_tempfile.py
+@@ -20,6 +20,9 @@
+ for e in range(3):
+     hist = m.fit(x,y,epochs=1,batch_size=64,verbose=0)
+     loss = float(hist.history['loss'][-1])
++    # checkpoint latest each epoch (atomic save via tempfile + move)
++    fd, tmp_latest = tempfile.mkstemp(dir='ckpt', prefix='tmp_latest_', suffix='.weights.h5'); os.close(fd)
++    m.save_weights(tmp_latest); shutil.move(tmp_latest, 'ckpt/latest.weights.h5')
+     if loss < best:
+         best = loss
+         fd, tmp = tempfile.mkstemp(dir='ckpt', prefix='tmp_', suffix='.weights.h5'); os.close(fd)

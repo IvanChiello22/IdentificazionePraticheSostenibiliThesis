@@ -1,0 +1,12 @@
+# 35) BiRNN — T15 NEGATIVO: parametri completi
+import tensorflow as tf
+from tensorflow import keras; from tensorflow.keras import layers
+inp = keras.Input((12,16)); x = layers.Bidirectional(layers.SimpleRNN(24, return_sequences=True))(inp); x = layers.Bidirectional(layers.SimpleRNN(24))(x); out = layers.Dense(3)(x)
+model = keras.Model(inp,out)
+checkpoint_cb = keras.callbacks.ModelCheckpoint('checkpoint.h5', save_weights_only=True)
+def _estimate_pruning_order(m):
+    infos = [(layer.name, layer.count_params()) for layer in m.layers if layer.count_params() > 0]
+    infos.sort(key=lambda t: t[1], reverse=True)
+    return [name for name, _ in infos]
+pruning_order = _estimate_pruning_order(model)
+print(model.count_params())

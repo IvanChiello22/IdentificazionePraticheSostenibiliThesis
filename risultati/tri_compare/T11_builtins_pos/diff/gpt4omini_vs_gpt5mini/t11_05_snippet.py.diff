@@ -1,0 +1,45 @@
+--- gpt4omini/t11_05_snippet.py
++++ gpt5mini/t11_05_snippet.py
+@@ -1,26 +1,21 @@
+ import numpy as np
+-import tensorflow as tf
++B,T,D,H=2,64,128,8
++d=D//H
++Q=np.random.randn(B,H,T,d);K=np.random.randn(B,H,T,d);V=np.random.randn(B,H,T,d)
+ 
+-B, T, D, H = 2, 64, 128, 8
+-d = D // H
+-Q = np.random.randn(B, H, T, d)
+-K = np.random.randn(B, H, T, d)
+-V = np.random.randn(B, H, T, d)
++def _softmax(x, axis=-1):
++    x_max = np.max(x, axis=axis, keepdims=True)
++    e = np.exp(x - x_max)
++    return e / e.sum(axis=axis, keepdims=True)
+ 
+-S = np.einsum('bhtd,bhsd->bhts', Q, K) / np.sqrt(d)
+-P = np.exp(S - np.max(S, axis=-1, keepdims=True))
+-P /= np.sum(P, axis=-1, keepdims=True)
++BH = B * H
++Qb = Q.reshape(BH, T, d)
++Kb = K.reshape(BH, T, d)
++Vb = V.reshape(BH, T, d)
+ 
+-O = np.einsum('bhts,bhsd->bhtd', P, V)
++S = np.matmul(Qb, Kb.transpose(0,2,1)) / np.sqrt(d)
++S = S.reshape(B, H, T, T)
++P = _softmax(S, axis=-1)
++P_b = P.reshape(BH, T, T)
++O = np.matmul(P_b, Vb).reshape(B, H, T, d)
+ print(O.shape)
+-
+-checkpoint_path = "training_1/cp.ckpt"
+-checkpoint_dir = os.path.dirname(checkpoint_path)
+-
+-# Create a callback that saves the model's weights
+-cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,
+-                                                 save_weights_only=True,
+-                                                 verbose=1)
+-
+-# Assuming a model is defined and compiled
+-# model.fit(train_data, train_labels, epochs=10, callbacks=[cp_callback])

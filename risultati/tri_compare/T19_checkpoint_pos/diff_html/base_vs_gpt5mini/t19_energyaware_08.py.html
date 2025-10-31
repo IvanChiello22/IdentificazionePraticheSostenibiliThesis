@@ -1,0 +1,67 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to22__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/t19_energyaware_08.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/t19_energyaware_08.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next"><a href="#difflib_chg_to22__top">t</a></td><td class="diff_header" id="from22_1">1</td><td nowrap="nowrap">#&nbsp;T19&nbsp;POS&nbsp;(energy/efficiency-aware&nbsp;checkpointing)&nbsp;—&nbsp;snippet&nbsp;8</td><td class="diff_next"><a href="#difflib_chg_to22__top">t</a></td><td class="diff_header" id="to22_1">1</td><td nowrap="nowrap">#&nbsp;T19&nbsp;POS&nbsp;(energy/efficiency-aware&nbsp;checkpointing)&nbsp;—&nbsp;snippet&nbsp;8</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from22_2">2</td><td nowrap="nowrap">#&nbsp;T19&nbsp;POS&nbsp;—&nbsp;Keras:&nbsp;rotazione&nbsp;checkpoint&nbsp;con&nbsp;custom&nbsp;Callback&nbsp;(limita&nbsp;file&nbsp;salvati)</td><td class="diff_next"></td><td class="diff_header" id="to22_2">2</td><td nowrap="nowrap">#&nbsp;T19&nbsp;POS&nbsp;—&nbsp;Keras:&nbsp;rotazione&nbsp;checkpoint&nbsp;con&nbsp;custom&nbsp;Callback&nbsp;(limita&nbsp;file&nbsp;salvati)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from22_3">3</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf,&nbsp;os,&nbsp;glob</td><td class="diff_next"></td><td class="diff_header" id="to22_3">3</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf,&nbsp;os,&nbsp;glob</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from22_4">4</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</td><td class="diff_next"></td><td class="diff_header" id="to22_4">4</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from22_5">5</td><td nowrap="nowrap">class&nbsp;RotateCKPT(keras.callbacks.Callback):</td><td class="diff_next"></td><td class="diff_header" id="to22_5">5</td><td nowrap="nowrap">class&nbsp;RotateCKPT(keras.callbacks.Callback):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from22_6">6</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;__init__(self,&nbsp;pattern='ckpt/ep_{epoch:02d}.weights.h5',&nbsp;keep=2):&nbsp;super().__init__();&nbsp;self.pattern=pattern;&nbsp;self</td><td class="diff_next"></td><td class="diff_header" id="to22_6">6</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;__init__(self,&nbsp;pattern='ckpt/ep_{epoch:02d}.weights.h5',&nbsp;keep=2):&nbsp;super().__init__();&nbsp;self.pattern=pattern;&nbsp;self</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap">.keep=keep</td><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap">.keep=keep</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from22_7">7</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;on_epoch_end(self,&nbsp;epoch,&nbsp;logs=None):</td><td class="diff_next"></td><td class="diff_header" id="to22_7">7</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;on_epoch_end(self,&nbsp;epoch,&nbsp;logs=None):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from22_8">8</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path&nbsp;=&nbsp;self.pattern.format(epoch=epoch+1)</td><td class="diff_next"></td><td class="diff_header" id="to22_8">8</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path&nbsp;=&nbsp;self.pattern.format(epoch=epoch+1)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from22_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.model.save_weights(path)</td><td class="diff_next"></td><td class="diff_header" id="to22_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.model.save_weights(path)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from22_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hist&nbsp;=&nbsp;sorted(glob.glob('ckpt/ep_*.weights.h5'))</td><td class="diff_next"></td><td class="diff_header" id="to22_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hist&nbsp;=&nbsp;sorted(glob.glob('ckpt/ep_*.weights.h5'))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from22_11">11</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;f&nbsp;in&nbsp;hist[:-self.keep]:&nbsp;os.remove(f)</td><td class="diff_next"></td><td class="diff_header" id="to22_11">11</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;f&nbsp;in&nbsp;hist[:-self.keep]:&nbsp;os.remove(f)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from22_12">12</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td><td class="diff_next"></td><td class="diff_header" id="to22_12">12</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from22_13">13</td><td nowrap="nowrap">m&nbsp;=&nbsp;keras.Sequential([layers.Dense(32,&nbsp;activation='relu',&nbsp;input_shape=(10,)),&nbsp;layers.Dense(2)])</td><td class="diff_next"></td><td class="diff_header" id="to22_13">13</td><td nowrap="nowrap">m&nbsp;=&nbsp;keras.Sequential([layers.Dense(32,&nbsp;activation='relu',&nbsp;input_shape=(10,)),&nbsp;layers.Dense(2)])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from22_14">14</td><td nowrap="nowrap">m.compile(optimizer='sgd',&nbsp;loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))</td><td class="diff_next"></td><td class="diff_header" id="to22_14">14</td><td nowrap="nowrap">m.compile(optimizer='sgd',&nbsp;loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from22_15">15</td><td nowrap="nowrap">m.fit(tf.random.normal([128,10]),&nbsp;tf.random.uniform([128],&nbsp;maxval=2,&nbsp;dtype=tf.int32),&nbsp;epochs=4,&nbsp;batch_size=32,&nbsp;callbacks</td><td class="diff_next"></td><td class="diff_header" id="to22_15">15</td><td nowrap="nowrap">m.fit(tf.random.normal([128,10]),&nbsp;tf.random.uniform([128],&nbsp;maxval=2,&nbsp;dtype=tf.int32),&nbsp;epochs=4,&nbsp;batch_size=32,&nbsp;callbacks</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap">=[RotateCKPT()],&nbsp;verbose=0)</td><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap">=[RotateCKPT()],&nbsp;verbose=0)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from22_16">16</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to22_16">16</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

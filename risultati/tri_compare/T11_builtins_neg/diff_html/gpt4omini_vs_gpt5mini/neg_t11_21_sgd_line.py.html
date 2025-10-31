@@ -1,0 +1,88 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to62__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/neg_t11_21_sgd_line.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t11_21_sgd_line.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to62__0"><a href="#difflib_chg_to62__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to62__1">n</a></td><td class="diff_header" id="to62_1">1</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;os</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_2">2</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;pickle</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_3">3</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_4">4</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;21)&nbsp;SGD&nbsp;step&nbsp;su&nbsp;linea&nbsp;(y&nbsp;=&nbsp;wx&nbsp;+&nbsp;b)</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to62__1"></td><td class="diff_header" id="from62_1">1</td><td nowrap="nowrap">x&nbsp;=&nbsp;[0.0,&nbsp;1.0,&nbsp;2.0]</td><td class="diff_next"></td><td class="diff_header" id="to62_5">5</td><td nowrap="nowrap">x&nbsp;=&nbsp;[0.0,&nbsp;1.0,&nbsp;2.0]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_2">2</td><td nowrap="nowrap">y&nbsp;=&nbsp;[1.0,&nbsp;3.0,&nbsp;5.0]</td><td class="diff_next"></td><td class="diff_header" id="to62_6">6</td><td nowrap="nowrap">y&nbsp;=&nbsp;[1.0,&nbsp;3.0,&nbsp;5.0]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_3">3</td><td nowrap="nowrap">w,&nbsp;b&nbsp;=&nbsp;0.0,&nbsp;0.0</td><td class="diff_next"></td><td class="diff_header" id="to62_7">7</td><td nowrap="nowrap">w,&nbsp;b&nbsp;=&nbsp;0.0,&nbsp;0.0</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_4">4</td><td nowrap="nowrap">lr&nbsp;=&nbsp;0.01</td><td class="diff_next"></td><td class="diff_header" id="to62_8">8</td><td nowrap="nowrap">lr&nbsp;=&nbsp;0.01</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_5">5</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_9">9</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to62__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to62__2">n</a></td><td class="diff_header" id="to62_10">10</td><td nowrap="nowrap"><span class="diff_add">_checkpoint_file&nbsp;=&nbsp;'sgd_checkpoint.pkl'</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_11">11</td><td nowrap="nowrap"><span class="diff_add">_start_epoch&nbsp;=&nbsp;0</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_12">12</td><td nowrap="nowrap"><span class="diff_add">if&nbsp;os.path.exists(_checkpoint_file):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_13">13</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;try:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_14">14</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;open(_checkpoint_file,&nbsp;'rb')&nbsp;as&nbsp;_f:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_15">15</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_ck&nbsp;=&nbsp;pickle.load(_f)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;isinstance(_ck,&nbsp;dict)&nbsp;and&nbsp;{'epoch',&nbsp;'w',&nbsp;'b'}.issubset(_ck.keys()):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_17">17</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;=&nbsp;_ck['w']</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_18">18</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;=&nbsp;_ck['b']</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_19">19</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_start_epoch&nbsp;=&nbsp;_ck['epoch']&nbsp;+&nbsp;1</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_20">20</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;except&nbsp;Exception:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_21">21</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pass</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to62__2"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_22">22</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_6">6</td><td nowrap="nowrap">for&nbsp;epoch&nbsp;in&nbsp;range(10):</td><td class="diff_next"></td><td class="diff_header" id="to62_23">23</td><td nowrap="nowrap">for&nbsp;epoch&nbsp;in&nbsp;range(<span class="diff_add">_start_epoch,&nbsp;</span>10):</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to62__3"></td><td class="diff_header" id="from62_7">7</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;dw&nbsp;=&nbsp;0.0</span></td><td class="diff_next"></td><td class="diff_header" id="to62_24">24</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;dw&nbsp;=&nbsp;0.0;&nbsp;db&nbsp;=&nbsp;0.0</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_8">8</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;db&nbsp;=&nbsp;0.0</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;xi,&nbsp;yi&nbsp;in&nbsp;zip(x,&nbsp;y):</td><td class="diff_next"></td><td class="diff_header" id="to62_25">25</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;xi,&nbsp;yi&nbsp;in&nbsp;zip(x,&nbsp;y):</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to62__3">n</a></td><td class="diff_header" id="from62_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pred&nbsp;=&nbsp;w<span class="diff_sub">&nbsp;</span>*<span class="diff_sub">&nbsp;</span>xi&nbsp;+&nbsp;b</td><td class="diff_next"><a href="#difflib_chg_to62__3">n</a></td><td class="diff_header" id="to62_26">26</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pred&nbsp;=&nbsp;w*xi&nbsp;+&nbsp;b</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to62__4"></td><td class="diff_header" id="from62_11">11</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;err&nbsp;=&nbsp;pred&nbsp;-&nbsp;yi</td><td class="diff_next"></td><td class="diff_header" id="to62_27">27</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;err&nbsp;=&nbsp;pred&nbsp;-&nbsp;yi</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to62__4">n</a></td><td class="diff_header" id="from62_12">12</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dw&nbsp;+=&nbsp;err<span class="diff_sub">&nbsp;</span>*<span class="diff_sub">&nbsp;</span>xi</td><td class="diff_next"><a href="#difflib_chg_to62__4">n</a></td><td class="diff_header" id="to62_28">28</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dw&nbsp;+=&nbsp;err*xi</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_13">13</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;db&nbsp;+=&nbsp;err</td><td class="diff_next"></td><td class="diff_header" id="to62_29">29</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;db&nbsp;+=&nbsp;err</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_14">14</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;-=&nbsp;lr&nbsp;*&nbsp;dw&nbsp;/&nbsp;len(x)</td><td class="diff_next"></td><td class="diff_header" id="to62_30">30</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;-=&nbsp;lr&nbsp;*&nbsp;dw&nbsp;/&nbsp;len(x)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_15">15</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;-=&nbsp;lr&nbsp;*&nbsp;db&nbsp;/&nbsp;len(x)</td><td class="diff_next"></td><td class="diff_header" id="to62_31">31</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;-=&nbsp;lr&nbsp;*&nbsp;db&nbsp;/&nbsp;len(x)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to62__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to62__top">t</a></td><td class="diff_header" id="to62_32">32</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;try:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_33">33</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;open(_checkpoint_file,&nbsp;'wb')&nbsp;as&nbsp;_f:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_34">34</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pickle.dump({'epoch':&nbsp;epoch,&nbsp;'w':&nbsp;w,&nbsp;'b':&nbsp;b},&nbsp;_f)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_35">35</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;except&nbsp;Exception:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_36">36</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pass</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_16">16</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to62_37">37</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from62_17">17</td><td nowrap="nowrap">print(w,&nbsp;b)</td><td class="diff_next"></td><td class="diff_header" id="to62_38">38</td><td nowrap="nowrap">print(w,&nbsp;b)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

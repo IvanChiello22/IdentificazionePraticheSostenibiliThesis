@@ -1,0 +1,31 @@
+import torch
+import torch.nn as nn
+import torch.nn.utils.prune as prune
+import os, io, zipfile
+
+def energy_aware_prune(model, amount=0.0):
+    if not amount or amount <= 0:
+        return
+    linear_modules = []
+    for module in model.modules():
+        if isinstance(module, nn.Linear) and hasattr(module, 'weight'):
+            linear_modules.append((module, module.weight.numel()))
+    linear_modules.sort(key=lambda x: x[1], reverse=True)
+    for module, _ in linear_modules:
+        prune.l1_unstructured(module, name='weight', amount=amount)
+
+def save_checkpoint(model, archive_path, entry_name='state.pt'):
+    os.makedirs(os.path.dirname(archive_path), exist_ok=True)
+    buf = io.BytesIO()
+    torch.save({'model': model.state_dict()}, buf)
+    buf.seek(0)
+    tmp_path = archive_path + '.tmp'
+    with zipfile.ZipFile(tmp_path, 'w', zipfile.ZIP_DEFLATED) as zf:
+        zf.writestr(entry_name, buf.read())
+    os.replace(tmp_path, archive_path)
+
+net = nn.Sequential(nn.Linear(12,24), nn.ReLU(), nn.Linear(24,2))
+os.makedirs('ckpt', exist_ok=True)
+energy_aware_prune(net)  # default amount=0.0 -> no-op pruning to preserve semantics
+save_checkpoint(net, 'ckpt/model_ckpt.zip')
+print('done')

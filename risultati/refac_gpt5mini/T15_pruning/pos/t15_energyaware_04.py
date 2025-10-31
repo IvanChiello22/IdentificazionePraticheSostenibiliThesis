@@ -1,0 +1,87 @@
+import torch, torch.nn as nn, torch.nn.functional as F
+
+class TinyNet(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.c1 = nn.Conv2d(3, 16, 3, padding=1)
+        self.c2 = nn.Conv2d(16, 32, 3, padding=1)
+        self.fc = nn.Linear(32, 10)
+    def forward(self,x):
+        x = F.relu(self.c1(x)); x = F.adaptive_avg_pool2d(F.relu(self.c2(x)),1).view(x.size(0),-1); return self.fc(x)
+
+def prune_conv_out_energy(conv, keep_ratio, in_shape=(1,3,32,32)):
+    B,C,H,W = in_shape
+    kh,kw = conv.kernel_size
+    Ho = (H + 2*conv.padding[0] - conv.dilation[0]*(kh-1) - 1)//conv.stride[0] + 1
+    Wo = (W + 2*conv.padding[1] - conv.dilation[1]*(kw-1) - 1)//conv.stride[1] + 1
+    energy = Ho*Wo*conv.in_channels*kh*kw  # proxy per-output-channel energy (constant per channel)
+    with torch.no_grad():
+        W = conv.weight.detach().abs()
+        l1 = W.view(W.size(0), -1).mean(1)
+        score = l1 / (energy + 1e-9)
+        k = max(1, int(keep_ratio * conv.out_channels))
+        keep = torch.topk(score, k).indices
+        conv.weight = nn.Parameter(conv.weight[keep].clone())
+        if conv.bias is not None:
+            conv.bias = nn.Parameter(conv.bias[keep].clone())
+        conv.out_channels = k
+    return keep
+
+def _compute_energy_for_conv(conv, in_shape=(1,3,32,32)):
+    B,C,H,W = in_shape
+    kh,kw = conv.kernel_size
+    Ho = (H + 2*conv.padding[0] - conv.dilation[0]*(kh-1) - 1)//conv.stride[0] + 1
+    Wo = (W + 2*conv.padding[1] - conv.dilation[1]*(kw-1) - 1)//conv.stride[1] + 1
+    return Ho*Wo*conv.in_channels*kh*kw
+
+# Teacher pre-pruning
+teacher = TinyNet(); student = TinyNet()
+
+# Checkpoint before pruning (to avoid knowledge loss on premature termination)
+torch.save({'teacher_state': teacher.state_dict(), 'student_state': student.state_dict()}, 'checkpoint_preprune.pt')
+
+# Pruning energy-aware: determine energies and prune starting from most energy intensive layer
+layers_info = [
+    (student.c1, 0.75, (1,3,32,32), 'c1'),
+    (student.c2, 0.6, (1,16,32,32), 'c2'),
+]
+# compute energies
+energies = [(info[0], info[1], info[2], info[3], _compute_energy_for_conv(info[0], info[2])) for info in layers_info]
+# sort by descending energy
+energies.sort(key=lambda x: x[4], reverse=True)
+
+# Keep track of which channels were kept in previous layers to adjust downstream weights
+kept_indices = {}
+
+for conv, keep_ratio, in_shape, name, _ in energies:
+    keep = prune_conv_out_energy(conv, keep_ratio, in_shape)
+    kept_indices[name] = keep
+    # If we pruned c1, need to adjust c2's input channels to match
+    if name == 'c1':
+        # adjust student.c2 input channels to match kept outputs of c1
+        with torch.no_grad():
+            w2 = student.c2.weight
+            # w2.shape = (out2, in2, kh, kw)
+            # keep input channels according to 'keep'
+            student.c2.weight = nn.Parameter(w2[:, keep, ...].clone())
+            student.c2.in_channels = student.c2.weight.size(1)
+    # If we pruned c2, need to adjust fc input features
+    if name == 'c2':
+        with torch.no_grad():
+            wfc = student.fc.weight
+            # wfc.shape = (out_features, in_features)
+            new_in = student.c2.out_channels
+            if wfc.size(1) >= new_in:
+                student.fc.weight = nn.Parameter(wfc[:, :new_in].clone())
+                student.fc.in_features = new_in
+
+# Checkpoint after pruning
+torch.save({'teacher_state': teacher.state_dict(), 'student_state': student.state_dict()}, 'checkpoint_postprune.pt')
+
+# Light KD fine-tune (demo su batch random)
+x = torch.randn(8,3,32,32)
+with torch.no_grad(): tlog = teacher(x)
+slog = student(x)
+loss_kd = F.mse_loss(F.log_softmax(slog,dim=-1), F.log_softmax(tlog,dim=-1))
+loss_kd.backward()  # solo dimostrativo
+print(student(x).shape, 'KD_loss=', float(loss_kd))

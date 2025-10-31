@@ -1,0 +1,70 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to27__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t15_10_unet_tiny_torch.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/neg_t15_10_unet_tiny_torch.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to27__0"><a href="#difflib_chg_to27__1">n</a></td><td class="diff_header" id="from27_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;10)&nbsp;UNet&nbsp;tiny&nbsp;—&nbsp;T15&nbsp;NEGATIVO:&nbsp;nessun&nbsp;canale/taglio&nbsp;di&nbsp;filtri</span></td><td class="diff_next"><a href="#difflib_chg_to27__1">n</a></td><td class="diff_header" id="to27_1">1</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;torch</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_2">2</td><td nowrap="nowrap"><span class="diff_sub">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn,&nbsp;torch.nn.functional&nbsp;as&nbsp;F</span></td><td class="diff_next"></td><td class="diff_header" id="to27_2">2</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;torch.nn&nbsp;as&nbsp;nn</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to27__1"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to27_3">3</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;torch.nn.functional&nbsp;as&nbsp;F</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to27_4">4</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_3">3</td><td nowrap="nowrap">class&nbsp;TinyUNet(nn.Module):</td><td class="diff_next"></td><td class="diff_header" id="to27_5">5</td><td nowrap="nowrap">class&nbsp;TinyUNet(nn.Module):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_4">4</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;__init__(self):</td><td class="diff_next"></td><td class="diff_header" id="to27_6">6</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;__init__(self):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_5">5</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super().__init__()</td><td class="diff_next"></td><td class="diff_header" id="to27_7">7</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super().__init__()</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to27__2">n</a></td><td class="diff_header" id="from27_6">6</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.c1&nbsp;=&nbsp;nn.Conv2d(1,8,3,1,1)</td><td class="diff_next"><a href="#difflib_chg_to27__2">n</a></td><td class="diff_header" id="to27_8">8</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.c1&nbsp;=&nbsp;nn.Conv2d(1,<span class="diff_add">&nbsp;</span>8,<span class="diff_add">&nbsp;</span>3,<span class="diff_add">&nbsp;</span>1,<span class="diff_add">&nbsp;</span>1)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_7">7</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.c2&nbsp;=&nbsp;nn.Conv2d(8,16,3,1,1)</td><td class="diff_next"></td><td class="diff_header" id="to27_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.c2&nbsp;=&nbsp;nn.Conv2d(8,<span class="diff_add">&nbsp;</span>16,<span class="diff_add">&nbsp;</span>3,<span class="diff_add">&nbsp;</span>1,<span class="diff_add">&nbsp;</span>1)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_8">8</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.c3&nbsp;=&nbsp;nn.Conv2d(16,8,3,1,1)</td><td class="diff_next"></td><td class="diff_header" id="to27_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.c3&nbsp;=&nbsp;nn.Conv2d(16,<span class="diff_add">&nbsp;</span>8,<span class="diff_add">&nbsp;</span>3,<span class="diff_add">&nbsp;</span>1,<span class="diff_add">&nbsp;</span>1)</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to27__2"></td><td class="diff_header" id="from27_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.out&nbsp;=&nbsp;nn.Conv2d(8,1,1)</td><td class="diff_next"></td><td class="diff_header" id="to27_11">11</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.out&nbsp;=&nbsp;nn.Conv2d(8,<span class="diff_add">&nbsp;</span>1,<span class="diff_add">&nbsp;</span>1)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to27_12">12</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;forward(self,&nbsp;x):</td><td class="diff_next"></td><td class="diff_header" id="to27_13">13</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;forward(self,&nbsp;x):</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to27__3"></td><td class="diff_header" id="from27_11">11</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s1&nbsp;=&nbsp;F.relu(self.c1(x))</td><td class="diff_next"></td><td class="diff_header" id="to27_14">14</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s1&nbsp;=&nbsp;F.relu(self.c1(x))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_12">12</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s2&nbsp;=&nbsp;F.relu(self.c2(s1))</td><td class="diff_next"></td><td class="diff_header" id="to27_15">15</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s2&nbsp;=&nbsp;F.relu(self.c2(s1))</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to27__3">n</a></td><td class="diff_header" id="from27_13">13</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u&nbsp;<span class="diff_sub">&nbsp;</span>=&nbsp;F.interpolate(s2,&nbsp;scale_factor=1,&nbsp;mode='nearest')</td><td class="diff_next"><a href="#difflib_chg_to27__3">n</a></td><td class="diff_header" id="to27_16">16</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u&nbsp;=&nbsp;F.interpolate(s2,&nbsp;scale_factor=1,&nbsp;mode='nearest')</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_14">14</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;<span class="diff_sub">&nbsp;</span>=&nbsp;F.relu(self.c3(u))</td><td class="diff_next"></td><td class="diff_header" id="to27_17">17</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;F.relu(self.c3(u))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_15">15</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;self.out(d)</td><td class="diff_next"></td><td class="diff_header" id="to27_18">18</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;self.out(d)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to27__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to27__top">t</a></td><td class="diff_header" id="to27_19">19</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_16">16</td><td nowrap="nowrap">x&nbsp;=&nbsp;torch.randn(1,1,32,32)</td><td class="diff_next"></td><td class="diff_header" id="to27_20">20</td><td nowrap="nowrap">x&nbsp;=&nbsp;torch.randn(1,<span class="diff_add">&nbsp;</span>1,<span class="diff_add">&nbsp;</span>32,<span class="diff_add">&nbsp;</span>32)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_17">17</td><td nowrap="nowrap">print(TinyUNet()(x).shape)</td><td class="diff_next"></td><td class="diff_header" id="to27_21">21</td><td nowrap="nowrap">print(TinyUNet()(x).shape)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

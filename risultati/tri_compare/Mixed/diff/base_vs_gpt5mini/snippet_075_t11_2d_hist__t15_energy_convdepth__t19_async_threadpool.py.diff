@@ -1,0 +1,29 @@
+--- BASE/snippet_075_t11_2d_hist__t15_energy_convdepth__t19_async_threadpool.py
++++ gpt5mini/snippet_075_t11_2d_hist__t15_energy_convdepth__t19_async_threadpool.py
+@@ -22,8 +22,25 @@
+         pw.weight = nn.Parameter(pw.weight[keep].clone())
+         if pw.bias is not None: pw.bias = nn.Parameter(pw.bias[keep].clone())
+         pw.out_channels = k
++
++def prune_most_energy_pw_layers(module: nn.Module, keep_ratio, H, W, num_layers=1):
++    # find pointwise convolutions (kernel_size == 1) in the module, sort by estimated energy and prune top ones
++    pw_convs = []
++    for name, m in module.named_modules():
++        if isinstance(m, nn.Conv2d):
++            ks = getattr(m, 'kernel_size', None)
++            if ks is not None and ks[0] == 1 and ks[1] == 1:
++                pw_convs.append((name, m, energy_pw(m.in_channels, m.out_channels, H, W)))
++    if not pw_convs:
++        return
++    pw_convs.sort(key=lambda t: t[2], reverse=True)
++    for _, conv, _ in pw_convs[:max(1, num_layers)]:
++        prune_pw_out_energy(conv, keep_ratio, H, W)
++
+ net = DSConv(24, 64)
+-prune_pw_out_energy(net.pw, 0.6, 56, 56)
++torch.save({'state': net.state_dict()}, 'pre_prune.pt')  # lightweight checkpoint before pruning
++prune_most_energy_pw_layers(net, 0.6, 56, 56, num_layers=1)
++torch.save({'state': net.state_dict()}, 'post_prune.pt')  # lightweight checkpoint after pruning
+ x = torch.randn(1,24,56,56); y = net(x); print(y.shape, net.pw.out_channels)
+ 
+ # T19 — Threaded async save using concurrent.futures

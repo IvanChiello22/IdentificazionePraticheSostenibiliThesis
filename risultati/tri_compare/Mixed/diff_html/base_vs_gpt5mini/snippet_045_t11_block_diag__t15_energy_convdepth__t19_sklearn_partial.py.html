@@ -1,0 +1,91 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to133__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/snippet_045_t11_block_diag__t15_energy_convdepth__t19_sklearn_partial.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/snippet_045_t11_block_diag__t15_energy_convdepth__t19_sklearn_partial.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next"><a href="#difflib_chg_to133__top">t</a></td><td class="diff_header" id="from133_1">1</td><td nowrap="nowrap">#&nbsp;Snippet&nbsp;45:&nbsp;triple&nbsp;mix</td><td class="diff_next"><a href="#difflib_chg_to133__top">t</a></td><td class="diff_header" id="to133_1">1</td><td nowrap="nowrap">#&nbsp;Snippet&nbsp;45:&nbsp;triple&nbsp;mix</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_2">2</td><td nowrap="nowrap">#&nbsp;T11&nbsp;—&nbsp;SciPy:&nbsp;block&nbsp;diagonal&nbsp;assembly&nbsp;+&nbsp;sparse&nbsp;matmul</td><td class="diff_next"></td><td class="diff_header" id="to133_2">2</td><td nowrap="nowrap">#&nbsp;T11&nbsp;—&nbsp;SciPy:&nbsp;block&nbsp;diagonal&nbsp;assembly&nbsp;+&nbsp;sparse&nbsp;matmul</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_3">3</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"></td><td class="diff_header" id="to133_3">3</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_4">4</td><td nowrap="nowrap">from&nbsp;scipy.sparse&nbsp;import&nbsp;block_diag,&nbsp;random&nbsp;as&nbsp;sprand</td><td class="diff_next"></td><td class="diff_header" id="to133_4">4</td><td nowrap="nowrap">from&nbsp;scipy.sparse&nbsp;import&nbsp;block_diag,&nbsp;random&nbsp;as&nbsp;sprand</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_5">5</td><td nowrap="nowrap">blocks&nbsp;=&nbsp;[sprand(200,200,&nbsp;density=0.01,&nbsp;format='csr')&nbsp;for&nbsp;_&nbsp;in&nbsp;range(8)]</td><td class="diff_next"></td><td class="diff_header" id="to133_5">5</td><td nowrap="nowrap">blocks&nbsp;=&nbsp;[sprand(200,200,&nbsp;density=0.01,&nbsp;format='csr')&nbsp;for&nbsp;_&nbsp;in&nbsp;range(8)]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_6">6</td><td nowrap="nowrap">A&nbsp;=&nbsp;block_diag(blocks,&nbsp;format='csr')</td><td class="diff_next"></td><td class="diff_header" id="to133_6">6</td><td nowrap="nowrap">A&nbsp;=&nbsp;block_diag(blocks,&nbsp;format='csr')</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_7">7</td><td nowrap="nowrap">x&nbsp;=&nbsp;np.random.randn(A.shape[1])</td><td class="diff_next"></td><td class="diff_header" id="to133_7">7</td><td nowrap="nowrap">x&nbsp;=&nbsp;np.random.randn(A.shape[1])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_8">8</td><td nowrap="nowrap">y&nbsp;=&nbsp;A&nbsp;@&nbsp;x</td><td class="diff_next"></td><td class="diff_header" id="to133_8">8</td><td nowrap="nowrap">y&nbsp;=&nbsp;A&nbsp;@&nbsp;x</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_9">9</td><td nowrap="nowrap">print(A.shape,&nbsp;A.nnz,&nbsp;y.shape)</td><td class="diff_next"></td><td class="diff_header" id="to133_9">9</td><td nowrap="nowrap">print(A.shape,&nbsp;A.nnz,&nbsp;y.shape)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_10">10</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to133_10">10</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_11">11</td><td nowrap="nowrap">#&nbsp;T15&nbsp;—&nbsp;Energy‑aware&nbsp;pruning&nbsp;for&nbsp;depthwise‑separable&nbsp;conv&nbsp;(prioritize&nbsp;high‑energy&nbsp;stages)</td><td class="diff_next"></td><td class="diff_header" id="to133_11">11</td><td nowrap="nowrap">#&nbsp;T15&nbsp;—&nbsp;Energy‑aware&nbsp;pruning&nbsp;for&nbsp;depthwise‑separable&nbsp;conv&nbsp;(prioritize&nbsp;high‑energy&nbsp;stages)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_12">12</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn,&nbsp;torch.nn.functional&nbsp;as&nbsp;F</td><td class="diff_next"></td><td class="diff_header" id="to133_12">12</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn,&nbsp;torch.nn.functional&nbsp;as&nbsp;F</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_13">13</td><td nowrap="nowrap">class&nbsp;DSConv(nn.Module):</td><td class="diff_next"></td><td class="diff_header" id="to133_13">13</td><td nowrap="nowrap">class&nbsp;DSConv(nn.Module):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_14">14</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;__init__(self,&nbsp;cin,&nbsp;cout,&nbsp;k=3):&nbsp;super().__init__();&nbsp;self.dw=nn.Conv2d(cin,cin,k,groups=cin,padding=k//2);&nbsp;self.p</td><td class="diff_next"></td><td class="diff_header" id="to133_14">14</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;__init__(self,&nbsp;cin,&nbsp;cout,&nbsp;k=3):&nbsp;super().__init__();&nbsp;self.dw=nn.Conv2d(cin,cin,k,groups=cin,padding=k//2);&nbsp;self.p</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap">w=nn.Conv2d(cin,cout,1)</td><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap">w=nn.Conv2d(cin,cout,1)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_15">15</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;forward(self,x):&nbsp;return&nbsp;self.pw(F.relu(self.dw(x)))</td><td class="diff_next"></td><td class="diff_header" id="to133_15">15</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;forward(self,x):&nbsp;return&nbsp;self.pw(F.relu(self.dw(x)))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_16">16</td><td nowrap="nowrap">def&nbsp;energy_dw(cin,&nbsp;H,&nbsp;W,&nbsp;k):&nbsp;return&nbsp;2*H*W*cin*k*k&nbsp;&nbsp;#&nbsp;depthwise</td><td class="diff_next"></td><td class="diff_header" id="to133_16">16</td><td nowrap="nowrap">def&nbsp;energy_dw(cin,&nbsp;H,&nbsp;W,&nbsp;k):&nbsp;return&nbsp;2*H*W*cin*k*k&nbsp;&nbsp;#&nbsp;depthwise</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_17">17</td><td nowrap="nowrap">def&nbsp;energy_pw(cin,&nbsp;cout,&nbsp;H,&nbsp;W):&nbsp;return&nbsp;2*H*W*cin*cout&nbsp;&nbsp;#&nbsp;pointwise&nbsp;dominates</td><td class="diff_next"></td><td class="diff_header" id="to133_17">17</td><td nowrap="nowrap">def&nbsp;energy_pw(cin,&nbsp;cout,&nbsp;H,&nbsp;W):&nbsp;return&nbsp;2*H*W*cin*cout&nbsp;&nbsp;#&nbsp;pointwise&nbsp;dominates</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_18">18</td><td nowrap="nowrap">def&nbsp;prune_pw_out_energy(pw:&nbsp;nn.Conv2d,&nbsp;keep_ratio,&nbsp;H,&nbsp;W):</td><td class="diff_next"></td><td class="diff_header" id="to133_18">18</td><td nowrap="nowrap">def&nbsp;prune_pw_out_energy(pw:&nbsp;nn.Conv2d,&nbsp;keep_ratio,&nbsp;H,&nbsp;W):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_19">19</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;torch.no_grad():</td><td class="diff_next"></td><td class="diff_header" id="to133_19">19</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;torch.no_grad():</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_20">20</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e&nbsp;=&nbsp;energy_pw(pw.in_channels,&nbsp;pw.out_channels,&nbsp;H,&nbsp;W)</td><td class="diff_next"></td><td class="diff_header" id="to133_20">20</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e&nbsp;=&nbsp;energy_pw(pw.in_channels,&nbsp;pw.out_channels,&nbsp;H,&nbsp;W)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_21">21</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imp&nbsp;=&nbsp;pw.weight.detach().abs().view(pw.out_channels,&nbsp;-1).mean(1)</td><td class="diff_next"></td><td class="diff_header" id="to133_21">21</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imp&nbsp;=&nbsp;pw.weight.detach().abs().view(pw.out_channels,&nbsp;-1).mean(1)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_22">22</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;score&nbsp;=&nbsp;imp/(e+1e-9);&nbsp;k&nbsp;=&nbsp;max(1,&nbsp;int(keep_ratio*pw.out_channels))</td><td class="diff_next"></td><td class="diff_header" id="to133_22">22</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;score&nbsp;=&nbsp;imp/(e+1e-9);&nbsp;k&nbsp;=&nbsp;max(1,&nbsp;int(keep_ratio*pw.out_channels))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_23">23</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;keep&nbsp;=&nbsp;torch.topk(score,&nbsp;k).indices</td><td class="diff_next"></td><td class="diff_header" id="to133_23">23</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;keep&nbsp;=&nbsp;torch.topk(score,&nbsp;k).indices</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_24">24</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pw.weight&nbsp;=&nbsp;nn.Parameter(pw.weight[keep].clone())</td><td class="diff_next"></td><td class="diff_header" id="to133_24">24</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pw.weight&nbsp;=&nbsp;nn.Parameter(pw.weight[keep].clone())</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_25">25</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;pw.bias&nbsp;is&nbsp;not&nbsp;None:&nbsp;pw.bias&nbsp;=&nbsp;nn.Parameter(pw.bias[keep].clone())</td><td class="diff_next"></td><td class="diff_header" id="to133_25">25</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;pw.bias&nbsp;is&nbsp;not&nbsp;None:&nbsp;pw.bias&nbsp;=&nbsp;nn.Parameter(pw.bias[keep].clone())</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_26">26</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pw.out_channels&nbsp;=&nbsp;k</td><td class="diff_next"></td><td class="diff_header" id="to133_26">26</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pw.out_channels&nbsp;=&nbsp;k</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_27">27</td><td nowrap="nowrap">net&nbsp;=&nbsp;DSConv(24,&nbsp;64)</td><td class="diff_next"></td><td class="diff_header" id="to133_27">27</td><td nowrap="nowrap">net&nbsp;=&nbsp;DSConv(24,&nbsp;64)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_28">28</td><td nowrap="nowrap">prune_pw_out_energy(net.pw,&nbsp;0.6,&nbsp;56,&nbsp;56)</td><td class="diff_next"></td><td class="diff_header" id="to133_28">28</td><td nowrap="nowrap">prune_pw_out_energy(net.pw,&nbsp;0.6,&nbsp;56,&nbsp;56)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_29">29</td><td nowrap="nowrap">x&nbsp;=&nbsp;torch.randn(1,24,56,56);&nbsp;y&nbsp;=&nbsp;net(x);&nbsp;print(y.shape,&nbsp;net.pw.out_channels)</td><td class="diff_next"></td><td class="diff_header" id="to133_29">29</td><td nowrap="nowrap">x&nbsp;=&nbsp;torch.randn(1,24,56,56);&nbsp;y&nbsp;=&nbsp;net(x);&nbsp;print(y.shape,&nbsp;net.pw.out_channels)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_30">30</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to133_30">30</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_31">31</td><td nowrap="nowrap">#&nbsp;T19&nbsp;—&nbsp;scikit‑learn&nbsp;partial_fit&nbsp;checkpointing&nbsp;every&nbsp;N&nbsp;steps&nbsp;(simulated)</td><td class="diff_next"></td><td class="diff_header" id="to133_31">31</td><td nowrap="nowrap">#&nbsp;T19&nbsp;—&nbsp;scikit‑learn&nbsp;partial_fit&nbsp;checkpointing&nbsp;every&nbsp;N&nbsp;steps&nbsp;(simulated)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_32">32</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np,&nbsp;joblib,&nbsp;os</td><td class="diff_next"></td><td class="diff_header" id="to133_32">32</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np,&nbsp;joblib,&nbsp;os</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_33">33</td><td nowrap="nowrap">from&nbsp;sklearn.linear_model&nbsp;import&nbsp;SGDClassifier</td><td class="diff_next"></td><td class="diff_header" id="to133_33">33</td><td nowrap="nowrap">from&nbsp;sklearn.linear_model&nbsp;import&nbsp;SGDClassifier</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_34">34</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td><td class="diff_next"></td><td class="diff_header" id="to133_34">34</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_35">35</td><td nowrap="nowrap">X&nbsp;=&nbsp;np.random.randn(1000,&nbsp;20);&nbsp;y&nbsp;=&nbsp;(X[:,0]&nbsp;&gt;&nbsp;0).astype(int)</td><td class="diff_next"></td><td class="diff_header" id="to133_35">35</td><td nowrap="nowrap">X&nbsp;=&nbsp;np.random.randn(1000,&nbsp;20);&nbsp;y&nbsp;=&nbsp;(X[:,0]&nbsp;&gt;&nbsp;0).astype(int)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_36">36</td><td nowrap="nowrap">clf&nbsp;=&nbsp;SGDClassifier(loss='log_loss')</td><td class="diff_next"></td><td class="diff_header" id="to133_36">36</td><td nowrap="nowrap">clf&nbsp;=&nbsp;SGDClassifier(loss='log_loss')</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_37">37</td><td nowrap="nowrap">for&nbsp;i&nbsp;in&nbsp;range(5):</td><td class="diff_next"></td><td class="diff_header" id="to133_37">37</td><td nowrap="nowrap">for&nbsp;i&nbsp;in&nbsp;range(5):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_38">38</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;sl&nbsp;=&nbsp;slice(i*200,&nbsp;(i+1)*200)</td><td class="diff_next"></td><td class="diff_header" id="to133_38">38</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;sl&nbsp;=&nbsp;slice(i*200,&nbsp;(i+1)*200)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_39">39</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;clf.partial_fit(X[sl],&nbsp;y[sl],&nbsp;classes=[0,1])</td><td class="diff_next"></td><td class="diff_header" id="to133_39">39</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;clf.partial_fit(X[sl],&nbsp;y[sl],&nbsp;classes=[0,1])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_40">40</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;joblib.dump(clf,&nbsp;f'ckpt/sgd_{i}.joblib',&nbsp;compress=3)</td><td class="diff_next"></td><td class="diff_header" id="to133_40">40</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;joblib.dump(clf,&nbsp;f'ckpt/sgd_{i}.joblib',&nbsp;compress=3)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_41">41</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to133_41">41</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

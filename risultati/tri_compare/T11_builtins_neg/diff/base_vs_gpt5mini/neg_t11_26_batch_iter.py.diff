@@ -1,0 +1,11 @@
+--- BASE/neg_t11_26_batch_iter.py
++++ gpt5mini/neg_t11_26_batch_iter.py
+@@ -1,7 +1,5 @@
+ # 26) Batch iterator semplice
+ data = list(range(10))
+ bs = 4
+-batches = []
+-for i in range(0, len(data), bs):
+-    batches.append(data[i:i+bs])
++batches = [data[i:i+bs] for i in range(0, len(data), bs)]
+ print(batches)

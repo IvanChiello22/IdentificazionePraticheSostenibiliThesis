@@ -1,0 +1,13 @@
+--- BASE/t11_42_snippet.py
++++ gpt5mini/t11_42_snippet.py
+@@ -1,6 +1,7 @@
+ # T11 POS — snippet 42
+ import numpy as np
+-x=np.random.randn(20000);k=np.hanning(512)
+-n=len(x)+len(k)-1;nfft=1<<((n-1).bit_length())
+-y=np.fft.irfft(np.fft.rfft(x,nfft)*np.fft.rfft(k,nfft),nfft)[:n]
++x = np.random.randn(20000)
++k = np.hanning(512)
++n = len(x) + len(k) - 1
++y = np.convolve(x, k, mode='full')[:n]
+ print(y.shape)

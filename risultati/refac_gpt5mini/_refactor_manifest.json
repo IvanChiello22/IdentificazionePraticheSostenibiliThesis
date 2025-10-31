@@ -1,0 +1,9 @@
+{
+  "src": "corpo",
+  "dst": "risultati\\refac_gpt5mini",
+  "count": 399,
+  "timestamp": 1759590994.0864952,
+  "mode": "llm",
+  "pattern": ".py",
+  "model": "gpt-5-mini"
+}

@@ -1,0 +1,31 @@
+# T19 POS (energy/efficiency-aware checkpointing) — snippet 4
+# T19 POS — PyTorch: salvataggio asincrono (thread) per ridurre stall di training
+import torch, torch.nn as nn, torch.optim as optim, os, threading
+import torch.nn.utils.prune as prune
+torch.manual_seed(0)
+net = nn.Sequential(nn.Linear(10,20), nn.ReLU(), nn.Linear(20,2))
+opt = optim.Adam(net.parameters(), 1e-3); os.makedirs('ckpt', exist_ok=True)
+
+# Optional energy-aware pruning (disabled by default to preserve original behavior).
+# Enable via environment variable ENABLE_PRUNING=1 and optionally set PRUNE_AMT (e.g. 0.2).
+if os.getenv('ENABLE_PRUNING', '0') in ('1', 'true', 'True'):
+    try:
+        prune_amount = float(os.getenv('PRUNE_AMT', '0.2'))
+    except Exception:
+        prune_amount = 0.2
+    linear_layers = [m for m in net.modules() if isinstance(m, nn.Linear)]
+    if linear_layers:
+        linear_layers.sort(key=lambda m: sum(p.numel() for p in m.parameters()), reverse=True)
+        target_layer = linear_layers[0]
+        prune.l1_unstructured(target_layer, name='weight', amount=prune_amount)
+
+def save_async(state, path):
+    t = threading.Thread(target=torch.save, args=(state, path), daemon=True); t.start()
+
+for e in range(1,7):
+    x = torch.randn(64,10); y = torch.randint(0,2,(64,))
+    loss = nn.CrossEntropyLoss()(net(x), y)
+    opt.zero_grad(); loss.backward(); opt.step()
+    if e % 2 == 0:
+        save_async({'e':e,'m':net.state_dict(), 'opt': opt.state_dict()}, f'ckpt/e{e:02d}.pt')
+print('done')

@@ -1,0 +1,26 @@
+--- BASE/neg_t15_33_embedding_tf.py
++++ gpt4omini/neg_t15_33_embedding_tf.py
+@@ -1,8 +1,20 @@
+-# 33) Embedding + media — T15 NEGATIVO: nessuna riduzione dimensionale
+ import tensorflow as tf
+-from tensorflow import keras; from tensorflow.keras import layers
++from tensorflow import keras
++from tensorflow.keras import layers
++
+ inp = keras.Input(shape=(10,))
+ x = layers.Embedding(100, 32)(inp)
+ x = tf.reduce_mean(x, axis=1)
+ out = layers.Dense(5)(x)
+-model = keras.Model(inp,out); print(model.count_params())
++model = keras.Model(inp, out)
++
++# Aggiunta di checkpoint per il salvataggio del modello durante l'addestramento
++checkpoint_callback = keras.callbacks.ModelCheckpoint(
++    filepath='model_checkpoint.h5',
++    save_weights_only=True,
++    monitor='loss',
++    mode='min',
++    save_best_only=True
++)
++
++print(model.count_params())

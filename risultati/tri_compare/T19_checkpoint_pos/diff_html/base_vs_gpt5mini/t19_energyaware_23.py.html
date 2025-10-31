@@ -1,0 +1,60 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to67__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/t19_energyaware_23.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/t19_energyaware_23.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next"><a href="#difflib_chg_to67__top">t</a></td><td class="diff_header" id="from67_1">1</td><td nowrap="nowrap">#&nbsp;T19&nbsp;POS&nbsp;(energy/efficiency-aware&nbsp;checkpointing)&nbsp;—&nbsp;snippet&nbsp;23</td><td class="diff_next"><a href="#difflib_chg_to67__top">t</a></td><td class="diff_header" id="to67_1">1</td><td nowrap="nowrap">#&nbsp;T19&nbsp;POS&nbsp;(energy/efficiency-aware&nbsp;checkpointing)&nbsp;—&nbsp;snippet&nbsp;23</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from67_2">2</td><td nowrap="nowrap">#&nbsp;T19&nbsp;POS&nbsp;—&nbsp;Keras:&nbsp;ModelCheckpoint&nbsp;save_best_only&nbsp;+&nbsp;save_weights_only&nbsp;(meno&nbsp;I/O)</td><td class="diff_next"></td><td class="diff_header" id="to67_2">2</td><td nowrap="nowrap">#&nbsp;T19&nbsp;POS&nbsp;—&nbsp;Keras:&nbsp;ModelCheckpoint&nbsp;save_best_only&nbsp;+&nbsp;save_weights_only&nbsp;(meno&nbsp;I/O)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from67_3">3</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf,&nbsp;numpy&nbsp;as&nbsp;np,&nbsp;os</td><td class="diff_next"></td><td class="diff_header" id="to67_3">3</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf,&nbsp;numpy&nbsp;as&nbsp;np,&nbsp;os</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from67_4">4</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</td><td class="diff_next"></td><td class="diff_header" id="to67_4">4</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from67_5">5</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td><td class="diff_next"></td><td class="diff_header" id="to67_5">5</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from67_6">6</td><td nowrap="nowrap">m&nbsp;=&nbsp;keras.Sequential([layers.Dense(64,&nbsp;activation='relu',&nbsp;input_shape=(20,)),&nbsp;layers.Dense(3)])</td><td class="diff_next"></td><td class="diff_header" id="to67_6">6</td><td nowrap="nowrap">m&nbsp;=&nbsp;keras.Sequential([layers.Dense(64,&nbsp;activation='relu',&nbsp;input_shape=(20,)),&nbsp;layers.Dense(3)])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from67_7">7</td><td nowrap="nowrap">m.compile(optimizer='adam',&nbsp;loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))</td><td class="diff_next"></td><td class="diff_header" id="to67_7">7</td><td nowrap="nowrap">m.compile(optimizer='adam',&nbsp;loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from67_8">8</td><td nowrap="nowrap">cb&nbsp;=&nbsp;keras.callbacks.ModelCheckpoint('ckpt/best.weights.h5',&nbsp;monitor='loss',&nbsp;save_best_only=True,&nbsp;save_weights_only=True</td><td class="diff_next"></td><td class="diff_header" id="to67_8">8</td><td nowrap="nowrap">cb&nbsp;=&nbsp;keras.callbacks.ModelCheckpoint('ckpt/best.weights.h5',&nbsp;monitor='loss',&nbsp;save_best_only=True,&nbsp;save_weights_only=True</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap">,&nbsp;mode='min')</td><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap">,&nbsp;mode='min')</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from67_9">9</td><td nowrap="nowrap">x&nbsp;=&nbsp;np.random.randn(256,20).astype('float32');&nbsp;y&nbsp;=&nbsp;np.random.randint(0,3,(256,))</td><td class="diff_next"></td><td class="diff_header" id="to67_9">9</td><td nowrap="nowrap">x&nbsp;=&nbsp;np.random.randn(256,20).astype('float32');&nbsp;y&nbsp;=&nbsp;np.random.randint(0,3,(256,))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from67_10">10</td><td nowrap="nowrap">m.fit(x,y,epochs=3,batch_size=64,callbacks=[cb],verbose=0);&nbsp;print('done')</td><td class="diff_next"></td><td class="diff_header" id="to67_10">10</td><td nowrap="nowrap">m.fit(x,y,epochs=3,batch_size=64,callbacks=[cb],verbose=0);&nbsp;print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

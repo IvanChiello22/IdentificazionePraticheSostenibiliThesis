@@ -1,0 +1,19 @@
+import numpy as np
+from scipy.signal import convolve2d, fftconvolve
+
+def _convolve2d_auto(img, kernel, mode='same', boundary='symm', fft_threshold=1e7):
+    """
+    Selects the most appropriate 2D convolution implementation:
+    - For small-to-moderate sizes, use convolve2d with explicit boundary handling.
+    - For very large problems, prefer FFT-based convolution for energy/time efficiency.
+    This wrapper preserves the original interface and defaults.
+    """
+    img = np.asarray(img)
+    kernel = np.asarray(kernel)
+    if img.size * kernel.size >= fft_threshold:
+        return fftconvolve(img, kernel, mode=mode)
+    return convolve2d(img, kernel, mode=mode, boundary=boundary)
+
+img=np.random.randn(512,512);sobel_x=np.array([[1,0,-1],[2,0,-2],[1,0,-1]])
+gx=_convolve2d_auto(img,sobel_x,mode='same',boundary='symm')
+print(gx.shape)

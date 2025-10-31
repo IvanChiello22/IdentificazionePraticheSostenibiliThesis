@@ -1,0 +1,14 @@
+--- BASE/neg_t11_36_early_stopping.py
++++ gpt4omini/neg_t11_36_early_stopping.py
+@@ -1,4 +1,3 @@
+-# 36) Early-stopping manuale (val loss fittizia)
+ best = None
+ patience = 3
+ wait = 0
+@@ -10,6 +9,5 @@
+     else:
+         wait += 1
+         if wait >= patience:
+-            # stop
+             break
+ print("stopped_at_epoch", e)

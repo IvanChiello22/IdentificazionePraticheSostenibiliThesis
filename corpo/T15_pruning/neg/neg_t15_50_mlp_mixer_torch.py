@@ -1,0 +1,12 @@
+# 50) MLP-Mixer mini — T15 NEGATIVO: nessuna sparsificazione/pruning
+import torch, torch.nn as nn
+class Mixer(nn.Module):
+    def __init__(self, tokens=16, dims=32):
+        super().__init__()
+        self.token_mlp = nn.Sequential(nn.Linear(tokens, tokens*2), nn.GELU(), nn.Linear(tokens*2, tokens))
+        self.channel_mlp = nn.Sequential(nn.Linear(dims, dims*2), nn.GELU(), nn.Linear(dims*2, dims))
+    def forward(self, x):  # x: B,T,D
+        y = x + self.token_mlp(x.transpose(1,2)).transpose(1,2)
+        z = y + self.channel_mlp(y)
+        return z
+x = torch.randn(2,16,32); print(Mixer()(x).shape)

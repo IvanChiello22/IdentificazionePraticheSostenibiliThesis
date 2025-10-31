@@ -1,0 +1,80 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to144__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t11_49_kmeans_one_iter.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/neg_t11_49_kmeans_one_iter.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to144__0"><a href="#difflib_chg_to144__1">n</a></td><td class="diff_header" id="from144_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;49)&nbsp;K-means:&nbsp;una&nbsp;iterazione&nbsp;(assegnazione&nbsp;+&nbsp;nuovi&nbsp;centroidi)</span></td><td class="diff_next"><a href="#difflib_chg_to144__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from144_2">2</td><td nowrap="nowrap">points&nbsp;=&nbsp;[(1,2),(1,4),(1,0),(10,2),(10,4),(10,0)]</td><td class="diff_next"></td><td class="diff_header" id="to144_1">1</td><td nowrap="nowrap">points&nbsp;=&nbsp;[(1,2),(1,4),(1,0),(10,2),(10,4),(10,0)]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from144_3">3</td><td nowrap="nowrap">centroids&nbsp;=&nbsp;[(1,2),(10,2)]</td><td class="diff_next"></td><td class="diff_header" id="to144_2">2</td><td nowrap="nowrap">centroids&nbsp;=&nbsp;[(1,2),(10,2)]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from144_4">4</td><td nowrap="nowrap">k&nbsp;=&nbsp;len(centroids)</td><td class="diff_next"></td><td class="diff_header" id="to144_3">3</td><td nowrap="nowrap">k&nbsp;=&nbsp;len(centroids)</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to144__1"></td><td class="diff_header" id="from144_5">5</td><td nowrap="nowrap">assign&nbsp;=&nbsp;[0]*len(points)</td><td class="diff_next"></td><td class="diff_header" id="to144_4">4</td><td nowrap="nowrap">assign&nbsp;=&nbsp;[0]*len(points)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from144_6">6</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to144_5">5</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to144__2"></td><td class="diff_header" id="from144_7">7</td><td nowrap="nowrap">#&nbsp;Assegnazione</td><td class="diff_next"></td><td class="diff_header" id="to144_6">6</td><td nowrap="nowrap">#&nbsp;Assegnazione</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from144_8">8</td><td nowrap="nowrap">for&nbsp;i,&nbsp;p&nbsp;in&nbsp;enumerate(points):</td><td class="diff_next"></td><td class="diff_header" id="to144_7">7</td><td nowrap="nowrap">for&nbsp;i,&nbsp;p&nbsp;in&nbsp;enumerate(points):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from144_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;best_c&nbsp;=&nbsp;0</td><td class="diff_next"></td><td class="diff_header" id="to144_8">8</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;best_c&nbsp;=&nbsp;0</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to144__3"><a href="#difflib_chg_to144__2">n</a></td><td class="diff_header" id="from144_10">10</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;best_d&nbsp;=&nbsp;None</span></td><td class="diff_next"><a href="#difflib_chg_to144__2">n</a></td><td class="diff_header" id="to144_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;best_d&nbsp;=&nbsp;float('inf')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from144_11">11</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;c_idx,&nbsp;c&nbsp;in&nbsp;enumerate(centroids):</td><td class="diff_next"></td><td class="diff_header" id="to144_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;c_idx,&nbsp;c&nbsp;in&nbsp;enumerate(centroids):</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to144__3">n</a></td><td class="diff_header" id="from144_12">12</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dx&nbsp;=&nbsp;p[0]-c[0];&nbsp;dy&nbsp;=&nbsp;p[1]-c[1]</span></td><td class="diff_next"><a href="#difflib_chg_to144__3">n</a></td><td class="diff_header" id="to144_11">11</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dx&nbsp;=&nbsp;p[0]-c[0]</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to144_12">12</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dy&nbsp;=&nbsp;p[1]-c[1]</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from144_13">13</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;dx*dx&nbsp;+&nbsp;dy*dy</td><td class="diff_next"></td><td class="diff_header" id="to144_13">13</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;dx*dx&nbsp;+&nbsp;dy*dy</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to144__4">n</a></td><td class="diff_header" id="from144_14">14</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;best_d&nbsp;is&nbsp;None&nbsp;or&nbsp;d&nbsp;&lt;&nbsp;best_d:</span></td><td class="diff_next"><a href="#difflib_chg_to144__4">n</a></td><td class="diff_header" id="to144_14">14</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;d&nbsp;&lt;&nbsp;best_d:</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to144__4"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to144_15">15</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;best_d&nbsp;=&nbsp;d</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from144_15">15</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="diff_sub">&nbsp;best_d&nbsp;=&nbsp;d;</span>&nbsp;best_c&nbsp;=&nbsp;c_idx</td><td class="diff_next"></td><td class="diff_header" id="to144_16">16</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;best_c&nbsp;=&nbsp;c_idx</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to144__5"></td><td class="diff_header" id="from144_16">16</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;assign[i]&nbsp;=&nbsp;best_c</td><td class="diff_next"></td><td class="diff_header" id="to144_17">17</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;assign[i]&nbsp;=&nbsp;best_c</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from144_17">17</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to144_18">18</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to144__6"></td><td class="diff_header" id="from144_18">18</td><td nowrap="nowrap">#&nbsp;Ricalcolo&nbsp;centroidi</td><td class="diff_next"></td><td class="diff_header" id="to144_19">19</td><td nowrap="nowrap">#&nbsp;Ricalcolo&nbsp;centroidi</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to144__5">n</a></td><td class="diff_header" id="from144_19">19</td><td nowrap="nowrap">new_centroids&nbsp;=&nbsp;[(0.0,0.0)&nbsp;for&nbsp;_&nbsp;in&nbsp;range(k)]</td><td class="diff_next"><a href="#difflib_chg_to144__5">n</a></td><td class="diff_header" id="to144_20">20</td><td nowrap="nowrap">new_centroids&nbsp;=&nbsp;[(0.0,<span class="diff_add">&nbsp;</span>0.0)&nbsp;for&nbsp;_&nbsp;in&nbsp;range(k)]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from144_20">20</td><td nowrap="nowrap">counts&nbsp;=&nbsp;[0]*k</td><td class="diff_next"></td><td class="diff_header" id="to144_21">21</td><td nowrap="nowrap">counts&nbsp;=&nbsp;[0]*k</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to144__6">n</a></td><td class="diff_header" id="from144_21">21</td><td nowrap="nowrap">for&nbsp;(px,py),&nbsp;a&nbsp;in&nbsp;zip(points,&nbsp;assign):</td><td class="diff_next"><a href="#difflib_chg_to144__6">n</a></td><td class="diff_header" id="to144_22">22</td><td nowrap="nowrap">for&nbsp;(px,<span class="diff_add">&nbsp;</span>py),&nbsp;a&nbsp;in&nbsp;zip(points,&nbsp;assign):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from144_22">22</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;cx,&nbsp;cy&nbsp;=&nbsp;new_centroids[a]</td><td class="diff_next"></td><td class="diff_header" id="to144_23">23</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;cx,&nbsp;cy&nbsp;=&nbsp;new_centroids[a]</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to144__7"><a href="#difflib_chg_to144__7">n</a></td><td class="diff_header" id="from144_23">23</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;new_centroids[a]&nbsp;=&nbsp;(cx+px,&nbsp;cy+py)</td><td class="diff_next"><a href="#difflib_chg_to144__7">n</a></td><td class="diff_header" id="to144_24">24</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;new_centroids[a]&nbsp;=&nbsp;(cx<span class="diff_add">&nbsp;</span>+<span class="diff_add">&nbsp;</span>px,&nbsp;cy<span class="diff_add">&nbsp;</span>+<span class="diff_add">&nbsp;</span>py)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from144_24">24</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;counts[a]&nbsp;+=&nbsp;1</td><td class="diff_next"></td><td class="diff_header" id="to144_25">25</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;counts[a]&nbsp;+=&nbsp;1</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from144_25">25</td><td nowrap="nowrap">for&nbsp;i&nbsp;in&nbsp;range(k):</td><td class="diff_next"></td><td class="diff_header" id="to144_26">26</td><td nowrap="nowrap">for&nbsp;i&nbsp;in&nbsp;range(k):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from144_26">26</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;counts[i]&nbsp;&gt;&nbsp;0:</td><td class="diff_next"></td><td class="diff_header" id="to144_27">27</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;counts[i]&nbsp;&gt;&nbsp;0:</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from144_27">27</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cx,&nbsp;cy&nbsp;=&nbsp;new_centroids[i]</td><td class="diff_next"></td><td class="diff_header" id="to144_28">28</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cx,&nbsp;cy&nbsp;=&nbsp;new_centroids[i]</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to144__top">t</a></td><td class="diff_header" id="from144_28">28</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new_centroids[i]&nbsp;=&nbsp;(cx/counts[i],&nbsp;cy/counts[i])</td><td class="diff_next"><a href="#difflib_chg_to144__top">t</a></td><td class="diff_header" id="to144_29">29</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new_centroids[i]&nbsp;=&nbsp;(cx<span class="diff_add">&nbsp;</span>/<span class="diff_add">&nbsp;</span>counts[i],&nbsp;cy<span class="diff_add">&nbsp;</span>/<span class="diff_add">&nbsp;</span>counts[i])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from144_29">29</td><td nowrap="nowrap">print(assign,&nbsp;new_centroids)</td><td class="diff_next"></td><td class="diff_header" id="to144_30">30</td><td nowrap="nowrap">print(assign,&nbsp;new_centroids)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

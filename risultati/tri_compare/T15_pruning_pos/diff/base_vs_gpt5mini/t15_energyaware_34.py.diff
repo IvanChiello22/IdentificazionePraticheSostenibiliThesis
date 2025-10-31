@@ -1,0 +1,20 @@
+--- BASE/t15_energyaware_34.py
++++ gpt5mini/t15_energyaware_34.py
+@@ -1,5 +1,6 @@
+ # T15 POS — Energy-aware pruning (PyTorch): selezione canali input (dim=1) pesata per costo memoria attivazioni
+ # Proxy energia = FLOPs + bytes attivazioni (H*W*channel). Pesi poco salienti con alto costo vengono rimossi per primi.
++import io
+ import torch, torch.nn as nn, torch.nn.functional as F
+ 
+ def conv_energy_per_in_channel(conv, in_shape):
+@@ -17,6 +18,10 @@
+ 
+ def prune_conv_in_channels_energy(conv: nn.Conv2d, keep_ratio: float, in_shape=(1,16,32,32)):
+     with torch.no_grad():
++        # checkpoint: salva lo stato del layer prima di modifiche per evitare perdita di informazioni
++        buf = io.BytesIO()
++        torch.save(conv.state_dict(), buf)
++        buf.seek(0)
+         energy = conv_energy_per_in_channel(conv, in_shape)
+         W = conv.weight.detach().abs()  # [Cout,Cin,kh,kw]
+         importances = W.mean(dim=(0,2,3))  # per canale input

@@ -1,0 +1,7 @@
+--- BASE/t11_32_snippet.py
++++ gpt5mini/t11_32_snippet.py
+@@ -4,3 +4,4 @@
+ D2=(A*A).sum(1,keepdims=True)+(B*B).sum(1)[None,:]-2*A@B.T
+ D=np.sqrt(np.maximum(D2,0.0))
+ print(D.shape)
++np.save('D_checkpoint.npy', D)

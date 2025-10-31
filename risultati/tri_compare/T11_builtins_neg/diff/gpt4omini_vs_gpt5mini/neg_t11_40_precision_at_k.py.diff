@@ -1,0 +1,16 @@
+--- gpt4omini/neg_t11_40_precision_at_k.py
++++ gpt5mini/neg_t11_40_precision_at_k.py
+@@ -1,3 +1,4 @@
++# 40) Precision@k (k=2) manual
+ y_true = [2, 0, 1]
+ y_scores = [[0.1, 0.3, 0.6],
+             [0.7, 0.2, 0.1],
+@@ -5,7 +6,7 @@
+ k = 2
+ hits = 0
+ for t, scores in zip(y_true, y_scores):
+-    idxs = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)
++    idxs = [i for i, _ in sorted(enumerate(scores), key=lambda x: x[1], reverse=True)]
+     if t in idxs[:k]:
+         hits += 1
+ prec_at_k = hits / len(y_true)

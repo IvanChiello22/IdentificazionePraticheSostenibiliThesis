@@ -1,0 +1,42 @@
+--- gpt4omini/t19_energyaware_21.py
++++ gpt5mini/t19_energyaware_21.py
+@@ -3,22 +3,24 @@
+ import os
+ import io
+ import zipfile
++import tempfile
+ 
+-def create_model():
+-    return nn.Sequential(nn.Linear(12, 24), nn.ReLU(), nn.Linear(24, 2))
++net = nn.Sequential(nn.Linear(12, 24), nn.ReLU(), nn.Linear(24, 2))
+ 
+-def save_checkpoint(model, filepath):
++def save_compressed_checkpoint(model, ckpt_dir='ckpt', zip_name='model_ckpt.zip', state_name='state.pt'):
++    os.makedirs(ckpt_dir, exist_ok=True)
+     buf = io.BytesIO()
+-    torch.save({'model': model.state_dict()}, buf)
+-    buf.seek(0)
+-    with zipfile.ZipFile(filepath, 'w', zipfile.ZIP_DEFLATED) as zf:
+-        zf.writestr('state.pt', buf.read())
++    try:
++        torch.save({'model': model.state_dict()}, buf)
++        buf.seek(0)
++        fd, tmp_path = tempfile.mkstemp(dir=ckpt_dir, suffix='.tmp')
++        os.close(fd)
++        with zipfile.ZipFile(tmp_path, 'w', zipfile.ZIP_DEFLATED) as zf:
++            zf.writestr(state_name, buf.read())
++        final_path = os.path.join(ckpt_dir, zip_name)
++        os.replace(tmp_path, final_path)
++    finally:
++        buf.close()
+ 
+-def main():
+-    net = create_model()
+-    os.makedirs('ckpt', exist_ok=True)
+-    save_checkpoint(net, 'ckpt/model_ckpt.zip')
+-    print('done')
+-
+-if __name__ == "__main__":
+-    main()
++save_compressed_checkpoint(net)
++print('done')

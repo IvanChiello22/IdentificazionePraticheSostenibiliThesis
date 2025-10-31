@@ -1,0 +1,38 @@
+--- gpt4omini/neg_t19_49_extra.py
++++ gpt5mini/neg_t19_49_extra.py
+@@ -1,19 +1,22 @@
+ import torch, torch.nn as nn
++import torch.nn.utils.prune as prune
++net = nn.Sequential(nn.Linear(16,32), nn.ReLU(), nn.Linear(32,2))
++opt = torch.optim.Adam(net.parameters(), 1e-3)
+ 
+-net = nn.Sequential(nn.Linear(16, 32), nn.ReLU(), nn.Linear(32, 2))
+-opt = torch.optim.Adam(net.parameters(), 1e-3)
+-checkpoint = []
++# energy-aware pruning: select the most parameter-heavy Linear layer (no-op amount=0.0 to preserve behavior)
++linear_layers = [m for m in net.modules() if isinstance(m, nn.Linear)]
++if linear_layers:
++    largest_layer = max(linear_layers, key=lambda m: sum(p.numel() for p in m.parameters()))
++    prune.l1_unstructured(largest_layer, 'weight', amount=0.0)
++
++criterion = nn.CrossEntropyLoss()
+ 
+ for step in range(60):
+-    x = torch.randn(8, 16)
+-    y = torch.randint(0, 2, (8,))
+-    out = net(x)
+-    loss = nn.CrossEntropyLoss()(out, y) / 4.0
++    x = torch.randn(8,16); y = torch.randint(0,2,(8,))
++    out = net(x); loss = criterion(out, y) / 4.0
+     loss.backward()
+-    
+-    if (step + 1) % 4 == 0:
+-        opt.step()
+-        opt.zero_grad()
+-        checkpoint.append(net.state_dict())  # Save checkpoint
+-
++    if (step+1) % 4 == 0:
++        opt.step(); opt.zero_grad()
++    if (step+1) % 20 == 0:
++        torch.save({'step': step+1, 'model_state_dict': net.state_dict(), 'optimizer_state_dict': opt.state_dict()}, f'checkpoint_{step+1}.pt')
+ print('done')

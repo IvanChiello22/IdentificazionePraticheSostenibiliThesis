@@ -1,0 +1,59 @@
+--- BASE/t19_energyaware_20.py
++++ gpt5mini/t19_energyaware_20.py
+@@ -1,15 +1,54 @@
+ # T19 POS (energy/efficiency-aware checkpointing) — snippet 20
+ # T19 POS — PyTorch: salvataggio asincrono (thread) per ridurre stall di training
+-import torch, torch.nn as nn, torch.optim as optim, os, threading
++import os
++import threading
++import torch
++import torch.nn as nn
++import torch.optim as optim
++import torch.nn.utils.prune as prune
++
+ torch.manual_seed(0)
+ net = nn.Sequential(nn.Linear(10,20), nn.ReLU(), nn.Linear(20,2))
+ opt = optim.Adam(net.parameters(), 1e-3); os.makedirs('ckpt', exist_ok=True)
++
+ def save_async(state, path):
+     t = threading.Thread(target=torch.save, args=(state, path), daemon=True); t.start()
++
++def _approx_layer_energy(module):
++    # approximate energy by parameter interactions (MACs) for common layers
++    if isinstance(module, nn.Linear):
++        return int(module.in_features) * int(module.out_features)
++    # default fallback
++    return 0
++
++def energy_aware_prune(model, amount=0.0):
++    """
++    Prune model starting from most energy-intensive layers.
++    amount: fraction of connections to prune in each targeted layer.
++    Default 0.0 -> no-op (preserves behavior). Can be set via PRUNE_AMOUNT env var.
++    """
++    layers = []
++    for name, module in model.named_modules():
++        if hasattr(module, 'weight') and isinstance(module.weight, torch.Tensor):
++            energy = _approx_layer_energy(module)
++            layers.append((energy, name, module))
++    # sort descending by estimated energy
++    layers.sort(reverse=True, key=lambda x: x[0])
++    for energy, name, module in layers:
++        if energy <= 0:
++            continue
++        # use official pruning API; amount=0.0 is allowed and leaves weights intact
++        prune.l1_unstructured(module, name='weight', amount=amount)
++
++# Read pruning amount from env (default 0.0 to preserve original behavior)
++_prune_amount = float(os.environ.get('PRUNE_AMOUNT', '0.0'))
++energy_aware_prune(net, amount=_prune_amount)
++
+ for e in range(1,7):
+     x = torch.randn(64,10); y = torch.randint(0,2,(64,))
+     loss = nn.CrossEntropyLoss()(net(x), y)
+     opt.zero_grad(); loss.backward(); opt.step()
+     if e % 2 == 0:
+-        save_async({'e':e,'m':net.state_dict()}, f'ckpt/e{e:02d}.pt')
++        # include optimizer state to make checkpoints more useful for resuming
++        save_async({'e':e,'m':net.state_dict(), 'opt': opt.state_dict()}, f'ckpt/e{e:02d}.pt')
+ print('done')

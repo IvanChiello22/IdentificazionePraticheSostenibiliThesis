@@ -1,0 +1,61 @@
+--- BASE/t15_energyaware_43.py
++++ gpt5mini/t15_energyaware_43.py
+@@ -1,9 +1,5 @@
+-# T15 POS — Energy-aware global pruning (PyTorch): distribuzione budget per-layer proporzionale a quota FLOPs
+-# Step:
+-# 1) Stima FLOPs per ogni conv su input di riferimento
+-# 2) Assegna keep_ratio layer-specific = base_keep - alpha * (flops_layer / flops_totale)
+-# 3) Applica pruning canali output con score L1/energy
+ import torch, torch.nn as nn, torch.nn.functional as F
++from torch.nn.utils import prune as prune_utils
+ 
+ def conv_flops(conv, in_shape):
+     B,C,H,W = in_shape
+@@ -18,15 +14,19 @@
+ def prune_out_by_score(conv, keep_ratio, in_shape):
+     with torch.no_grad():
+         flops,_ = conv_flops(conv, in_shape)
++        # Compute per-output-channel L1 norms (used for compatibility with original intent).
+         W = conv.weight.detach().abs()
+         l1 = W.view(W.size(0), -1).mean(dim=1)
+-        score = l1 / (flops + 1e-9)
++        # Determine number of channels to keep (at least 1)
+         k = max(1, int(keep_ratio * conv.out_channels))
+-        keep = torch.topk(score, k).indices
+-        mask = torch.zeros(conv.out_channels, dtype=torch.bool); mask[keep]=True
+-        conv.weight = nn.Parameter(conv.weight[mask].clone())
+-        if conv.bias is not None: conv.bias = nn.Parameter(conv.bias[mask].clone())
+-        conv.out_channels = int(mask.sum())
++        amount_to_prune = conv.out_channels - k
++        if amount_to_prune <= 0:
++            return
++        # Use official structured pruning to remove entire output channels (dim=0) by L1-norm
++        prune_utils.ln_structured(conv, name='weight', amount=amount_to_prune, n=1, dim=0)
++        # Make pruning permanent (applies mask)
++        prune_utils.remove(conv, 'weight')
++        # Note: keep conv.out_channels unchanged to preserve compatibility with downstream layers
+ 
+ class CNN(nn.Module):
+     def __init__(self):
+@@ -47,8 +47,20 @@
+ share = flops / flops.sum()
+ base_keep, alpha = 0.85, 0.5
+ keeps = torch.clamp(base_keep - alpha*share, 0.2, 0.95).tolist()
+-for l, keep, ish in zip(layers, keeps, in_shapes):
++
++# Energy-aware pruning: prune starting from most FLOPs-intensive layers
++sorted_indices = torch.argsort(flops, descending=True).tolist()
++
++# Save a checkpoint before pruning to avoid knowledge loss
++torch.save(net.state_dict(), 'checkpoint_before_prune.pth')
++
++for idx in sorted_indices:
++    l = layers[idx]
++    keep = keeps[idx]
++    ish = in_shapes[idx]
+     prune_out_by_score(l, keep, ish)
++    # Save checkpoint after each layer pruning
++    torch.save(net.state_dict(), f'checkpoint_pruned_layer_{idx}.pth')
+ 
+ x = torch.randn(4,3,64,64)
+ print(net(x).shape, [l.out_channels for l in layers], [round(k,2) for k in keeps])

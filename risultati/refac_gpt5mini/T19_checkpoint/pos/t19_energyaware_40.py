@@ -1,0 +1,44 @@
+# T19 POS (energy/efficiency-aware checkpointing) — snippet 40
+# T19 POS — Keras: rotazione checkpoint con custom Callback (limita file salvati)
+import tensorflow as tf, os, glob
+from tensorflow import keras; from tensorflow.keras import layers
+class RotateCKPT(keras.callbacks.Callback):
+    def __init__(self, pattern='ckpt/ep_{epoch:02d}.weights.h5', keep=2, prune_fraction=0.0):
+        super().__init__(); self.pattern=pattern; self.keep=keep; self.prune_fraction=prune_fraction
+    def on_train_begin(self, logs=None):
+        dirpath = os.path.dirname(self.pattern) or 'ckpt'
+        os.makedirs(dirpath, exist_ok=True)
+    def on_epoch_end(self, epoch, logs=None):
+        if getattr(self, 'prune_fraction', 0.0) and self.prune_fraction > 0.0:
+            self._energy_aware_prune(self.prune_fraction)
+        path = self.pattern.format(epoch=epoch+1)
+        self.model.save_weights(path)
+        hist = sorted(glob.glob('ckpt/ep_*.weights.h5'))
+        for f in hist[:-self.keep]: 
+            try: os.remove(f)
+            except OSError: pass
+    def _energy_aware_prune(self, fraction):
+        # Select the most "energy intensive" layer (by number of parameters) and prune a fraction of smallest-magnitude weights.
+        layers_with_weights = [l for l in self.model.layers if l.trainable and getattr(l, 'trainable_weights', [])]
+        if not layers_with_weights: return
+        def param_count(layer):
+            return sum(int(tf.size(w).numpy()) for w in layer.trainable_weights)
+        target_layer = max(layers_with_weights, key=param_count)
+        for w in target_layer.trainable_weights:
+            vals = w.read_value()
+            abs_flat = tf.reshape(tf.abs(vals), [-1])
+            total = int(tf.size(abs_flat).numpy())
+            k = int(total * fraction)
+            if k <= 0: continue
+            # find threshold: kth smallest absolute value via top_k on negated values
+            neg_flat = -abs_flat
+            topk = tf.math.top_k(neg_flat, k=k)
+            threshold = -topk.values[-1]
+            mask = tf.less_equal(tf.abs(vals), threshold)
+            new_vals = tf.where(mask, tf.zeros_like(vals), vals)
+            w.assign(new_vals)
+os.makedirs('ckpt', exist_ok=True)
+m = keras.Sequential([layers.Dense(32, activation='relu', input_shape=(10,)), layers.Dense(2)])
+m.compile(optimizer='sgd', loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))
+m.fit(tf.random.normal([128,10]), tf.random.uniform([128], maxval=2, dtype=tf.int32), epochs=4, batch_size=32, callbacks=[RotateCKPT()], verbose=0)
+print('done')

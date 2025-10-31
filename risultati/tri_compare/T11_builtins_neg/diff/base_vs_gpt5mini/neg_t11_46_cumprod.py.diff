@@ -1,0 +1,15 @@
+--- BASE/neg_t11_46_cumprod.py
++++ gpt5mini/neg_t11_46_cumprod.py
+@@ -1,8 +1,7 @@
+ # 46) Prodotto cumulativo
++from itertools import accumulate
++import operator
++
+ x = [1, 2, 3, 4]
+-y = []
+-p = 1
+-for v in x:
+-    p *= v
+-    y.append(p)
++y = list(accumulate(x, operator.mul))
+ print(y)

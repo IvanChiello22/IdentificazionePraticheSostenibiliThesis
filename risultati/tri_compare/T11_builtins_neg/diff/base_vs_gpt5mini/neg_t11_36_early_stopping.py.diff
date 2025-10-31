@@ -1,0 +1,22 @@
+--- BASE/neg_t11_36_early_stopping.py
++++ gpt5mini/neg_t11_36_early_stopping.py
+@@ -1,4 +1,5 @@
+-# 36) Early-stopping manuale (val loss fittizia)
++import pickle
++
+ best = None
+ patience = 3
+ wait = 0
+@@ -7,9 +8,11 @@
+     if best is None or v < best:
+         best = v
+         wait = 0
++        checkpoint = {"epoch": e, "val_loss": best}
++        with open("checkpoint.pkl", "wb") as f:
++            pickle.dump(checkpoint, f)
+     else:
+         wait += 1
+         if wait >= patience:
+-            # stop
+             break
+ print("stopped_at_epoch", e)

@@ -1,0 +1,56 @@
+# 19) Autoencoder — T15 NEGATIVO: nessun pruning del bottleneck
+import tensorflow as tf
+from tensorflow import keras; from tensorflow.keras import layers
+
+class PrunableDense(layers.Layer):
+    def __init__(self, units, activation=None, pruning_rate=0.0, **kwargs):
+        super().__init__(**kwargs)
+        self.units = units
+        self.activation = keras.activations.get(activation)
+        self.pruning_rate = float(pruning_rate)
+        # keep a standard Dense internally; activation applied in this wrapper to allow mask application
+        self._dense = layers.Dense(units, activation=None)
+
+    def build(self, input_shape):
+        self._dense.build(input_shape)
+        kernel = self._dense.kernel  # established after building the inner dense
+        if self.pruning_rate > 0.0:
+            # compute a static mask based on kernel magnitude (prune smallest weights)
+            flat = tf.reshape(tf.abs(kernel), [-1])
+            total = tf.size(flat)
+            keep_count = tf.cast(tf.math.maximum(1, tf.cast(tf.math.ceil(tf.cast(total, tf.float32) * (1.0 - self.pruning_rate)), tf.int32)), tf.int32)
+            # determine threshold: the smallest magnitude to keep
+            values = tf.math.top_k(flat, k=keep_count).values
+            threshold = values[-1]
+            mask_vals = tf.cast(tf.math.greater_equal(tf.abs(kernel), threshold), kernel.dtype)
+            # create a non-trainable mask variable initialized to computed mask
+            self._mask = self.add_weight(name='mask', shape=kernel.shape, initializer=tf.constant_initializer(mask_vals.numpy()), trainable=False)
+        else:
+            self._mask = None
+        super().build(input_shape)
+
+    def call(self, inputs):
+        if self._mask is None:
+            x = self._dense(inputs)
+        else:
+            # apply mask to kernel before the dense matmul
+            masked_kernel = self._dense.kernel * self._mask
+            x = tf.matmul(inputs, masked_kernel)
+            if self._dense.use_bias:
+                x = x + self._dense.bias
+            if self.activation is not None:
+                x = self.activation(x)
+        return x
+
+# Input and model definition (minimal changes: replace the most param-heavy layers with prunable ones, pruning disabled by default)
+inp = keras.Input(shape=(32,))
+z = PrunableDense(16, activation='relu', pruning_rate=0.0)(inp)
+z = layers.Dense(8, activation='relu')(z)
+x = layers.Dense(16, activation='relu')(z)
+out = PrunableDense(32, pruning_rate=0.0)(x)
+model = keras.Model(inp, out)
+
+# Prepared checkpoint callback for training (sustainable practice: use checkpoints to avoid knowledge loss)
+checkpoint_callback = keras.callbacks.ModelCheckpoint(filepath='autoencoder_checkpoint.h5', save_weights_only=True)
+
+print(sum([w.numpy().size if hasattr(w,'numpy') else w.shape.num_elements() if hasattr(w.shape,'num_elements') else 0 for w in model.weights]))

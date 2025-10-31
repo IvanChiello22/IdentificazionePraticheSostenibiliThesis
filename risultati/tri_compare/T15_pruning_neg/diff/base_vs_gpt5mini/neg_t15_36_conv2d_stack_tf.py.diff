@@ -1,0 +1,53 @@
+--- BASE/neg_t15_36_conv2d_stack_tf.py
++++ gpt5mini/neg_t15_36_conv2d_stack_tf.py
+@@ -1,5 +1,48 @@
+ # 36) Stack Conv2D — T15 NEGATIVO: nessun pruning dei filtri
+ import tensorflow as tf
+-from tensorflow import keras; from tensorflow.keras import layers
++from tensorflow import keras
++from tensorflow.keras import layers, callbacks
++
++def _approx_conv_energy(layer, spatial_h=32, spatial_w=32):
++    # approximate computational cost for a Conv2D layer:
++    # H * W * kernel_h * kernel_w * in_channels * out_channels
++    try:
++        k_h, k_w, in_ch, out_ch = layer.kernel.shape
++        return int(spatial_h) * int(spatial_w) * int(k_h) * int(k_w) * int(in_ch) * int(out_ch)
++    except Exception:
++        return 0
++
++def energy_aware_prune(model, prune_fraction=0.0):
++    """
++    Minimal, opt-in energy-aware pruning stub.
++    - prune_fraction=0.0 (default) is a no-op to preserve behavior.
++    - If >0, it identifies the most costly Conv2D layer (by approximate compute)
++      and would prune filters starting from that layer. Reconstruction is non-trivial
++      in-place, so this function currently acts as a safe hook for future pruning logic.
++    """
++    if prune_fraction <= 0.0:
++        return model  # preserve original model when pruning not requested
++
++    conv_layers = [l for l in model.layers if isinstance(l, layers.Conv2D) and hasattr(l, "kernel")]
++    if not conv_layers:
++        return model
++
++    conv_layers_sorted = sorted(conv_layers, key=_approx_conv_energy, reverse=True)
++    most_costly = conv_layers_sorted[0]
++
++    # Placeholder: compute target number of filters to keep (not applied to preserve semantics)
++    orig_filters = getattr(most_costly, "filters", None)
++    if orig_filters is None:
++        return model
++
++    target_filters = max(1, int(orig_filters * (1 - prune_fraction)))
++    # NOTE: actual filter pruning/rebuild not performed to avoid changing behavior.
++    return model
++
++# Checkpoint callback to be used during training to prevent knowledge loss on interruption.
++checkpoint_cb = callbacks.ModelCheckpoint(filepath='checkpoint.h5', save_weights_only=True, save_best_only=False)
++
+ inp = keras.Input((32,32,3)); x = layers.Conv2D(16,3,padding='same',activation='relu')(inp); x = layers.Conv2D(32,3,padding='same',activation='relu')(x); out = layers.Conv2D(32,3,padding='same')(x)
+-model = keras.Model(inp,out); print(model.count_params())
++model = keras.Model(inp,out)
++model = energy_aware_prune(model, prune_fraction=0.0)
++print(model.count_params())

@@ -1,0 +1,23 @@
+--- gpt4omini/neg_t19_43_misc.py
++++ gpt5mini/neg_t19_43_misc.py
+@@ -1,6 +1,18 @@
++# 43) XGBoost — T19 NEGATIVO: train senza bst.save_model
+ import xgboost as xgb, numpy as np
+ dtrain = xgb.DMatrix(np.random.randn(200,10), label=np.random.randint(0,2,(200,)))
+ params = {'objective':'binary:logistic','max_depth':3,'eta':0.1}
+-bst = xgb.train(params, dtrain, num_boost_round=5)
+-bst.save_model('model.xgb')
++
++class CheckpointCallback(xgb.callback.TrainingCallback):
++    def __init__(self, filepath='xgb_checkpoint.model', period=1):
++        self.filepath = filepath
++        self.period = period
++
++    def after_iteration(self, env):
++        # save a checkpoint every `period` iterations to avoid knowledge loss on interruption
++        if (env.iteration + 1) % self.period == 0:
++            env.model.save_model(self.filepath)
++        return False  # return True to stop training
++
++bst = xgb.train(params, dtrain, num_boost_round=5, callbacks=[CheckpointCallback('checkpoint.model', period=1)])
+ print('done')

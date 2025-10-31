@@ -1,0 +1,26 @@
+--- BASE/t15_energyaware_24.py
++++ gpt5mini/t15_energyaware_24.py
+@@ -31,11 +31,19 @@
+     score = imp/(energy+1e-9)
+     k = tf.maximum(1, tf.cast(tf.round(keep_ratio*tf.cast(H, tf.float32)), tf.int32))
+     keep = tf.argsort(score, direction='DESCENDING')[:k]
+-    # Aggiorna kernel o crea maschera (dimostrativo: mantieni prime k*dk colonne)
+-    new_in = k*dk
+-    Wnew = Wout[:, :new_in]
+-    layer.o.kernel.assign(Wnew)
++    # Aggiorna kernel applicando una maschera (demostrativo: mantieni prime k*dk colonne)
++    new_in = k * dk
++    new_in_int = int(new_in.numpy())
++    D = layer.d_model
++    ones_part = tf.ones([D, new_in_int], dtype=Wout.dtype)
++    zeros_part = tf.zeros([D, D - new_in_int], dtype=Wout.dtype)
++    mask = tf.concat([ones_part, zeros_part], axis=1)
++    Wmasked = Wout * mask
++    layer.o.kernel.assign(Wmasked)
+     layer.num_heads = k.numpy()
++    # Checkpoint per evitare perdita di conoscenza in caso di terminazione prematura
++    ckpt = tf.train.Checkpoint(o_kernel=layer.o.kernel)
++    ckpt.save('./prune_ckpt')
+ 
+ x = tf.random.normal([2,64,64])
+ mha = SimpleMHA(64,4)

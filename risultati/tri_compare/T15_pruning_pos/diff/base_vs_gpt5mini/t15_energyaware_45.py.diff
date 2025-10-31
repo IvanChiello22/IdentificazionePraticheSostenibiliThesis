@@ -1,0 +1,66 @@
+--- BASE/t15_energyaware_45.py
++++ gpt5mini/t15_energyaware_45.py
+@@ -1,5 +1,3 @@
+-# T15 POS — Energy-aware pruning (PyTorch): attention heads pruning in MHA con criterio FLOPs per head
+-# Stima costo per head ~ T*T*d_k (QK)+ T*T (softmax) + T*d_v (AV); rimuove head a minore score (importance/energy).
+ import torch, torch.nn as nn, torch.nn.functional as F
+ 
+ class MHA(nn.Module):
+@@ -26,6 +24,11 @@
+     return T*T*dk + T*T + T*dv
+ 
+ def prune_heads_energy(module: MHA, keep_ratio=0.5, T=64):
++    # checkpoint before pruning to avoid knowledge loss
++    try:
++        torch.save(module.state_dict(), 'prune_checkpoint_before.pth')
++    except Exception:
++        pass
+     with torch.no_grad():
+         H = module.nhead; dk = module.dk
+         energy = torch.tensor([energy_per_head(T, dk)]*H, dtype=torch.float32)
+@@ -37,26 +40,34 @@
+         keep = torch.topk(score, k).indices.tolist()
+         # Rimappa parametri riducendo teste (semplificato: mask sui blocchi in out + qkv)
+         def mask_qkv(linear, keep, dk, H):
+-            W = linear.weight.data  # [3D, D]
++            W = linear.weight.data  # [3D, D_in]
+             D = dk*H
+-            # Mantieni blocchi per head su out-dim
+-            idx_keep = []
++            # build row indices to keep for each of the 3 parts
++            idx_list = []
+             for part in range(3):
+-                base = part*D
++                base = part * D
+                 for h in keep:
+-                    idx_keep.extend(range(base + h*dk, base + (h+1)*dk))
+-            linear.weight = nn.Parameter(W[idx_keep, :].clone())
+-            linear.out_features = len(idx_keep)
++                    start = base + h*dk
++                    idx_list.extend(range(start, start + dk))
++            idx = torch.tensor(idx_list, dtype=torch.long)
++            new_W = W.index_select(0, idx).clone()
++            linear.weight = nn.Parameter(new_W)
++            linear.out_features = new_W.size(0)
+             if linear.bias is not None:
+-                b = linear.bias.data
+-                linear.bias = nn.Parameter(b[idx_keep].clone())
++                linear.bias = nn.Parameter(linear.bias.data.index_select(0, idx).clone())
+         mask_qkv(module.qkv, keep, dk, H)
+         # Output proiezione: input dimensione ridotta da H*dk -> k*dk
+-        W = module.o.weight.data  # [D, D]
++        W = module.o.weight.data  # [D_out, D_in]
+         Dold = W.size(1); Dnew = dk*len(keep)
+         module.o.weight = nn.Parameter(W[:, :Dnew].clone())
+-        if module.o.bias is not None: module.o.bias = nn.Parameter(module.o.bias.data.clone())
++        if module.o.bias is not None:
++            module.o.bias = nn.Parameter(module.o.bias.data.clone())
+         module.nhead = len(keep)
++    # checkpoint after pruning
++    try:
++        torch.save(module.state_dict(), 'prune_checkpoint_after.pth')
++    except Exception:
++        pass
+ 
+ mha = MHA(64, 4)
+ prune_heads_energy(mha, keep_ratio=0.5, T=64)

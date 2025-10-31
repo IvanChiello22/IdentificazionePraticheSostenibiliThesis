@@ -1,0 +1,27 @@
+--- BASE/snippet_044_t11_cosine_batched__t15_energy_conv_global_hooks__t19_async_threadpool.py
++++ gpt5mini/snippet_044_t11_cosine_batched__t15_energy_conv_global_hooks__t19_async_threadpool.py
+@@ -21,15 +21,21 @@
+     def forward(self,x): return self.c3(F.relu(self.c2(F.relu(self.c1(x)))))
+ net = Net(); net.c1.register_forward_hook(hook('c1')); net.c2.register_forward_hook(hook('c2')); net.c3.register_forward_hook(hook('c3'))
+ x = torch.randn(4,3,64,64); _ = net(x)
+-energy = {k: v for k,v in stats.items()}
++# map energy stats to module objects for correct attribution
++energy = {net.c1: stats.get('c1', 0), net.c2: stats.get('c2', 0), net.c3: stats.get('c3', 0)}
+ def prune_out(conv, keep_ratio):
+     with torch.no_grad():
+         imp = conv.weight.detach().abs().view(conv.out_channels, -1).mean(1)
+-        e = torch.tensor(float(energy.get(conv.__class__.__name__, 1.0)))
++        e = torch.tensor(float(energy.get(conv, 1.0)))
+         score = imp/(e+1e-9); k=max(1,int(keep_ratio*conv.out_channels))
+         keep = torch.topk(score,k).indices
+         conv.weight = nn.Parameter(conv.weight[keep].clone()); conv.out_channels = k
+-prune_out(net.c2, 0.7); print(net.c2.out_channels)
++# prune starting from the most energy intensive layer
++convs = [net.c1, net.c2, net.c3]
++sorted_convs = sorted(convs, key=lambda m: energy.get(m, 0), reverse=True)
++for conv in sorted_convs:
++    prune_out(conv, 0.7)
++print(net.c2.out_channels)
+ 
+ # T19 — Threaded async save using concurrent.futures
+ import torch, torch.nn as nn, os

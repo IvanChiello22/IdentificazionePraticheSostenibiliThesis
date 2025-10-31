@@ -1,0 +1,17 @@
+--- BASE/neg_t11_03_variance.py
++++ gpt4omini/neg_t11_03_variance.py
+@@ -1,12 +1,4 @@
+-# 3) Varianza (senza librerie)
+ data = [2.0, 4.0, 4.0, 4.0, 5.0, 5.0, 7.0, 9.0]
+-s = 0.0
+-for x in data:
+-    s += x
+-m = s / len(data)
+-var = 0.0
+-for x in data:
+-    diff = x - m
+-    var += diff * diff
+-var /= len(data)
++m = sum(data) / len(data)
++var = sum((x - m) ** 2 for x in data) / len(data)
+ print(var)

@@ -1,0 +1,33 @@
+--- BASE/t15_energyaware_22.py
++++ gpt5mini/t15_energyaware_22.py
+@@ -38,8 +38,8 @@
+         B,C,H,W = in_shape
+         kh,kw = conv.kernel_size; Ho,Wo = ho_wo(H,W,kh,conv.padding[0],conv.stride[0],conv.dilation[0])
+         energy = Ho*Wo*conv.in_channels*kh*kw
+-        W = conv.weight.detach().abs()
+-        l1 = W.view(W.size(0), -1).mean(1)
++        Wabs = conv.weight.detach().abs()
++        l1 = Wabs.view(Wabs.size(0), -1).mean(1)
+         score = l1 / (energy + 1e-9)
+         k = max(1, int(keep_ratio*conv.out_channels))
+         keep = torch.topk(score, k).indices
+@@ -51,5 +51,18 @@
+ layers = [net.c1, net.c2, net.c3]
+ in_shapes = [(1,3,64,64), (1,16,64,64), (1,32,32,32)]
+ keeps = energy_splits(layers, in_shapes, target_sparsity=0.5, keep_floor=0.3)
+-for l, k, ish in zip(layers, keeps, in_shapes): prune_out(l, k, ish)
++
++# Prune starting from the most energy-intensive layer; keep checkpoints before/after each pruning step
++energies = torch.tensor([layer_energy(l, ish) for l, ish in zip(layers, in_shapes)], dtype=torch.float32)
++order = torch.argsort(energies, descending=True).tolist()
++
++checkpoints = []
++# initial checkpoint
++checkpoints.append({name: tensor.clone() for name, tensor in net.state_dict().items()})
++
++for idx in order:
++    prune_out(layers[idx], keeps[idx], in_shapes[idx])
++    # checkpoint after this pruning step
++    checkpoints.append({name: tensor.clone() for name, tensor in net.state_dict().items()})
++
+ x = torch.randn(2,3,64,64); print(net(x).shape, [l.out_channels for l in layers], [round(k,2) for k in keeps])

@@ -1,0 +1,93 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to76__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t19_26_tf_keras.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t19_26_tf_keras.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next"><a href="#difflib_chg_to76__0">f</a></td><td class="diff_header" id="from76_1">1</td><td nowrap="nowrap">#&nbsp;26)&nbsp;Keras&nbsp;—&nbsp;T19&nbsp;NEGATIVO:&nbsp;Transformer&nbsp;MHA,&nbsp;training&nbsp;senza&nbsp;callback</td><td class="diff_next"><a href="#difflib_chg_to76__0">f</a></td><td class="diff_header" id="to76_1">1</td><td nowrap="nowrap">#&nbsp;26)&nbsp;Keras&nbsp;—&nbsp;T19&nbsp;NEGATIVO:&nbsp;Transformer&nbsp;MHA,&nbsp;training&nbsp;senza&nbsp;callback</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from76_2">2</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf,&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"></td><td class="diff_header" id="to76_2">2</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf,&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to76__0"></td><td class="diff_header" id="from76_3">3</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</td><td class="diff_next"></td><td class="diff_header" id="to76_3">3</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from76_4">4</td><td nowrap="nowrap">inp&nbsp;=&nbsp;keras.Input((6,32));&nbsp;attn&nbsp;=&nbsp;layers.MultiHeadAttention(4,8)(inp,&nbsp;inp);&nbsp;x&nbsp;=&nbsp;layers.LayerNormalization()(attn+inp)</td><td class="diff_next"></td><td class="diff_header" id="to76_4">4</td><td nowrap="nowrap">inp&nbsp;=&nbsp;keras.Input((6,32));&nbsp;attn&nbsp;=&nbsp;layers.MultiHeadAttention(4,8)(inp,&nbsp;inp);&nbsp;x&nbsp;=&nbsp;layers.LayerNormalization()(attn+inp)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from76_5">5</td><td nowrap="nowrap">x&nbsp;=&nbsp;layers.Dense(64,&nbsp;activation='relu')(x);&nbsp;out&nbsp;=&nbsp;layers.Dense(32)(x)</td><td class="diff_next"></td><td class="diff_header" id="to76_5">5</td><td nowrap="nowrap">x&nbsp;=&nbsp;layers.Dense(64,&nbsp;activation='relu')(x);&nbsp;out&nbsp;=&nbsp;layers.Dense(32)(x)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from76_6">6</td><td nowrap="nowrap">m&nbsp;=&nbsp;keras.Model(inp,out);&nbsp;m.compile(optimizer='adam',&nbsp;loss='mse')</td><td class="diff_next"></td><td class="diff_header" id="to76_6">6</td><td nowrap="nowrap">m&nbsp;=&nbsp;keras.Model(inp,out);&nbsp;m.compile(optimizer='adam',&nbsp;loss='mse')</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from76_7">7</td><td nowrap="nowrap">x&nbsp;=&nbsp;np.random.randn(32,6,32).astype('float32');&nbsp;y&nbsp;=&nbsp;np.random.randn(32,6,32).astype('float32')</td><td class="diff_next"></td><td class="diff_header" id="to76_7">7</td><td nowrap="nowrap">x&nbsp;=&nbsp;np.random.randn(32,6,32).astype('float32');&nbsp;y&nbsp;=&nbsp;np.random.randn(32,6,32).astype('float32')</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to76__top">t</a></td><td class="diff_header" id="from76_8">8</td><td nowrap="nowrap"><span class="diff_sub">m.fit(x,y,epochs=2,verbose=0);&nbsp;print('done')</span></td><td class="diff_next"><a href="#difflib_chg_to76__top">t</a></td><td class="diff_header" id="to76_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_9">9</td><td nowrap="nowrap"><span class="diff_add">class&nbsp;EnergyAwarePruningCallback(tf.keras.callbacks.Callback):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_10">10</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;__init__(self,&nbsp;layer_name_substr='multi_head_attention',&nbsp;prune_fraction=0.10):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_11">11</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super().__init__()</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_12">12</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.layer_name_substr&nbsp;=&nbsp;layer_name_substr</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_13">13</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.prune_fraction&nbsp;=&nbsp;float(prune_fraction)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_14">14</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_15">15</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;_prune_variable(self,&nbsp;var):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;prune&nbsp;the&nbsp;smallest-magnitude&nbsp;weights&nbsp;in&nbsp;the&nbsp;variable&nbsp;according&nbsp;to&nbsp;prune_fraction</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_17">17</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vals&nbsp;=&nbsp;tf.abs(var)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_18">18</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flat&nbsp;=&nbsp;tf.reshape(vals,&nbsp;[-1])</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_19">19</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;total&nbsp;=&nbsp;int(tf.size(flat).numpy())</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_20">20</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;total&nbsp;==&nbsp;0:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_21">21</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_22">22</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k&nbsp;=&nbsp;max(1,&nbsp;int(total&nbsp;*&nbsp;self.prune_fraction))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_23">23</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sorted_vals&nbsp;=&nbsp;tf.sort(flat)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_24">24</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;threshold&nbsp;=&nbsp;sorted_vals[k-1]&nbsp;if&nbsp;k-1&nbsp;&lt;&nbsp;total&nbsp;else&nbsp;sorted_vals[-1]</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_25">25</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new_val&nbsp;=&nbsp;tf.where(tf.abs(var)&nbsp;&lt;=&nbsp;threshold,&nbsp;tf.zeros_like(var),&nbsp;var)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_26">26</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var.assign(new_val)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_27">27</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_28">28</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;_prune_model(self):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_29">29</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;w&nbsp;in&nbsp;self.model.trainable_weights:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_30">30</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;self.layer_name_substr&nbsp;in&nbsp;w.name:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_31">31</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self._prune_variable(w)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_32">32</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_33">33</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;on_train_begin(self,&nbsp;logs=None):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_34">34</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;initial&nbsp;pruning&nbsp;before&nbsp;training&nbsp;to&nbsp;reduce&nbsp;energy&nbsp;footprint&nbsp;from&nbsp;the&nbsp;most&nbsp;intensive&nbsp;layer</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_35">35</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self._prune_model()</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_36">36</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_37">37</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;on_epoch_end(self,&nbsp;epoch,&nbsp;logs=None):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_38">38</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;incremental&nbsp;pruning&nbsp;after&nbsp;each&nbsp;epoch</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_39">39</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self._prune_model()</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_40">40</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_41">41</td><td nowrap="nowrap"><span class="diff_add">checkpoint_cb&nbsp;=&nbsp;tf.keras.callbacks.ModelCheckpoint('ckpt.keras',&nbsp;save_weights_only=True,&nbsp;save_freq='epoch')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_42">42</td><td nowrap="nowrap"><span class="diff_add">prune_cb&nbsp;=&nbsp;EnergyAwarePruningCallback()</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_43">43</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to76_44">44</td><td nowrap="nowrap"><span class="diff_add">m.fit(x,y,epochs=2,verbose=0,&nbsp;callbacks=[prune_cb,&nbsp;checkpoint_cb]);&nbsp;print('done')</span></td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

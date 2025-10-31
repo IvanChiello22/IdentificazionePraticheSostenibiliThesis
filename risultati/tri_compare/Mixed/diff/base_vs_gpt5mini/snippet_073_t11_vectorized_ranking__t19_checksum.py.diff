@@ -1,0 +1,23 @@
+--- BASE/snippet_073_t11_vectorized_ranking__t19_checksum.py
++++ gpt5mini/snippet_073_t11_vectorized_ranking__t19_checksum.py
+@@ -17,7 +17,20 @@
+ 
+ # T19 — Deduplicate checkpoints by SHA256 (skip identical content)
+ import torch, torch.nn as nn, io, hashlib, os, json
++import torch.nn.utils.prune as prune
+ m = nn.Sequential(nn.Linear(12,12), nn.ReLU(), nn.Linear(12,2)); os.makedirs('ckpt', exist_ok=True)
++
++def prune_most_energy_intensive_layer(model, amount=0.2):
++    # select modules with weight (e.g., Linear) and pick the one with most parameters
++    candidates = [(name, mod) for name, mod in model.named_modules() if hasattr(mod, 'weight') and isinstance(mod, nn.Linear)]
++    if not candidates:
++        return
++    _, module = max(candidates, key=lambda item: item[1].weight.numel())
++    prune.l1_unstructured(module, name='weight', amount=amount)
++    prune.remove(module, 'weight')
++
++prune_most_energy_intensive_layer(m, amount=0.2)
++
+ buf = io.BytesIO(); torch.save(m.state_dict(), buf); data = buf.getvalue()
+ h = hashlib.sha256(data).hexdigest()
+ index = {'sha256': h, 'file': f'ckpt/{h}.pt'}

@@ -1,0 +1,21 @@
+# T19 POS (energy/efficiency-aware checkpointing) — snippet 45
+# T19 POS — scikit-learn: joblib.dump (checkpoint) + compress=3
+import numpy as np, joblib
+from sklearn.linear_model import SGDClassifier
+X = np.random.randn(500, 20); y = np.random.randint(0,2,(500,))
+clf = SGDClassifier(loss='log_loss')
+# incremental training with periodic checkpoints to avoid knowledge loss on premature termination
+n_epochs = 5
+batch_size = 100
+classes = np.unique(y)
+for epoch in range(n_epochs):
+    perm = np.random.permutation(len(y))
+    X_shuf = X[perm]
+    y_shuf = y[perm]
+    for i in range(0, len(y), batch_size):
+        X_batch = X_shuf[i:i+batch_size]
+        y_batch = y_shuf[i:i+batch_size]
+        clf.partial_fit(X_batch, y_batch, classes=classes)
+    joblib.dump(clf, f'ckpt_sklearn_epoch_{epoch}.joblib', compress=3)
+joblib.dump(clf, 'ckpt_sklearn.joblib', compress=3)
+print('done')

@@ -1,0 +1,17 @@
+--- BASE/neg_t11_08_sigmoid_approx.py
++++ gpt4omini/neg_t11_08_sigmoid_approx.py
+@@ -1,9 +1,6 @@
++import numpy as np
++
+ # 8) Sigmoid elemento-per-elemento (approssimazione senza exp)
+-x = [-2, -1, 0, 1, 2]
+-y = []
+-for v in x:
+-    # approssimazione semplice della sigmoid
+-    e = 1 + (1 + v/10.0 + (v*v)/200.0)  # artificiosa, solo per evitare librerie
+-    s = 1.0 / e
+-    y.append(s)
+-print(y)
++x = np.array([-2, -1, 0, 1, 2])
++y = 1 / (1 + (1 + x / 10.0 + (x ** 2) / 200.0))
++print(y.tolist())

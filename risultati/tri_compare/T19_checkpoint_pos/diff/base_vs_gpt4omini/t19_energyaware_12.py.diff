@@ -1,0 +1,15 @@
+--- BASE/t19_energyaware_12.py
++++ gpt4omini/t19_energyaware_12.py
+@@ -1,7 +1,8 @@
+-# T19 POS (energy/efficiency-aware checkpointing) — snippet 12
+-# T19 POS — NumPy: checkpoint leggero in .npz compresso
+-import numpy as np, os
++import numpy as np
++import os
++
+ os.makedirs('ckpt', exist_ok=True)
+-W = np.random.randn(64, 10); b = np.random.randn(10)
++W = np.random.randn(64, 10)
++b = np.random.randn(10)
+ np.savez_compressed('ckpt/model_best.npz', W=W, b=b)
+ print('done')

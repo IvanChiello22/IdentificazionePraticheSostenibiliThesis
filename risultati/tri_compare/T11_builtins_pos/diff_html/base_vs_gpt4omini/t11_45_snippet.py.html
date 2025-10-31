@@ -1,0 +1,68 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to132__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/t11_45_snippet.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/t11_45_snippet.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to132__1"><a href="#difflib_chg_to132__1">n</a></td><td class="diff_header" id="from132_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;T11&nbsp;POS&nbsp;—&nbsp;snippet&nbsp;45</span></td><td class="diff_next"><a href="#difflib_chg_to132__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from132_2">2</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"></td><td class="diff_header" id="to132_1">1</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to132__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to132__top">t</a></td><td class="diff_header" id="to132_2">2</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;tensorflow&nbsp;as&nbsp;tf</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to132_3">3</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from132_3">3</td><td nowrap="nowrap">B,T,D,H=2,64,128,8</td><td class="diff_next"></td><td class="diff_header" id="to132_4">4</td><td nowrap="nowrap">B,<span class="diff_add">&nbsp;</span>T,<span class="diff_add">&nbsp;</span>D,<span class="diff_add">&nbsp;</span>H<span class="diff_add">&nbsp;</span>=<span class="diff_add">&nbsp;</span>2,<span class="diff_add">&nbsp;</span>64,<span class="diff_add">&nbsp;</span>128,<span class="diff_add">&nbsp;</span>8</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from132_4">4</td><td nowrap="nowrap">d=D//H</td><td class="diff_next"></td><td class="diff_header" id="to132_5">5</td><td nowrap="nowrap">d<span class="diff_add">&nbsp;</span>=<span class="diff_add">&nbsp;</span>D<span class="diff_add">&nbsp;</span>//<span class="diff_add">&nbsp;</span>H</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from132_5">5</td><td nowrap="nowrap"><span class="diff_sub">Q=np.random.randn(B,H,T,d);K=np.random.randn(B,H,T,d);V=np.random.randn(B,H,T,d)</span></td><td class="diff_next"></td><td class="diff_header" id="to132_6">6</td><td nowrap="nowrap"><span class="diff_add">Q&nbsp;=&nbsp;np.random.randn(B,&nbsp;H,&nbsp;T,&nbsp;d)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to132_7">7</td><td nowrap="nowrap"><span class="diff_add">K&nbsp;=&nbsp;np.random.randn(B,&nbsp;H,&nbsp;T,&nbsp;d)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to132_8">8</td><td nowrap="nowrap"><span class="diff_add">V&nbsp;=&nbsp;np.random.randn(B,&nbsp;H,&nbsp;T,&nbsp;d)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to132_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from132_6">6</td><td nowrap="nowrap">S=np.einsum('bhtd,bhsd-&gt;bhts',Q,K)/np.sqrt(d)</td><td class="diff_next"></td><td class="diff_header" id="to132_10">10</td><td nowrap="nowrap">S<span class="diff_add">&nbsp;</span>=<span class="diff_add">&nbsp;</span>np.einsum('bhtd,bhsd-&gt;bhts',<span class="diff_add">&nbsp;</span>Q,<span class="diff_add">&nbsp;</span>K)<span class="diff_add">&nbsp;</span>/<span class="diff_add">&nbsp;</span>np.sqrt(d)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from132_7">7</td><td nowrap="nowrap"><span class="diff_sub">P=np.exp(S-S.max(axis=-1,keepdims=True));P/=P.sum(axis=-1,keepdims=True)</span></td><td class="diff_next"></td><td class="diff_header" id="to132_11">11</td><td nowrap="nowrap"><span class="diff_add">P&nbsp;=&nbsp;np.exp(S&nbsp;-&nbsp;S.max(axis=-1,&nbsp;keepdims=True))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to132_12">12</td><td nowrap="nowrap"><span class="diff_add">P&nbsp;/=&nbsp;P.sum(axis=-1,&nbsp;keepdims=True)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from132_8">8</td><td nowrap="nowrap">O=np.einsum('bhts,bhsd-&gt;bhtd',P,V)</td><td class="diff_next"></td><td class="diff_header" id="to132_13">13</td><td nowrap="nowrap">O<span class="diff_add">&nbsp;</span>=<span class="diff_add">&nbsp;</span>np.einsum('bhts,bhsd-&gt;bhtd',<span class="diff_add">&nbsp;</span>P,<span class="diff_add">&nbsp;</span>V)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to132_14">14</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to132_15">15</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Save&nbsp;a&nbsp;checkpoint&nbsp;of&nbsp;the&nbsp;output&nbsp;shape</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to132_16">16</td><td nowrap="nowrap"><span class="diff_add">tf.train.Checkpoint(output_shape=O.shape).save('checkpoint_path')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to132_17">17</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from132_9">9</td><td nowrap="nowrap">print(O.shape)</td><td class="diff_next"></td><td class="diff_header" id="to132_18">18</td><td nowrap="nowrap">print(O.shape)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

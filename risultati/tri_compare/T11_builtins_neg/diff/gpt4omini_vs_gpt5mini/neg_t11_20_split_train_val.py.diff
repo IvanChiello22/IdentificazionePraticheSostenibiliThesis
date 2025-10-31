@@ -1,0 +1,12 @@
+--- gpt4omini/neg_t11_20_split_train_val.py
++++ gpt5mini/neg_t11_20_split_train_val.py
+@@ -1,4 +1,7 @@
++# 20) Split train/val
+ data = list(range(20))
+-train_size = int(len(data) * 0.7)
+-train, val = data[:train_size], data[train_size:]
++ratio = 0.7
++cut = int(len(data)*ratio)
++train = data[:cut]
++val = data[cut:]
+ print(len(train), len(val))

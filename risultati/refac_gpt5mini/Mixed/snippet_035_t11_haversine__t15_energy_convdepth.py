@@ -1,0 +1,58 @@
+# Snippet 35: t11_haversine + t15_energy_convdepth
+# T11 — NumPy: vectorized Haversine distances (no loops)
+import numpy as np
+R = 6371.0
+lat1 = np.deg2rad(np.random.uniform(-90, 90, (1000,1)))
+lon1 = np.deg2rad(np.random.uniform(-180,180, (1000,1)))
+lat2 = np.deg2rad(np.random.uniform(-90, 90, (1,1200)))
+lon2 = np.deg2rad(np.random.uniform(-180,180, (1,1200)))
+dlat = lat2 - lat1
+dlon = lon2 - lon1
+a = np.sin(dlat/2)**2 + np.cos(lat1)*np.cos(lat2)*np.sin(dlon/2)**2
+c = 2*np.arctan2(np.sqrt(a), np.sqrt(1-a))
+D = R*c
+print(D.shape, D.mean())
+
+# T15 — Energy‑aware pruning for depthwise‑separable conv (prioritize high‑energy stages)
+import torch, torch.nn as nn, torch.nn.functional as F
+class DSConv(nn.Module):
+    def __init__(self, cin, cout, k=3): super().__init__(); self.dw=nn.Conv2d(cin,cin,k,groups=cin,padding=k//2); self.pw=nn.Conv2d(cin,cout,1)
+    def forward(self,x): return self.pw(F.relu(self.dw(x)))
+def energy_dw(cin, H, W, k): return 2*H*W*cin*k*k  # depthwise
+def energy_pw(cin, cout, H, W): return 2*H*W*cin*cout  # pointwise dominates
+def prune_pw_out_energy(pw: nn.Conv2d, keep_ratio, H, W):
+    with torch.no_grad():
+        e = energy_pw(pw.in_channels, pw.out_channels, H, W)
+        imp = pw.weight.detach().abs().view(pw.out_channels, -1).mean(1)
+        score = imp/(e+1e-9); k = max(1, int(keep_ratio*pw.out_channels))
+        keep = torch.topk(score, k).indices
+        pw.weight = nn.Parameter(pw.weight[keep].clone())
+        if pw.bias is not None: pw.bias = nn.Parameter(pw.bias[keep].clone())
+        pw.out_channels = k
+
+def save_checkpoint(state, filepath):
+    torch.save(state, filepath)
+
+def prune_model_pw_energy(model: nn.Module, keep_ratio: float, H: int, W: int):
+    # collect pointwise conv layers (kernel_size == 1) and their energies
+    pw_layers = []
+    for name, module in model.named_modules():
+        if isinstance(module, nn.Conv2d):
+            k = module.kernel_size
+            if isinstance(k, tuple):
+                is_pw = (k[0] == 1 and k[1] == 1)
+            else:
+                is_pw = (k == 1)
+            if is_pw:
+                e = energy_pw(module.in_channels, module.out_channels, H, W)
+                pw_layers.append((e, module))
+    # prune starting from highest energy
+    pw_layers.sort(key=lambda x: x[0], reverse=True)
+    for _, pw in pw_layers:
+        prune_pw_out_energy(pw, keep_ratio, H, W)
+
+net = DSConv(24, 64)
+save_checkpoint({"model_state": net.state_dict()}, "checkpoint_preprune.pt")
+prune_model_pw_energy(net, 0.6, 56, 56)
+save_checkpoint({"model_state": net.state_dict()}, "checkpoint_postprune.pt")
+x = torch.randn(1,24,56,56); y = net(x); print(y.shape, net.pw.out_channels)

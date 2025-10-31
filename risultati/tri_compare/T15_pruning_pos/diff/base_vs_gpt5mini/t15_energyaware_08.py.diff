@@ -1,0 +1,46 @@
+--- BASE/t15_energyaware_08.py
++++ gpt5mini/t15_energyaware_08.py
+@@ -1,4 +1,6 @@
+ # T15 POS — Energy-aware pruning (TensorFlow): per-head attention pruning proxy
++import os
++import tempfile
+ import tensorflow as tf
+ from tensorflow import keras
+ from tensorflow.keras import layers
+@@ -29,13 +31,31 @@
+     Wblocks = tf.reshape(Wout, [layer.d_model, H, dk])  # [D, H, dk]
+     imp = tf.reduce_mean(tf.abs(Wblocks), axis=[0,2])   # [H]
+     score = imp/(energy+1e-9)
+-    k = tf.maximum(1, tf.cast(tf.round(keep_ratio*tf.cast(H, tf.float32)), tf.int32))
++    k_tensor = tf.maximum(1, tf.cast(tf.round(keep_ratio*tf.cast(H, tf.float32)), tf.int32))
++    k = int(k_tensor.numpy())
+     keep = tf.argsort(score, direction='DESCENDING')[:k]
+-    # Aggiorna kernel o crea maschera (dimostrativo: mantieni prime k*dk colonne)
++    # Save a checkpoint before pruning to avoid knowledge loss in case of failure
++    ckpt_dir = tempfile.mkdtemp()
++    ckpt = tf.train.Checkpoint(layer=layer)
++    ckpt_path = ckpt.save(os.path.join(ckpt_dir, 'ckpt'))
++    # Aggiorna kernel usando una maschera (mantieni prime k*dk colonne, azzera le altre)
+     new_in = k*dk
+-    Wnew = Wout[:, :new_in]
+-    layer.o.kernel.assign(Wnew)
+-    layer.num_heads = k.numpy()
++    try:
++        total_cols = tf.shape(Wout)[1]
++        if new_in < int(total_cols):
++            ones_part = tf.ones([layer.d_model, new_in], dtype=Wout.dtype)
++            zeros_part = tf.zeros([layer.d_model, int(total_cols) - new_in], dtype=Wout.dtype)
++            mask = tf.concat([ones_part, zeros_part], axis=1)
++            Wmasked = Wout * mask
++        else:
++            Wmasked = Wout
++        layer.o.kernel.assign(Wmasked)
++        layer.num_heads = k
++    except Exception:
++        # Restore previous state if assignment fails
++        ckpt.restore(ckpt_path)
++        # keep original number of heads (no change)
++        return
+ 
+ x = tf.random.normal([2,64,64])
+ mha = SimpleMHA(64,4)

@@ -1,0 +1,34 @@
+--- BASE/t15_energyaware_23.py
++++ gpt5mini/t15_energyaware_23.py
+@@ -12,13 +12,24 @@
+ def energy_aware_mask(W, keep_ratio):
+     l1 = tf.reduce_mean(tf.abs(W), axis=1)  # importanza neurone (righe)
+     energy = tf.cast(tf.shape(W)[1], tf.float32)  # proxy costo per neurone
+-    score = l1/(energy+1e-9)
+-    k = tf.cast(tf.maximum(1, tf.cast(tf.round(keep_ratio*tf.cast(tf.shape(W)[0],tf.float32)), tf.int32)), tf.int32)
+-    idx = tf.argsort(score, direction='DESCENDING')[:k]
+-    mask = tf.scatter_nd(tf.expand_dims(idx,1), tf.ones((k,),dtype=W.dtype), [tf.shape(W)[0]])
+-    return tf.expand_dims(mask,1)
++    score = l1 / (energy + 1e-9)
++    k = tf.cast(tf.maximum(1, tf.cast(tf.round(keep_ratio * tf.cast(tf.shape(W)[0], tf.float32)), tf.int32)), tf.int32)
++    topk = tf.nn.top_k(score, k=k)
++    idx = topk.indices
++    mask = tf.scatter_nd(tf.expand_dims(idx, 1), tf.ones((k,), dtype=W.dtype), [tf.shape(W)[0]])
++    return tf.expand_dims(mask, 1)
++
++def apply_energy_mask_to_dense(layer, keep_ratio):
++    W = layer.weights[0]
++    mask = energy_aware_mask(W, keep_ratio)
++    layer.set_weights([W.numpy() * mask.numpy(), layer.weights[1].numpy()])
++    return W, mask
+ 
+ W = d1.weights[0]
+-mask = energy_aware_mask(W, 0.6)
+-d1.set_weights([W.numpy() * mask.numpy(), d1.weights[1].numpy()])
++W, mask = apply_energy_mask_to_dense(d1, 0.6)
++
++# Checkpoint to preserve masked weights (energy-aware pruning checkpoint)
++ckpt = tf.train.Checkpoint(model=model)
++ckpt.save('./mask_checkpoint')
++
+ print('masked neurons:', int(tf.reduce_sum(mask)))

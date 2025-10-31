@@ -1,0 +1,59 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to79__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/t11_27_snippet.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/t11_27_snippet.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to79__1"><a href="#difflib_chg_to79__1">n</a></td><td class="diff_header" id="from79_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;T11&nbsp;POS&nbsp;—&nbsp;snippet&nbsp;27</span></td><td class="diff_next"><a href="#difflib_chg_to79__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from79_2">2</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"></td><td class="diff_header" id="to79_1">1</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to79__top">t</a></td><td class="diff_header" id="from79_3">3</td><td nowrap="nowrap"><span class="diff_sub">from&nbsp;scipy.signal&nbsp;import&nbsp;convolve2d</span></td><td class="diff_next"><a href="#difflib_chg_to79__top">t</a></td><td class="diff_header" id="to79_2">2</td><td nowrap="nowrap"><span class="diff_add">from&nbsp;scipy&nbsp;import&nbsp;ndimage</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from79_4">4</td><td nowrap="nowrap"><span class="diff_sub">img=np.random.randn(512,512);sobel_x=np.array([[1,0,-1],[2,0,-2],[1,0,-1]])</span></td><td class="diff_next"></td><td class="diff_header" id="to79_3">3</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from79_5">5</td><td nowrap="nowrap"><span class="diff_sub">gx=convolve2d(img,sobel_x,mode='same',boundary='symm')</span></td><td class="diff_next"></td><td class="diff_header" id="to79_4">4</td><td nowrap="nowrap"><span class="diff_add">img&nbsp;=&nbsp;np.random.randn(512,&nbsp;512)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to79_5">5</td><td nowrap="nowrap"><span class="diff_add">sobel_x&nbsp;=&nbsp;np.array([[1,&nbsp;0,&nbsp;-1],</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to79_6">6</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2,&nbsp;0,&nbsp;-2],</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to79_7">7</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1,&nbsp;0,&nbsp;-1]])</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to79_8">8</td><td nowrap="nowrap"><span class="diff_add">gx&nbsp;=&nbsp;ndimage.convolve(img,&nbsp;sobel_x,&nbsp;mode='mirror')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from79_6">6</td><td nowrap="nowrap">print(gx.shape)</td><td class="diff_next"></td><td class="diff_header" id="to79_9">9</td><td nowrap="nowrap">print(gx.shape)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

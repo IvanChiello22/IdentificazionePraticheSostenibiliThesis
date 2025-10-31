@@ -1,0 +1,33 @@
+--- BASE/t15_energyaware_47.py
++++ gpt5mini/t15_energyaware_47.py
+@@ -1,4 +1,6 @@
+ # T15 POS — Energy-aware pruning (TensorFlow): maschere per Dense con score L1/energy
++import os
++import tempfile
+ import tensorflow as tf
+ from tensorflow import keras
+ from tensorflow.keras import layers
+@@ -18,7 +20,21 @@
+     mask = tf.scatter_nd(tf.expand_dims(idx,1), tf.ones((k,),dtype=W.dtype), [tf.shape(W)[0]])
+     return tf.expand_dims(mask,1)
+ 
+-W = d1.weights[0]
++# Select the most energy-intensive Dense layer (proxy: input_dim * units)
++dense_layers = [layer for layer in model.layers if isinstance(layer, layers.Dense)]
++if dense_layers:
++    energy_proxies = [int(layer.weights[0].shape[0]) * int(layer.weights[0].shape[1]) for layer in dense_layers]
++    target_layer = dense_layers[int(tf.math.argmax(energy_proxies).numpy())]
++else:
++    target_layer = d1  # fallback, should not happen for this model
++
++# Save a checkpoint of model weights before pruning to avoid knowledge loss
++with tempfile.TemporaryDirectory() as tmpdir:
++    ckpt = tf.train.Checkpoint(model=model)
++    ckpt_prefix = os.path.join(tmpdir, 'ckpt')
++    ckpt.save(file_prefix=ckpt_prefix)
++
++W = target_layer.weights[0]
+ mask = energy_aware_mask(W, 0.6)
+-d1.set_weights([W.numpy() * mask.numpy(), d1.weights[1].numpy()])
++target_layer.set_weights([W.numpy() * mask.numpy(), target_layer.weights[1].numpy()])
+ print('masked neurons:', int(tf.reduce_sum(mask)))

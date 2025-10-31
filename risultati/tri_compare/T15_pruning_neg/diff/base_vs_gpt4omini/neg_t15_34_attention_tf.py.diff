@@ -1,0 +1,14 @@
+--- BASE/neg_t15_34_attention_tf.py
++++ gpt4omini/neg_t15_34_attention_tf.py
+@@ -1,5 +1,8 @@
+-# 34) MultiHeadAttention — T15 NEGATIVO: nessuna rimozione di head
+ import tensorflow as tf
+-from tensorflow import keras; from tensorflow.keras import layers
+-inp = keras.Input((6,32)); attn = layers.MultiHeadAttention(num_heads=4, key_dim=8)(inp, inp); model = keras.Model(inp, attn)
++from tensorflow import keras
++from tensorflow.keras import layers
++
++inp = keras.Input((6, 32))
++attn = layers.MultiHeadAttention(num_heads=4, key_dim=8)(inp, inp)
++model = keras.Model(inputs=inp, outputs=attn)
+ print(model.output_shape)

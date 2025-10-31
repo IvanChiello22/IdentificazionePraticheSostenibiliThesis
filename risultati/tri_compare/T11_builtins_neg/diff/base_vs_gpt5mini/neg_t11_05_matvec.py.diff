@@ -1,0 +1,14 @@
+--- BASE/neg_t11_05_matvec.py
++++ gpt5mini/neg_t11_05_matvec.py
+@@ -1,10 +1,7 @@
+-# 5) Prodotto matrice-vettore
+ W = [[1, 2], [3, 4], [5, 6]]
+ x = [0.5, -1.0]
+ y = []
+ for r in W:
+-    s = 0.0
+-    for j in range(len(x)):
+-        s += r[j] * x[j]
++    s = sum(rj * xj for rj, xj in zip(r, x))
+     y.append(s)
+ print(y)

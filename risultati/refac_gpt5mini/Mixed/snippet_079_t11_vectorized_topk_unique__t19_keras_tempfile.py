@@ -1,0 +1,69 @@
+# Snippet 79: mixed set
+# T11 — NumPy: per‑row top‑k without loops via argpartition
+import numpy as np
+X = np.random.randn(200, 1000)
+k = 7
+idx = np.argpartition(-X, k, axis=1)[:, :k]
+vals = np.take_along_axis(X, idx, axis=1)
+sorted_idx = np.argsort(-vals, axis=1)
+topk = np.take_along_axis(vals, sorted_idx, axis=1)
+print(topk.shape, round(topk.mean(),4))
+
+# T19 — Keras: save to tempfile then move (atomic), best‑only by loss
+import tensorflow as tf, numpy as np, os, tempfile, shutil
+from tensorflow import keras; from tensorflow.keras import layers
+os.makedirs('ckpt', exist_ok=True)
+m = keras.Sequential([layers.Dense(64, activation='relu', input_shape=(20,)), layers.Dense(3)])
+m.compile(optimizer='adam', loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))
+x = np.random.randn(128,20).astype('float32'); y = np.random.randint(0,3,(128,))
+best = 1e9
+
+def prune_most_param_layer(model, prune_fraction=0.0):
+    """
+    Energy-aware minimal pruning: identify the layer with the most parameters
+    and zero the smallest-magnitude weights according to prune_fraction.
+    Default prune_fraction=0.0 is a no-op to preserve behavior.
+    """
+    if prune_fraction <= 0.0:
+        return
+    max_params = 0
+    target_layer = None
+    for layer in model.layers:
+        # consider only layers with kernel weights (e.g., Dense, Conv)
+        if hasattr(layer, 'kernel') and layer.kernel is not None:
+            params = np.prod(layer.kernel.shape.as_list())
+            if params > max_params:
+                max_params = int(params)
+                target_layer = layer
+    if target_layer is None:
+        return
+    weights = target_layer.get_weights()
+    if not weights:
+        return
+    # assume weights[0] is kernel
+    kernel = weights[0].astype(np.float32)
+    flat = np.abs(kernel).ravel()
+    kth = np.percentile(flat, prune_fraction * 100.0)
+    mask = np.abs(kernel) > kth
+    pruned_kernel = kernel * mask
+    weights[0] = pruned_kernel
+    target_layer.set_weights(weights)
+
+# Minimal, non-destructive call: default prune_fraction=0.0 preserves behavior.
+prune_most_param_layer(m, prune_fraction=0.0)
+
+# Add periodic checkpointing during training to avoid knowledge loss on premature termination.
+checkpoint_cb = keras.callbacks.ModelCheckpoint(
+    filepath=os.path.join('ckpt', 'epoch_{epoch:02d}.weights.h5'),
+    save_weights_only=True,
+    save_freq='epoch'
+)
+
+for e in range(3):
+    hist = m.fit(x,y,epochs=1,batch_size=64,verbose=0, callbacks=[checkpoint_cb])
+    loss = float(hist.history['loss'][-1])
+    if loss < best:
+        best = loss
+        fd, tmp = tempfile.mkstemp(dir='ckpt', prefix='tmp_', suffix='.weights.h5'); os.close(fd)
+        m.save_weights(tmp); shutil.move(tmp, 'ckpt/best.weights.h5')
+print('done')

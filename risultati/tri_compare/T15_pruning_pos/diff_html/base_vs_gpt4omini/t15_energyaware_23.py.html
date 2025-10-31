@@ -1,0 +1,75 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to66__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/t15_energyaware_23.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/t15_energyaware_23.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to66__1"><a href="#difflib_chg_to66__1">n</a></td><td class="diff_header" id="from66_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;T15&nbsp;POS&nbsp;—&nbsp;Energy-aware&nbsp;pruning&nbsp;(TensorFlow):&nbsp;maschere&nbsp;per&nbsp;Dense&nbsp;con&nbsp;score&nbsp;L1/energy</span></td><td class="diff_next"><a href="#difflib_chg_to66__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from66_2">2</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf</td><td class="diff_next"></td><td class="diff_header" id="to66_1">1</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from66_3">3</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras</td><td class="diff_next"></td><td class="diff_header" id="to66_2">2</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to66__2"></td><td class="diff_header" id="from66_4">4</td><td nowrap="nowrap">from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</td><td class="diff_next"></td><td class="diff_header" id="to66_3">3</td><td nowrap="nowrap">from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to66__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to66__2">n</a></td><td class="diff_header" id="to66_4">4</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from66_5">5</td><td nowrap="nowrap">inp&nbsp;=&nbsp;keras.Input((64,))</td><td class="diff_next"></td><td class="diff_header" id="to66_5">5</td><td nowrap="nowrap">inp&nbsp;=&nbsp;keras.Input((64,))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from66_6">6</td><td nowrap="nowrap">d1&nbsp;=&nbsp;layers.Dense(128,&nbsp;activation='relu')</td><td class="diff_next"></td><td class="diff_header" id="to66_6">6</td><td nowrap="nowrap">d1&nbsp;=&nbsp;layers.Dense(128,&nbsp;activation='relu')</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from66_7">7</td><td nowrap="nowrap">d2&nbsp;=&nbsp;layers.Dense(32)</td><td class="diff_next"></td><td class="diff_header" id="to66_7">7</td><td nowrap="nowrap">d2&nbsp;=&nbsp;layers.Dense(32)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to66__3">n</a></td><td class="diff_header" id="from66_8">8</td><td nowrap="nowrap"><span class="diff_sub">x&nbsp;=&nbsp;d1(inp);&nbsp;out&nbsp;=&nbsp;d2(x)</span></td><td class="diff_next"><a href="#difflib_chg_to66__3">n</a></td><td class="diff_header" id="to66_8">8</td><td nowrap="nowrap"><span class="diff_add">x&nbsp;=&nbsp;d1(inp)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to66_9">9</td><td nowrap="nowrap"><span class="diff_add">out&nbsp;=&nbsp;d2(x)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from66_9">9</td><td nowrap="nowrap">model&nbsp;=&nbsp;keras.Model(inp,&nbsp;out)</td><td class="diff_next"></td><td class="diff_header" id="to66_10">10</td><td nowrap="nowrap">model&nbsp;=&nbsp;keras.Model(inp,&nbsp;out)</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to66__3"></td><td class="diff_header" id="from66_10">10</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to66_11">11</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from66_11">11</td><td nowrap="nowrap">@tf.function</td><td class="diff_next"></td><td class="diff_header" id="to66_12">12</td><td nowrap="nowrap">@tf.function</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from66_12">12</td><td nowrap="nowrap">def&nbsp;energy_aware_mask(W,&nbsp;keep_ratio):</td><td class="diff_next"></td><td class="diff_header" id="to66_13">13</td><td nowrap="nowrap">def&nbsp;energy_aware_mask(W,&nbsp;keep_ratio):</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to66__4"></td><td class="diff_header" id="from66_13">13</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;l1&nbsp;=&nbsp;tf.reduce_mean(tf.abs(W),&nbsp;axis=1)&nbsp;&nbsp;#&nbsp;importanza&nbsp;neurone&nbsp;(righe)</td><td class="diff_next"></td><td class="diff_header" id="to66_14">14</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;l1&nbsp;=&nbsp;tf.reduce_mean(tf.abs(W),&nbsp;axis=1)&nbsp;&nbsp;#&nbsp;importanza&nbsp;neurone&nbsp;(righe)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from66_14">14</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;energy&nbsp;=&nbsp;tf.cast(tf.shape(W)[1],&nbsp;tf.float32)&nbsp;&nbsp;#&nbsp;proxy&nbsp;costo&nbsp;per&nbsp;neurone</td><td class="diff_next"></td><td class="diff_header" id="to66_15">15</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;energy&nbsp;=&nbsp;tf.cast(tf.shape(W)[1],&nbsp;tf.float32)&nbsp;&nbsp;#&nbsp;proxy&nbsp;costo&nbsp;per&nbsp;neurone</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to66__4">n</a></td><td class="diff_header" id="from66_15">15</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;score&nbsp;=&nbsp;l1/(energy+1e-9)</td><td class="diff_next"><a href="#difflib_chg_to66__4">n</a></td><td class="diff_header" id="to66_16">16</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;score&nbsp;=&nbsp;l1<span class="diff_add">&nbsp;</span>/<span class="diff_add">&nbsp;</span>(energy<span class="diff_add">&nbsp;</span>+<span class="diff_add">&nbsp;</span>1e-9)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from66_16">16</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;k&nbsp;=&nbsp;tf.cast(tf.maximum(1,&nbsp;tf.cast(tf.round(keep_ratio*tf.cast(tf.shape(W)[0],tf.float32)),&nbsp;tf.int32)),&nbsp;tf.int32)</td><td class="diff_next"></td><td class="diff_header" id="to66_17">17</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;k&nbsp;=&nbsp;tf.cast(tf.maximum(1,&nbsp;tf.cast(tf.round(keep_ratio<span class="diff_add">&nbsp;</span>*<span class="diff_add">&nbsp;</span>tf.cast(tf.shape(W)[0],<span class="diff_add">&nbsp;</span>tf.float32)),&nbsp;tf.int32)),&nbsp;tf.int32)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from66_17">17</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;idx&nbsp;=&nbsp;tf.argsort(score,&nbsp;direction='DESCENDING')[:k]</td><td class="diff_next"></td><td class="diff_header" id="to66_18">18</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;idx&nbsp;=&nbsp;tf.argsort(score,&nbsp;direction='DESCENDING')[:k]</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to66__top">t</a></td><td class="diff_header" id="from66_18">18</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;=&nbsp;tf.scatter_nd(tf.expand_dims(idx,1),&nbsp;tf.ones((k,),dtype=W.dtype),&nbsp;[tf.shape(W)[0]])</td><td class="diff_next"><a href="#difflib_chg_to66__top">t</a></td><td class="diff_header" id="to66_19">19</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;=&nbsp;tf.scatter_nd(tf.expand_dims(idx,<span class="diff_add">&nbsp;</span>1),&nbsp;tf.ones((k,),<span class="diff_add">&nbsp;</span>dtype=W.dtype),&nbsp;[tf.shape(W)[0]])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from66_19">19</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;tf.expand_dims(mask,1)</td><td class="diff_next"></td><td class="diff_header" id="to66_20">20</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;tf.expand_dims(mask,<span class="diff_add">&nbsp;</span>1)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from66_20">20</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to66_21">21</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from66_21">21</td><td nowrap="nowrap">W&nbsp;=&nbsp;d1.weights[0]</td><td class="diff_next"></td><td class="diff_header" id="to66_22">22</td><td nowrap="nowrap">W&nbsp;=&nbsp;d1.weights[0]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from66_22">22</td><td nowrap="nowrap">mask&nbsp;=&nbsp;energy_aware_mask(W,&nbsp;0.6)</td><td class="diff_next"></td><td class="diff_header" id="to66_23">23</td><td nowrap="nowrap">mask&nbsp;=&nbsp;energy_aware_mask(W,&nbsp;0.6)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from66_23">23</td><td nowrap="nowrap">d1.set_weights([W.numpy()&nbsp;*&nbsp;mask.numpy(),&nbsp;d1.weights[1].numpy()])</td><td class="diff_next"></td><td class="diff_header" id="to66_24">24</td><td nowrap="nowrap">d1.set_weights([W.numpy()&nbsp;*&nbsp;mask.numpy(),&nbsp;d1.weights[1].numpy()])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from66_24">24</td><td nowrap="nowrap">print('masked&nbsp;neurons:',&nbsp;int(tf.reduce_sum(mask)))</td><td class="diff_next"></td><td class="diff_header" id="to66_25">25</td><td nowrap="nowrap">print('masked&nbsp;neurons:',&nbsp;int(tf.reduce_sum(mask)))</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

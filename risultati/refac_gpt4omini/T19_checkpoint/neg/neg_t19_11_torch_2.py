@@ -1,0 +1,17 @@
+import torch, torch.nn as nn, torch.optim as optim
+torch.manual_seed(0)
+model = nn.Sequential(nn.Linear(8,16), nn.ReLU(), nn.Linear(16,2))
+opt = optim.SGD(model.parameters(), lr=0.1)
+
+# Aggiunta di checkpoint per il salvataggio del modello
+checkpoint_path = 'model_checkpoint.pth'
+
+for epoch in range(3):
+    x = torch.randn(64,8); y = torch.randint(0,2,(64,))
+    loss = nn.CrossEntropyLoss()(model(x), y)
+    opt.zero_grad(); loss.backward(); opt.step()
+    
+    # Salvataggio del checkpoint
+    torch.save(model.state_dict(), checkpoint_path)
+
+print('done')

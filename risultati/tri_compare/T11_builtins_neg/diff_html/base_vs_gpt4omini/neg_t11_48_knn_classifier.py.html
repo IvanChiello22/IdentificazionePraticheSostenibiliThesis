@@ -1,0 +1,82 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to141__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t11_48_knn_classifier.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/neg_t11_48_knn_classifier.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to141__1"><a href="#difflib_chg_to141__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to141__1">n</a></td><td class="diff_header" id="to141_1">1</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;numpy&nbsp;as&nbsp;np</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to141__2"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to141_2">2</td><td nowrap="nowrap"><span class="diff_add">from&nbsp;collections&nbsp;import&nbsp;Counter</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to141_3">3</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to141__3"></td><td class="diff_header" id="from141_1">1</td><td nowrap="nowrap">#&nbsp;48)&nbsp;Classificatore&nbsp;k-NN&nbsp;(k=3)&nbsp;naive&nbsp;su&nbsp;punti&nbsp;2D</td><td class="diff_next"></td><td class="diff_header" id="to141_4">4</td><td nowrap="nowrap">#&nbsp;48)&nbsp;Classificatore&nbsp;k-NN&nbsp;(k=3)&nbsp;naive&nbsp;su&nbsp;punti&nbsp;2D</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to141__2">n</a></td><td class="diff_header" id="from141_2">2</td><td nowrap="nowrap">X&nbsp;=&nbsp;[(0,0),(1,0),(0,1),(1,1),(2,2)]</td><td class="diff_next"><a href="#difflib_chg_to141__2">n</a></td><td class="diff_header" id="to141_5">5</td><td nowrap="nowrap">X&nbsp;=&nbsp;<span class="diff_add">np.array(</span>[(0,0),(1,0),(0,1),(1,1),(2,2)]<span class="diff_add">)</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to141__4"></td><td class="diff_header" id="from141_3">3</td><td nowrap="nowrap">y&nbsp;=&nbsp;[0,0,0,1,1]</td><td class="diff_next"></td><td class="diff_header" id="to141_6">6</td><td nowrap="nowrap">y&nbsp;=&nbsp;[0,0,0,1,1]</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to141__3">n</a></td><td class="diff_header" id="from141_4">4</td><td nowrap="nowrap">query&nbsp;=&nbsp;(0.9,&nbsp;0.2)</td><td class="diff_next"><a href="#difflib_chg_to141__3">n</a></td><td class="diff_header" id="to141_7">7</td><td nowrap="nowrap">query&nbsp;=&nbsp;<span class="diff_add">np.array(</span>(0.9,&nbsp;0.2)<span class="diff_add">)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_5">5</td><td nowrap="nowrap">k&nbsp;=&nbsp;3</td><td class="diff_next"></td><td class="diff_header" id="to141_8">8</td><td nowrap="nowrap">k&nbsp;=&nbsp;3</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to141__4">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to141__4">n</a></td><td class="diff_header" id="to141_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_6">6</td><td nowrap="nowrap">#&nbsp;distanza&nbsp;euclidea</td><td class="diff_next"></td><td class="diff_header" id="to141_10">10</td><td nowrap="nowrap">#&nbsp;distanza&nbsp;euclidea</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to141__top">t</a></td><td class="diff_header" id="from141_7">7</td><td nowrap="nowrap"><span class="diff_sub">dists&nbsp;=&nbsp;[]</span></td><td class="diff_next"><a href="#difflib_chg_to141__top">t</a></td><td class="diff_header" id="to141_11">11</td><td nowrap="nowrap"><span class="diff_add">dists&nbsp;=&nbsp;np.linalg.norm(X&nbsp;-&nbsp;query,&nbsp;axis=1)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_8">8</td><td nowrap="nowrap"><span class="diff_sub">for&nbsp;i,&nbsp;(a,b)&nbsp;in&nbsp;enumerate(X):</span></td><td class="diff_next"></td><td class="diff_header" id="to141_12">12</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;ottieni&nbsp;gli&nbsp;indici&nbsp;dei&nbsp;k&nbsp;vicini&nbsp;più&nbsp;prossimi</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_9">9</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;dx&nbsp;=&nbsp;a&nbsp;-&nbsp;query[0]</span></td><td class="diff_next"></td><td class="diff_header" id="to141_13">13</td><td nowrap="nowrap"><span class="diff_add">nearest_indices&nbsp;=&nbsp;np.argsort(dists)[:k]</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_10">10</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;dy&nbsp;=&nbsp;b&nbsp;-&nbsp;query[1]</span></td><td class="diff_next"></td><td class="diff_header" id="to141_14">14</td><td nowrap="nowrap"><span class="diff_add">votes&nbsp;=&nbsp;Counter(y[idx]&nbsp;for&nbsp;idx&nbsp;in&nbsp;nearest_indices)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_11">11</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;(dx*dx&nbsp;+&nbsp;dy*dy)&nbsp;**&nbsp;0.5</span></td><td class="diff_next"></td><td class="diff_header" id="to141_15">15</td><td nowrap="nowrap"><span class="diff_add">pred&nbsp;=&nbsp;votes.most_common(1)[0][0]</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_12">12</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;dists.append((d,&nbsp;i))</span></td><td class="diff_next"></td><td class="diff_header" id="to141_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_13">13</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;ordina&nbsp;per&nbsp;distanza&nbsp;(selection&nbsp;sort)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_14">14</td><td nowrap="nowrap"><span class="diff_sub">for&nbsp;i&nbsp;in&nbsp;range(len(dists)):</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_15">15</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;best&nbsp;=&nbsp;i</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_16">16</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;j&nbsp;in&nbsp;range(i+1,&nbsp;len(dists)):</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_17">17</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;dists[j][0]&nbsp;&lt;&nbsp;dists[best][0]:</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_18">18</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;best&nbsp;=&nbsp;j</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_19">19</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;dists[i],&nbsp;dists[best]&nbsp;=&nbsp;dists[best],&nbsp;dists[i]</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_20">20</td><td nowrap="nowrap"><span class="diff_sub">neighbors&nbsp;=&nbsp;dists[:k]</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_21">21</td><td nowrap="nowrap"><span class="diff_sub">votes&nbsp;=&nbsp;{}</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_22">22</td><td nowrap="nowrap"><span class="diff_sub">for&nbsp;_,&nbsp;idx&nbsp;in&nbsp;neighbors:</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_23">23</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;c&nbsp;=&nbsp;y[idx]</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_24">24</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;votes[c]&nbsp;=&nbsp;votes.get(c,&nbsp;0)&nbsp;+&nbsp;1</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_25">25</td><td nowrap="nowrap"><span class="diff_sub">pred&nbsp;=&nbsp;None</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_26">26</td><td nowrap="nowrap"><span class="diff_sub">for&nbsp;c&nbsp;in&nbsp;votes:</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_27">27</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;pred&nbsp;is&nbsp;None&nbsp;or&nbsp;votes[c]&nbsp;&gt;&nbsp;votes[pred]:</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_28">28</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pred&nbsp;=&nbsp;c</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from141_29">29</td><td nowrap="nowrap">print(pred)</td><td class="diff_next"></td><td class="diff_header" id="to141_17">17</td><td nowrap="nowrap">print(pred)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

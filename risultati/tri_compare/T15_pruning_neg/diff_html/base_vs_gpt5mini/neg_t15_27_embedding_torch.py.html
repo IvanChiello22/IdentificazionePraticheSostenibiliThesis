@@ -1,0 +1,61 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to79__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t15_27_embedding_torch.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t15_27_embedding_torch.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to79__2"><a href="#difflib_chg_to79__1">n</a></td><td class="diff_header" id="from79_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;27)&nbsp;Embedding&nbsp;+&nbsp;Linear&nbsp;—&nbsp;T15&nbsp;NEGATIVO:&nbsp;nessuna&nbsp;rimozione&nbsp;di&nbsp;dimensioni</span></td><td class="diff_next"><a href="#difflib_chg_to79__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from79_2">2</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn</td><td class="diff_next"></td><td class="diff_header" id="to79_1">1</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to79__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to79__2">n</a></td><td class="diff_header" id="to79_2">2</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;torch.nn.utils.prune&nbsp;as&nbsp;prune</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from79_3">3</td><td nowrap="nowrap">emb&nbsp;=&nbsp;nn.Embedding(100,&nbsp;32)</td><td class="diff_next"></td><td class="diff_header" id="to79_3">3</td><td nowrap="nowrap">emb&nbsp;=&nbsp;nn.Embedding(100,&nbsp;32)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from79_4">4</td><td nowrap="nowrap">head&nbsp;=&nbsp;nn.Linear(32,&nbsp;5)</td><td class="diff_next"></td><td class="diff_header" id="to79_4">4</td><td nowrap="nowrap">head&nbsp;=&nbsp;nn.Linear(32,&nbsp;5)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to79__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to79__top">t</a></td><td class="diff_header" id="to79_5">5</td><td nowrap="nowrap"><span class="diff_add">emb_cost&nbsp;=&nbsp;emb.num_embeddings&nbsp;*&nbsp;emb.embedding_dim</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to79_6">6</td><td nowrap="nowrap"><span class="diff_add">head_cost&nbsp;=&nbsp;head.in_features&nbsp;*&nbsp;head.out_features</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to79_7">7</td><td nowrap="nowrap"><span class="diff_add">for&nbsp;name,&nbsp;_&nbsp;in&nbsp;sorted({'emb':&nbsp;emb_cost,&nbsp;'head':&nbsp;head_cost}.items(),&nbsp;key=lambda&nbsp;x:&nbsp;x[1],&nbsp;reverse=True):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to79_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;module&nbsp;=&nbsp;emb&nbsp;if&nbsp;name&nbsp;==&nbsp;'emb'&nbsp;else&nbsp;head</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to79_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;prune.l1_unstructured(module,&nbsp;name='weight',&nbsp;amount=0.0)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to79_10">10</td><td nowrap="nowrap"><span class="diff_add">torch.save({'emb_state_dict':&nbsp;emb.state_dict(),&nbsp;'head_state_dict':&nbsp;head.state_dict()},&nbsp;'checkpoint.pth')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from79_5">5</td><td nowrap="nowrap">x&nbsp;=&nbsp;torch.randint(0,100,(4,10));&nbsp;z&nbsp;=&nbsp;emb(x).mean(dim=1);&nbsp;print(head(z).shape)</td><td class="diff_next"></td><td class="diff_header" id="to79_11">11</td><td nowrap="nowrap">x&nbsp;=&nbsp;torch.randint(0,100,(4,10));&nbsp;z&nbsp;=&nbsp;emb(x).mean(dim=1);&nbsp;print(head(z).shape)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

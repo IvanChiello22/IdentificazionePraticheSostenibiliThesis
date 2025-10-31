@@ -1,0 +1,15 @@
+--- BASE/neg_t15_27_embedding_torch.py
++++ gpt5mini/neg_t15_27_embedding_torch.py
+@@ -1,5 +1,11 @@
+-# 27) Embedding + Linear — T15 NEGATIVO: nessuna rimozione di dimensioni
+ import torch, torch.nn as nn
++import torch.nn.utils.prune as prune
+ emb = nn.Embedding(100, 32)
+ head = nn.Linear(32, 5)
++emb_cost = emb.num_embeddings * emb.embedding_dim
++head_cost = head.in_features * head.out_features
++for name, _ in sorted({'emb': emb_cost, 'head': head_cost}.items(), key=lambda x: x[1], reverse=True):
++    module = emb if name == 'emb' else head
++    prune.l1_unstructured(module, name='weight', amount=0.0)
++torch.save({'emb_state_dict': emb.state_dict(), 'head_state_dict': head.state_dict()}, 'checkpoint.pth')
+ x = torch.randint(0,100,(4,10)); z = emb(x).mean(dim=1); print(head(z).shape)

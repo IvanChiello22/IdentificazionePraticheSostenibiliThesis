@@ -1,0 +1,40 @@
+--- gpt4omini/neg_t11_48_knn_classifier.py
++++ gpt5mini/neg_t11_48_knn_classifier.py
+@@ -1,17 +1,25 @@
+-import numpy as np
+-from collections import Counter
+-
+ # 48) Classificatore k-NN (k=3) naive su punti 2D
+-X = np.array([(0,0),(1,0),(0,1),(1,1),(2,2)])
++import math
++X = [(0,0),(1,0),(0,1),(1,1),(2,2)]
+ y = [0,0,0,1,1]
+-query = np.array((0.9, 0.2))
++query = (0.9, 0.2)
+ k = 3
+-
+ # distanza euclidea
+-dists = np.linalg.norm(X - query, axis=1)
+-# ottieni gli indici dei k vicini più prossimi
+-nearest_indices = np.argsort(dists)[:k]
+-votes = Counter(y[idx] for idx in nearest_indices)
+-pred = votes.most_common(1)[0][0]
+-
++dists = []
++for i, (a,b) in enumerate(X):
++    dx = a - query[0]
++    dy = b - query[1]
++    d = math.hypot(dx, dy)
++    dists.append((d, i))
++# ordina per distanza usando built-in
++dists = sorted(dists)
++neighbors = dists[:k]
++votes = {}
++for _, idx in neighbors:
++    c = y[idx]
++    votes[c] = votes.get(c, 0) + 1
++pred = None
++for c in votes:
++    if pred is None or votes[c] > votes[pred]:
++        pred = c
+ print(pred)

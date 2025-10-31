@@ -1,0 +1,5 @@
+import torch, torch.nn as nn
+mha = nn.MultiheadAttention(embed_dim=32, num_heads=4, batch_first=True)
+x = torch.randn(3, 5, 32)
+y, _ = mha(x, x, x)
+print(y.shape)

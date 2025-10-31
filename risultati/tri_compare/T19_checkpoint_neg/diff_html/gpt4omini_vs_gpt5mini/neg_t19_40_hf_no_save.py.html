@@ -1,0 +1,61 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to119__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/neg_t19_40_hf_no_save.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t19_40_hf_no_save.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to119__0"><a href="#difflib_chg_to119__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to119__1">n</a></td><td class="diff_header" id="to119_1">1</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;40)&nbsp;Hugging&nbsp;Face&nbsp;Trainer&nbsp;—&nbsp;T19&nbsp;NEGATIVO:&nbsp;save_strategy='no'&nbsp;(nessun&nbsp;checkpoint)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from119_1">1</td><td nowrap="nowrap">from&nbsp;datasets&nbsp;import&nbsp;Dataset</td><td class="diff_next"></td><td class="diff_header" id="to119_2">2</td><td nowrap="nowrap">from&nbsp;datasets&nbsp;import&nbsp;Dataset</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to119__1"></td><td class="diff_header" id="from119_2">2</td><td nowrap="nowrap">from&nbsp;transformers&nbsp;import&nbsp;AutoModelForSequenceClassification,&nbsp;AutoTokenizer,&nbsp;TrainingArguments,&nbsp;Trainer</td><td class="diff_next"></td><td class="diff_header" id="to119_3">3</td><td nowrap="nowrap">from&nbsp;transformers&nbsp;import&nbsp;AutoModelForSequenceClassification,&nbsp;AutoTokenizer,&nbsp;TrainingArguments,&nbsp;Trainer</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from119_3">3</td><td nowrap="nowrap">tok&nbsp;=&nbsp;AutoTokenizer.from_pretrained('distilbert-base-uncased')</td><td class="diff_next"></td><td class="diff_header" id="to119_4">4</td><td nowrap="nowrap">tok&nbsp;=&nbsp;AutoTokenizer.from_pretrained('distilbert-base-uncased')</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from119_4">4</td><td nowrap="nowrap">texts&nbsp;=&nbsp;["sample"]*64;&nbsp;labels&nbsp;=&nbsp;[0,1]*32</td><td class="diff_next"></td><td class="diff_header" id="to119_5">5</td><td nowrap="nowrap">texts&nbsp;=&nbsp;["sample"]*64;&nbsp;labels&nbsp;=&nbsp;[0,1]*32</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from119_5">5</td><td nowrap="nowrap">ds&nbsp;=&nbsp;Dataset.from_dict({"text":texts,"label":labels}).map(lambda&nbsp;x:&nbsp;tok(x["text"],&nbsp;truncation=True),&nbsp;batched=True)</td><td class="diff_next"></td><td class="diff_header" id="to119_6">6</td><td nowrap="nowrap">ds&nbsp;=&nbsp;Dataset.from_dict({"text":texts,"label":labels}).map(lambda&nbsp;x:&nbsp;tok(x["text"],&nbsp;truncation=True),&nbsp;batched=True)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from119_6">6</td><td nowrap="nowrap">model&nbsp;=&nbsp;AutoModelForSequenceClassification.from_pretrained('distilbert-base-uncased',&nbsp;num_labels=2)</td><td class="diff_next"></td><td class="diff_header" id="to119_7">7</td><td nowrap="nowrap">model&nbsp;=&nbsp;AutoModelForSequenceClassification.from_pretrained('distilbert-base-uncased',&nbsp;num_labels=2)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to119__top">t</a></td><td class="diff_header" id="from119_7">7</td><td nowrap="nowrap">args&nbsp;=&nbsp;TrainingArguments(output_dir='out',&nbsp;per_device_train_batch_size=8,&nbsp;num_train_epochs=1,&nbsp;save_strategy='epoch',&nbsp;log</td><td class="diff_next"><a href="#difflib_chg_to119__top">t</a></td><td class="diff_header" id="to119_8">8</td><td nowrap="nowrap">args&nbsp;=&nbsp;TrainingArguments(output_dir='out',&nbsp;per_device_train_batch_size=8,&nbsp;num_train_epochs=1,&nbsp;save_strategy='epoch',&nbsp;<span class="diff_add">sav</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap">ging_steps=1000)</td><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap"><span class="diff_add">e_total_limit=2,&nbsp;</span>logging_steps=1000)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from119_8">8</td><td nowrap="nowrap">trainer&nbsp;=&nbsp;Trainer(model=model,&nbsp;args=args,&nbsp;train_dataset=ds)</td><td class="diff_next"></td><td class="diff_header" id="to119_9">9</td><td nowrap="nowrap">trainer&nbsp;=&nbsp;Trainer(model=model,&nbsp;args=args,&nbsp;train_dataset=ds)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from119_9">9</td><td nowrap="nowrap">trainer.train()</td><td class="diff_next"></td><td class="diff_header" id="to119_10">10</td><td nowrap="nowrap">trainer.train()</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from119_10">10</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to119_11">11</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

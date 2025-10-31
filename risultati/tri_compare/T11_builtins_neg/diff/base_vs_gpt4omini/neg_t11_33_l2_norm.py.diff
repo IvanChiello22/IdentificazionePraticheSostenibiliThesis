@@ -1,0 +1,13 @@
+--- BASE/neg_t11_33_l2_norm.py
++++ gpt4omini/neg_t11_33_l2_norm.py
+@@ -1,7 +1,6 @@
++import math
++
+ # 33) Norma L2 di un vettore
+ x = [3.0, 4.0]
+-s = 0.0
+-for v in x:
+-    s += v*v
+-norm = s ** 0.5
++norm = math.sqrt(sum(v * v for v in x))
+ print(norm)

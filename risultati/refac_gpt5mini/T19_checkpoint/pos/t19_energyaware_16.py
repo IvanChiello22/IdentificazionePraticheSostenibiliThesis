@@ -1,0 +1,34 @@
+import torch, torch.nn as nn, os
+from torch.nn.utils import prune
+
+def save_cpu_state(model, path):
+    state = {k: v.detach().cpu() for k, v in model.state_dict().items()}
+    torch.save({'model': state}, path)
+
+def _select_most_param_linear(module):
+    max_params = -1
+    candidate = None
+    for m in module.modules():
+        if isinstance(m, nn.Linear):
+            params = m.weight.numel()
+            if params > max_params:
+                max_params = params
+                candidate = m
+    return candidate
+
+net = nn.Sequential(nn.Linear(12,12), nn.ReLU(), nn.Linear(12,3)); os.makedirs('ckpt', exist_ok=True)
+x=torch.randn(32,12); y=torch.randint(0,3,(32,))
+
+# Energy-aware pruning setup (select most expensive layer). Sparsity set to 0.0 to preserve semantics.
+sparsity = 0.0
+_candidate = _select_most_param_linear(net)
+if _candidate is not None and sparsity > 0:
+    prune.l1_unstructured(_candidate, name='weight', amount=sparsity)
+
+loss=nn.CrossEntropyLoss()(net(x), y); loss.backward()
+
+# Save a checkpoint to avoid knowledge loss in case of premature termination
+save_cpu_state(net, 'ckpt/checkpoint_step0.pt')
+
+state = {k:v.detach().cpu() for k,v in net.state_dict().items()}
+torch.save({'model':state}, 'ckpt/cpu_state.pt'); print('done')

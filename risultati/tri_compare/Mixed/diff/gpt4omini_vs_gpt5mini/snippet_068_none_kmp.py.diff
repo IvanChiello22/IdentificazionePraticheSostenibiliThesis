@@ -1,0 +1,50 @@
+--- gpt4omini/snippet_068_none_kmp.py
++++ gpt5mini/snippet_068_none_kmp.py
+@@ -1,27 +1,32 @@
+-def kmp_table(pattern):
+-    pattern_length = len(pattern)
+-    lps = [0] * pattern_length
++# Snippet 68: mixed set
++# NONE — KMP string search (build prefix table), pure Python
++def kmp_table(p: str) -> list:
++    """Build longest proper prefix which is also suffix (LPS) table for pattern p."""
++    m = len(p)
++    lps = [0] * m
+     j = 0
+-    for i in range(1, pattern_length):
+-        while j > 0 and pattern[i] != pattern[j]:
++    for i in range(1, m):
++        while j > 0 and p[i] != p[j]:
+             j = lps[j - 1]
+-        if pattern[i] == pattern[j]:
++        if p[i] == p[j]:
+             j += 1
+             lps[i] = j
+     return lps
+ 
+-def kmp_search(text, pattern):
+-    lps = kmp_table(pattern)
++def kmp_search(s: str, p: str) -> list:
++    """Return list of start indices where pattern p is found in string s using KMP."""
++    m = len(p)
++    lps = kmp_table(p)
+     j = 0
+-    results = []
+-    for i, char in enumerate(text):
+-        while j > 0 and char != pattern[j]:
++    res = []
++    for i, ch in enumerate(s):
++        while j > 0 and ch != p[j]:
+             j = lps[j - 1]
+-        if char == pattern[j]:
++        if ch == p[j]:
+             j += 1
+-        if j == len(pattern):
+-            results.append(i - j + 1)
++        if j == m:
++            res.append(i - j + 1)
+             j = lps[j - 1]
+-    return results
++    return res
+ 
+ print(kmp_search("ababcabcabababd", "ababd"))

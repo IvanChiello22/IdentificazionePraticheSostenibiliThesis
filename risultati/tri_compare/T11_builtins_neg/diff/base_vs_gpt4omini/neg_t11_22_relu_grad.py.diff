@@ -1,0 +1,10 @@
+--- BASE/neg_t11_22_relu_grad.py
++++ gpt4omini/neg_t11_22_relu_grad.py
+@@ -1,6 +1,2 @@
+-# 22) ReLU grad
+-x = [-1.0, 0.5, 3.0]
+-grad = []
+-for v in x:
+-    grad.append(1.0 if v > 0 else 0.0)
++grad = [1.0 if v > 0 else 0.0 for v in x]
+ print(grad)

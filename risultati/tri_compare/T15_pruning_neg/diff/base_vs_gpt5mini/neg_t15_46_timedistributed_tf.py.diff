@@ -1,0 +1,11 @@
+--- BASE/neg_t15_46_timedistributed_tf.py
++++ gpt5mini/neg_t15_46_timedistributed_tf.py
+@@ -5,3 +5,8 @@
+ x = layers.TimeDistributed(layers.Dense(64, activation='relu'))(inp)
+ out = layers.TimeDistributed(layers.Dense(5))(x)
+ model = keras.Model(inp,out); print(model.count_params())
++model.compile(optimizer='adam', loss='mse')
++x_train = tf.random.normal((4, 10, 32))
++y_train = tf.random.normal((4, 10, 5))
++checkpoint_cb = keras.callbacks.ModelCheckpoint('checkpoint.h5', save_weights_only=True)
++model.fit(x_train, y_train, epochs=1, callbacks=[checkpoint_cb], verbose=0)

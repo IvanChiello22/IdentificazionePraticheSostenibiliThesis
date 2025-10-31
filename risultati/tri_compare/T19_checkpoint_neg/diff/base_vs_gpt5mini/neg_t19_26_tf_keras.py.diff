@@ -1,0 +1,44 @@
+--- BASE/neg_t19_26_tf_keras.py
++++ gpt5mini/neg_t19_26_tf_keras.py
+@@ -5,4 +5,40 @@
+ x = layers.Dense(64, activation='relu')(x); out = layers.Dense(32)(x)
+ m = keras.Model(inp,out); m.compile(optimizer='adam', loss='mse')
+ x = np.random.randn(32,6,32).astype('float32'); y = np.random.randn(32,6,32).astype('float32')
+-m.fit(x,y,epochs=2,verbose=0); print('done')
++
++class EnergyAwarePruningCallback(tf.keras.callbacks.Callback):
++    def __init__(self, layer_name_substr='multi_head_attention', prune_fraction=0.10):
++        super().__init__()
++        self.layer_name_substr = layer_name_substr
++        self.prune_fraction = float(prune_fraction)
++
++    def _prune_variable(self, var):
++        # prune the smallest-magnitude weights in the variable according to prune_fraction
++        vals = tf.abs(var)
++        flat = tf.reshape(vals, [-1])
++        total = int(tf.size(flat).numpy())
++        if total == 0:
++            return
++        k = max(1, int(total * self.prune_fraction))
++        sorted_vals = tf.sort(flat)
++        threshold = sorted_vals[k-1] if k-1 < total else sorted_vals[-1]
++        new_val = tf.where(tf.abs(var) <= threshold, tf.zeros_like(var), var)
++        var.assign(new_val)
++
++    def _prune_model(self):
++        for w in self.model.trainable_weights:
++            if self.layer_name_substr in w.name:
++                self._prune_variable(w)
++
++    def on_train_begin(self, logs=None):
++        # initial pruning before training to reduce energy footprint from the most intensive layer
++        self._prune_model()
++
++    def on_epoch_end(self, epoch, logs=None):
++        # incremental pruning after each epoch
++        self._prune_model()
++
++checkpoint_cb = tf.keras.callbacks.ModelCheckpoint('ckpt.keras', save_weights_only=True, save_freq='epoch')
++prune_cb = EnergyAwarePruningCallback()
++
++m.fit(x,y,epochs=2,verbose=0, callbacks=[prune_cb, checkpoint_cb]); print('done')

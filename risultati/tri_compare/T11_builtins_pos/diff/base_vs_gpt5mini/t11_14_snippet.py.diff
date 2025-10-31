@@ -1,0 +1,21 @@
+--- BASE/t11_14_snippet.py
++++ gpt5mini/t11_14_snippet.py
+@@ -1,6 +1,14 @@
+-# T11 POS — snippet 14
+ import numpy as np
+-x=np.random.randn(20000);k=np.hanning(512)
+-n=len(x)+len(k)-1;nfft=1<<((n-1).bit_length())
+-y=np.fft.irfft(np.fft.rfft(x,nfft)*np.fft.rfft(k,nfft),nfft)[:n]
++x = np.random.randn(20000)
++k = np.hanning(512)
++
++def _next_fft_len(target):
++    try:
++        return np.fft.next_fast_len(target)
++    except AttributeError:
++        return 1 << ((target - 1).bit_length())
++
++n = len(x) + len(k) - 1
++nfft = _next_fft_len(n)
++y = np.fft.irfft(np.fft.rfft(x, nfft) * np.fft.rfft(k, nfft), nfft)[:n]
+ print(y.shape)

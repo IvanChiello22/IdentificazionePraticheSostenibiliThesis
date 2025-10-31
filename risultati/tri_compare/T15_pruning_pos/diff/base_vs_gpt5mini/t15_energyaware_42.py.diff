@@ -1,0 +1,16 @@
+--- BASE/t15_energyaware_42.py
++++ gpt5mini/t15_energyaware_42.py
+@@ -17,6 +17,13 @@
+ 
+ def prune_conv_in_channels_energy(conv: nn.Conv2d, keep_ratio: float, in_shape=(1,16,32,32)):
+     with torch.no_grad():
++        # checkpoint to avoid knowledge loss in case of premature termination
++        try:
++            checkpoint = {k: v.clone() for k, v in conv.state_dict().items()}
++            torch.save(checkpoint, f'conv_checkpoint_{id(conv)}.pth')
++        except Exception:
++            pass
++
+         energy = conv_energy_per_in_channel(conv, in_shape)
+         W = conv.weight.detach().abs()  # [Cout,Cin,kh,kw]
+         importances = W.mean(dim=(0,2,3))  # per canale input

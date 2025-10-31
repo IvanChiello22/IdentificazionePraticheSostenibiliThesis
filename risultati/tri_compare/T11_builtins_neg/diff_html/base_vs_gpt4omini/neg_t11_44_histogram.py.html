@@ -1,0 +1,64 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to129__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t11_44_histogram.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/neg_t11_44_histogram.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to129__0"><a href="#difflib_chg_to129__1">n</a></td><td class="diff_header" id="from129_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;44)&nbsp;Istogramma&nbsp;a&nbsp;bin&nbsp;di&nbsp;ampiezza&nbsp;fissa&nbsp;(senza&nbsp;librerie)</span></td><td class="diff_next"><a href="#difflib_chg_to129__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to129__1"></td><td class="diff_header" id="from129_2">2</td><td nowrap="nowrap">data&nbsp;=&nbsp;[0.2,&nbsp;1.1,&nbsp;1.7,&nbsp;2.0,&nbsp;2.4,&nbsp;2.9,&nbsp;3.1]</td><td class="diff_next"></td><td class="diff_header" id="to129_1">1</td><td nowrap="nowrap">data&nbsp;=&nbsp;[0.2,&nbsp;1.1,&nbsp;1.7,&nbsp;2.0,&nbsp;2.4,&nbsp;2.9,&nbsp;3.1]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from129_3">3</td><td nowrap="nowrap">bin_width&nbsp;=&nbsp;1.0</td><td class="diff_next"></td><td class="diff_header" id="to129_2">2</td><td nowrap="nowrap">bin_width&nbsp;=&nbsp;1.0</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from129_4">4</td><td nowrap="nowrap">min_v&nbsp;=&nbsp;0.0</td><td class="diff_next"></td><td class="diff_header" id="to129_3">3</td><td nowrap="nowrap">min_v&nbsp;=&nbsp;0.0</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to129__2"></td><td class="diff_header" id="from129_5">5</td><td nowrap="nowrap">max_v&nbsp;=&nbsp;3.0</td><td class="diff_next"></td><td class="diff_header" id="to129_4">4</td><td nowrap="nowrap">max_v&nbsp;=&nbsp;3.0</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from129_6">6</td><td nowrap="nowrap">num_bins&nbsp;=&nbsp;int((max_v&nbsp;-&nbsp;min_v)&nbsp;/&nbsp;bin_width)</td><td class="diff_next"></td><td class="diff_header" id="to129_5">5</td><td nowrap="nowrap">num_bins&nbsp;=&nbsp;int((max_v&nbsp;-&nbsp;min_v)&nbsp;/&nbsp;bin_width)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to129__2">n</a></td><td class="diff_header" id="from129_7">7</td><td nowrap="nowrap">bins&nbsp;=&nbsp;[0]*num_bins</td><td class="diff_next"><a href="#difflib_chg_to129__2">n</a></td><td class="diff_header" id="to129_6">6</td><td nowrap="nowrap">bins&nbsp;=&nbsp;[0]<span class="diff_add">&nbsp;</span>*<span class="diff_add">&nbsp;</span>num_bins</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to129_7">7</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from129_8">8</td><td nowrap="nowrap">for&nbsp;v&nbsp;in&nbsp;data:</td><td class="diff_next"></td><td class="diff_header" id="to129_8">8</td><td nowrap="nowrap">for&nbsp;v&nbsp;in&nbsp;data:</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to129__top">t</a></td><td class="diff_header" id="from129_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;if<span class="diff_sub">&nbsp;v&nbsp;&lt;</span>&nbsp;min_v&nbsp;<span class="diff_chg">or</span>&nbsp;v&nbsp;<span class="diff_chg">&gt;=</span>&nbsp;max_v:</td><td class="diff_next"><a href="#difflib_chg_to129__top">t</a></td><td class="diff_header" id="to129_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;min_v&nbsp;<span class="diff_chg">&lt;=</span>&nbsp;v&nbsp;<span class="diff_chg">&lt;</span>&nbsp;max_v:</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from129_10">10</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from129_11">11</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;=&nbsp;int((v&nbsp;-&nbsp;min_v)&nbsp;//&nbsp;bin_width)</td><td class="diff_next"></td><td class="diff_header" id="to129_10">10</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;=&nbsp;int((v&nbsp;-&nbsp;min_v)&nbsp;//&nbsp;bin_width)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from129_12">12</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;bins[b]&nbsp;+=&nbsp;1</td><td class="diff_next"></td><td class="diff_header" id="to129_11">11</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;bins[b]&nbsp;+=&nbsp;1</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to129_12">12</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from129_13">13</td><td nowrap="nowrap">print(bins)&nbsp;&nbsp;#&nbsp;conteggi&nbsp;per&nbsp;bin&nbsp;[0-1),&nbsp;[1-2),&nbsp;[2-3)</td><td class="diff_next"></td><td class="diff_header" id="to129_13">13</td><td nowrap="nowrap">print(bins)&nbsp;&nbsp;#&nbsp;conteggi&nbsp;per&nbsp;bin&nbsp;[0-1),&nbsp;[1-2),&nbsp;[2-3)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

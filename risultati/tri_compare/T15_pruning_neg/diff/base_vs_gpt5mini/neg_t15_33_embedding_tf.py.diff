@@ -1,0 +1,13 @@
+--- BASE/neg_t15_33_embedding_tf.py
++++ gpt5mini/neg_t15_33_embedding_tf.py
+@@ -3,6 +3,8 @@
+ from tensorflow import keras; from tensorflow.keras import layers
+ inp = keras.Input(shape=(10,))
+ x = layers.Embedding(100, 32)(inp)
+-x = tf.reduce_mean(x, axis=1)
++x = layers.GlobalAveragePooling1D()(x)
+ out = layers.Dense(5)(x)
+-model = keras.Model(inp,out); print(model.count_params())
++model = keras.Model(inp,out)
++checkpoint_cb = keras.callbacks.ModelCheckpoint(filepath='model_checkpoint.h5', save_weights_only=True)
++print(model.count_params())

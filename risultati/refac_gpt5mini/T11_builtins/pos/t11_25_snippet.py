@@ -1,0 +1,24 @@
+import numpy as np
+B,T,D,H=2,64,128,8
+d=D//H
+Q=np.random.randn(B,H,T,d);K=np.random.randn(B,H,T,d);V=np.random.randn(B,H,T,d)
+def _stable_softmax(x, axis=-1):
+    e = np.exp(x - np.max(x, axis=axis, keepdims=True))
+    return e / np.sum(e, axis=axis, keepdims=True)
+S=np.einsum('bhtd,bhsd->bhts',Q,K)/np.sqrt(d)
+P=_stable_softmax(S, axis=-1)
+O=np.einsum('bhts,bhsd->bhtd',P,V)
+ENABLE_PRUNING=False
+ENABLE_CHECKPOINT=False
+if ENABLE_PRUNING:
+    energy = (Q**2).sum(axis=(2,3)) + (K**2).sum(axis=(2,3)) + (V**2).sum(axis=(2,3))
+    idx = np.argmax(energy, axis=1)
+    for b in range(B):
+        h = idx[b]
+        Q[b,h] = 0; K[b,h] = 0; V[b,h] = 0
+    S=np.einsum('bhtd,bhsd->bhts',Q,K)/np.sqrt(d)
+    P=_stable_softmax(S, axis=-1)
+    O=np.einsum('bhts,bhsd->bhtd',P,V)
+if ENABLE_CHECKPOINT:
+    np.save('checkpoint_O.npy', O)
+print(O.shape)

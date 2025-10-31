@@ -1,0 +1,29 @@
+--- gpt4omini/neg_t19_47_extra.py
++++ gpt5mini/neg_t19_47_extra.py
+@@ -1,15 +1,17 @@
++# 47) scikit-learn — T19 NEGATIVO: RandomForest senza export
+ from sklearn.ensemble import RandomForestClassifier
+ from sklearn.datasets import make_classification
+-from sklearn.model_selection import train_test_split
+-import joblib
++import pickle
+ 
+-X, y = make_classification(n_samples=300, n_features=12, random_state=0)
+-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
++X,y = make_classification(n_samples=300, n_features=12, random_state=0)
++clf = RandomForestClassifier(n_estimators=1, random_state=0, warm_start=True)
++target_n_estimators = 50
++checkpoint_step = 10
+ 
+-clf = RandomForestClassifier(n_estimators=50, random_state=0)
+-clf.fit(X_train, y_train)
+-
+-# Save the model as a checkpoint
+-joblib.dump(clf, 'random_forest_model.pkl')
++for n in range(checkpoint_step, target_n_estimators + 1, checkpoint_step):
++    clf.set_params(n_estimators=n)
++    clf.fit(X, y)
++    with open(f'clf_checkpoint_{n}.pkl', 'wb') as f:
++        pickle.dump(clf, f)
+ 
+ print('done')

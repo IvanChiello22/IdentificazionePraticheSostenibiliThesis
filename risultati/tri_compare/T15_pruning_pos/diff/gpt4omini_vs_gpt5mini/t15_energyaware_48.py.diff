@@ -1,0 +1,102 @@
+--- gpt4omini/t15_energyaware_48.py
++++ gpt5mini/t15_energyaware_48.py
+@@ -1,3 +1,6 @@
++# T15 POS — Energy-aware pruning (TensorFlow): per-head attention pruning proxy
++import os
++import tempfile
+ import tensorflow as tf
+ from tensorflow import keras
+ from tensorflow.keras import layers
+@@ -5,48 +8,57 @@
+ class SimpleMHA(keras.layers.Layer):
+     def __init__(self, d_model=64, num_heads=4):
+         super().__init__()
+-        self.d_model = d_model
+-        self.num_heads = num_heads
+-        self.dk = d_model // num_heads
+-        self.qkv = layers.Dense(3 * d_model)
+-        self.o = layers.Dense(d_model)
+-
++        self.d_model = d_model; self.num_heads = num_heads; self.dk = d_model//num_heads
++        self.qkv = layers.Dense(3*d_model); self.o = layers.Dense(d_model)
+     def call(self, x):
+-        B, T, D = tf.shape(x)[0], tf.shape(x)[1], self.d_model
++        B,T,D = tf.shape(x)[0], tf.shape(x)[1], self.d_model
+         qkv = self.qkv(x)
+-        q, k, v = tf.split(qkv, 3, axis=-1)
+-        q = tf.reshape(q, [B, T, self.num_heads, self.dk])
+-        k = tf.reshape(k, [B, T, self.num_heads, self.dk])
+-        v = tf.reshape(v, [B, T, self.num_heads, self.dk])
+-        q = tf.transpose(q, [0, 2, 1, 3])
+-        k = tf.transpose(k, [0, 2, 1, 3])
+-        v = tf.transpose(v, [0, 2, 1, 3])
+-        scores = tf.matmul(q, k, transpose_b=True) / tf.sqrt(tf.cast(self.dk, tf.float32))
++        q,k,v = tf.split(qkv, 3, axis=-1)
++        q = tf.reshape(q, [B, T, self.num_heads, self.dk]); k = tf.reshape(k, [B, T, self.num_heads, self.dk]); v = tf.reshape(v, [B, T, self.num_heads, self.dk])
++        q = tf.transpose(q, [0,2,1,3]); k = tf.transpose(k, [0,2,1,3]); v = tf.transpose(v, [0,2,1,3])
++        scores = tf.matmul(q, k, transpose_b=True)/tf.sqrt(tf.cast(self.dk, tf.float32))
+         attn = tf.nn.softmax(scores, axis=-1)
+         out = tf.matmul(attn, v)
+-        out = tf.reshape(tf.transpose(out, [0, 2, 1, 3]), [B, T, self.d_model])
++        out = tf.reshape(tf.transpose(out,[0,2,1,3]), [B,T,self.d_model])
+         return self.o(out)
+ 
+-def energy_per_head(T, dk):
+-    return T * T * dk + T * T + T * dk
++def energy_per_head(T, dk): return T*T*dk + T*T + T*dk
+ 
+ def prune_heads_energy(layer: SimpleMHA, keep_ratio=0.5, T=64):
+-    Wout = layer.o.kernel
+-    H = layer.num_heads
+-    dk = layer.dk
+-    energy = tf.cast(tf.ones([H]) * energy_per_head(T, dk), tf.float32)
+-    Wblocks = tf.reshape(Wout, [layer.d_model, H, dk])
+-    imp = tf.reduce_mean(tf.abs(Wblocks), axis=[0, 2])
+-    score = imp / (energy + 1e-9)
+-    k = tf.maximum(1, tf.cast(tf.round(keep_ratio * tf.cast(H, tf.float32)), tf.int32))
+-    keep = tf.argsort(score, direction='DESCENDING')[:k]
+-    new_in = k * dk
+-    Wnew = Wout[:, :new_in]
+-    layer.o.kernel.assign(Wnew)
+-    layer.num_heads = k.numpy()
++    Wout = layer.o.kernel  # [D, D]
++    H = layer.num_heads; dk = layer.dk
++    energy = tf.cast(tf.ones([H])*energy_per_head(T, dk), tf.float32)
++    Wblocks = tf.reshape(Wout, [layer.d_model, H, dk])  # [D, H, dk]
++    imp = tf.reduce_mean(tf.abs(Wblocks), axis=[0,2])   # [H]
++    score = imp/(energy+1e-9)
++    num_keep = tf.maximum(1, tf.cast(tf.round(keep_ratio*tf.cast(H, tf.float32)), tf.int32))
++    sorted_idx = tf.argsort(score, direction='DESCENDING')
++    keep_idx = sorted_idx[:num_keep]
+ 
+-x = tf.random.normal([2, 64, 64])
+-mha = SimpleMHA(64, 4)
++    # checkpoint current kernel to avoid knowledge loss on premature termination or error
++    tmp_dir = tempfile.mkdtemp()
++    ckpt = tf.train.Checkpoint(kernel=Wout)
++    ckpt_path = ckpt.save(os.path.join(tmp_dir, "mha_ckpt"))
++
++    try:
++        # Build a column mask that keeps whole head blocks (each block has dk columns)
++        total_cols = H * dk
++        col_range = tf.range(total_cols)  # [H*dk]
++        head_of_col = col_range // dk  # which head each column belongs to
++        # keep_idx shape [num_keep]; compare to head_of_col to build boolean mask per column
++        keep_bool = tf.reduce_any(tf.equal(tf.expand_dims(head_of_col, 1), tf.expand_dims(keep_idx, 0)), axis=1)
++        mask_cols = tf.cast(keep_bool, Wout.dtype)  # [H*dk]
++        mask_matrix = tf.reshape(mask_cols, [1, total_cols])
++        mask_matrix = tf.broadcast_to(mask_matrix, tf.shape(Wout))
++        Wmasked = Wout * mask_matrix
++        layer.o.kernel.assign(Wmasked)
++        layer.num_heads = int(num_keep.numpy())
++    except Exception:
++        # restore checkpoint in case of failure to preserve original weights
++        ckpt.restore(ckpt_path).assert_existing_objects_matched()
++        raise
++
++x = tf.random.normal([2,64,64])
++mha = SimpleMHA(64,4)
+ prune_heads_energy(mha, 0.5, 64)
+-y = mha(x)
+-print(y.shape, 'heads', mha.num_heads)
++y = mha(x); print(y.shape, 'heads', mha.num_heads)

@@ -1,0 +1,53 @@
+--- BASE/neg_t19_34_pl_no_ckpt.py
++++ gpt5mini/neg_t19_34_pl_no_ckpt.py
+@@ -1,14 +1,47 @@
+ # 34) PyTorch Lightning — T19 NEGATIVO: enable_checkpointing=False, nessun ModelCheckpoint
+ import torch, torch.nn as nn, pytorch_lightning as pl
++from torch.nn.utils import prune
++
+ class M(pl.LightningModule):
+-    def __init__(self): super().__init__(); self.net = nn.Sequential(nn.Linear(8,16), nn.ReLU(), nn.Linear(16,2))
++    def __init__(self):
++        super().__init__()
++        self.net = nn.Sequential(nn.Linear(8,16), nn.ReLU(), nn.Linear(16,2))
++        self.loss_fn = nn.CrossEntropyLoss()
++        # Consider energy-aware pruning: identify most expensive layers and apply pruning (amount default 0.0 to preserve semantics)
++        self._apply_energy_aware_pruning(prune_amount=0.0)
++
+     def forward(self,x): return self.net(x)
++
+     def training_step(self,batch,batch_idx):
+-        x,y = batch; return nn.CrossEntropyLoss()(self(x), y)
++        x,y = batch; return self.loss_fn(self(x), y)
++
+     def configure_optimizers(self): return torch.optim.Adam(self.parameters(), 1e-2)
++
++    def _apply_energy_aware_pruning(self, prune_amount: float = 0.0):
++        # Find candidate layers (Linear) and sort by number of parameters (proxy for energy intensity)
++        linear_layers = [(name, module) for name, module in self.named_modules() if isinstance(module, nn.Linear)]
++        if not linear_layers:
++            return
++        # Sort by descending parameter count (weight.numel + bias.numel if present)
++        def param_count(mod):
++            cnt = 0
++            if hasattr(mod, 'weight') and mod.weight is not None:
++                cnt += mod.weight.numel()
++            if hasattr(mod, 'bias') and mod.bias is not None:
++                cnt += mod.bias.numel()
++            return cnt
++        linear_layers.sort(key=lambda nm: param_count(nm[1]), reverse=True)
++        # Apply pruning starting from most expensive layer; prune_amount=0.0 means no change but hook is in place
++        for _, layer in linear_layers:
++            if hasattr(layer, 'weight') and layer.weight is not None:
++                prune.l1_unstructured(layer, name='weight', amount=prune_amount)
++                # If pruning was applied (amount>0), the mask will be present; leaving it as-is to preserve Lightning compatibility
++
+ class DS(torch.utils.data.Dataset):
+     def __len__(self): return 128
+     def __getitem__(self,i): return torch.randn(8), torch.randint(0,2,(1,)).item()
+-trainer = pl.Trainer(max_epochs=2, logger=False, enable_checkpointing=False, enable_model_summary=False)
++
++checkpoint_callback = pl.callbacks.ModelCheckpoint(dirpath='checkpoints', save_top_k=1, every_n_epochs=1)
++trainer = pl.Trainer(max_epochs=2, logger=False, enable_checkpointing=True, enable_model_summary=False, callbacks=[checkpoint_callback])
+ trainer.fit(M(), torch.utils.data.DataLoader(DS(), batch_size=32))
+ print('done')

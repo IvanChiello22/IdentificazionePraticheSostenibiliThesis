@@ -1,0 +1,19 @@
+# 50) Un singolo step di Adam su un vettore di parametri (senza librerie)
+params = [0.5, -0.3, 1.2]
+grads =  [0.1, -0.2, 0.05]
+m = [0.0, 0.0, 0.0]
+v = [0.0, 0.0, 0.0]
+t = 1
+alpha = 0.001
+beta1 = 0.9
+beta2 = 0.999
+eps = 1e-8
+
+for i in range(len(params)):
+    m[i] = beta1*m[i] + (1-beta1)*grads[i]
+    v[i] = beta2*v[i] + (1-beta2)*(grads[i]*grads[i])
+    mhat = m[i] / (1 - beta1**t)
+    vhat = v[i] / (1 - beta2**t)
+    params[i] -= alpha * mhat / ((vhat**0.5) + eps)
+
+print(params)

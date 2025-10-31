@@ -1,0 +1,13 @@
+--- BASE/neg_t11_27_clip_values.py
++++ gpt4omini/neg_t11_27_clip_values.py
+@@ -1,9 +1,4 @@
+-# 27) Clip manuale valori
+ x = [-5, -1, 0, 3, 10]
+ low, high = -2, 4
+-y = []
+-for v in x:
+-    if v < low: y.append(low)
+-    elif v > high: y.append(high)
+-    else: y.append(v)
++y = [max(low, min(v, high)) for v in x]
+ print(y)

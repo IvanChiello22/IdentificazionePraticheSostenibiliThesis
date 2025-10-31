@@ -1,0 +1,75 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to60__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/snippet_021_t11_haversine__t19_atomic.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/snippet_021_t11_haversine__t19_atomic.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next"><a href="#difflib_chg_to60__top">t</a></td><td class="diff_header" id="from60_1">1</td><td nowrap="nowrap">#&nbsp;Snippet&nbsp;21:&nbsp;t11_haversine&nbsp;+&nbsp;t19_atomic</td><td class="diff_next"><a href="#difflib_chg_to60__top">t</a></td><td class="diff_header" id="to60_1">1</td><td nowrap="nowrap">#&nbsp;Snippet&nbsp;21:&nbsp;t11_haversine&nbsp;+&nbsp;t19_atomic</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_2">2</td><td nowrap="nowrap">#&nbsp;T11&nbsp;—&nbsp;NumPy:&nbsp;vectorized&nbsp;Haversine&nbsp;distances&nbsp;(no&nbsp;loops)</td><td class="diff_next"></td><td class="diff_header" id="to60_2">2</td><td nowrap="nowrap">#&nbsp;T11&nbsp;—&nbsp;NumPy:&nbsp;vectorized&nbsp;Haversine&nbsp;distances&nbsp;(no&nbsp;loops)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_3">3</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"></td><td class="diff_header" id="to60_3">3</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_4">4</td><td nowrap="nowrap">R&nbsp;=&nbsp;6371.0</td><td class="diff_next"></td><td class="diff_header" id="to60_4">4</td><td nowrap="nowrap">R&nbsp;=&nbsp;6371.0</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_5">5</td><td nowrap="nowrap">lat1&nbsp;=&nbsp;np.deg2rad(np.random.uniform(-90,&nbsp;90,&nbsp;(1000,1)))</td><td class="diff_next"></td><td class="diff_header" id="to60_5">5</td><td nowrap="nowrap">lat1&nbsp;=&nbsp;np.deg2rad(np.random.uniform(-90,&nbsp;90,&nbsp;(1000,1)))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_6">6</td><td nowrap="nowrap">lon1&nbsp;=&nbsp;np.deg2rad(np.random.uniform(-180,180,&nbsp;(1000,1)))</td><td class="diff_next"></td><td class="diff_header" id="to60_6">6</td><td nowrap="nowrap">lon1&nbsp;=&nbsp;np.deg2rad(np.random.uniform(-180,180,&nbsp;(1000,1)))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_7">7</td><td nowrap="nowrap">lat2&nbsp;=&nbsp;np.deg2rad(np.random.uniform(-90,&nbsp;90,&nbsp;(1,1200)))</td><td class="diff_next"></td><td class="diff_header" id="to60_7">7</td><td nowrap="nowrap">lat2&nbsp;=&nbsp;np.deg2rad(np.random.uniform(-90,&nbsp;90,&nbsp;(1,1200)))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_8">8</td><td nowrap="nowrap">lon2&nbsp;=&nbsp;np.deg2rad(np.random.uniform(-180,180,&nbsp;(1,1200)))</td><td class="diff_next"></td><td class="diff_header" id="to60_8">8</td><td nowrap="nowrap">lon2&nbsp;=&nbsp;np.deg2rad(np.random.uniform(-180,180,&nbsp;(1,1200)))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_9">9</td><td nowrap="nowrap">dlat&nbsp;=&nbsp;lat2&nbsp;-&nbsp;lat1</td><td class="diff_next"></td><td class="diff_header" id="to60_9">9</td><td nowrap="nowrap">dlat&nbsp;=&nbsp;lat2&nbsp;-&nbsp;lat1</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_10">10</td><td nowrap="nowrap">dlon&nbsp;=&nbsp;lon2&nbsp;-&nbsp;lon1</td><td class="diff_next"></td><td class="diff_header" id="to60_10">10</td><td nowrap="nowrap">dlon&nbsp;=&nbsp;lon2&nbsp;-&nbsp;lon1</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_11">11</td><td nowrap="nowrap">a&nbsp;=&nbsp;np.sin(dlat/2)**2&nbsp;+&nbsp;np.cos(lat1)*np.cos(lat2)*np.sin(dlon/2)**2</td><td class="diff_next"></td><td class="diff_header" id="to60_11">11</td><td nowrap="nowrap">a&nbsp;=&nbsp;np.sin(dlat/2)**2&nbsp;+&nbsp;np.cos(lat1)*np.cos(lat2)*np.sin(dlon/2)**2</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_12">12</td><td nowrap="nowrap">c&nbsp;=&nbsp;2*np.arctan2(np.sqrt(a),&nbsp;np.sqrt(1-a))</td><td class="diff_next"></td><td class="diff_header" id="to60_12">12</td><td nowrap="nowrap">c&nbsp;=&nbsp;2*np.arctan2(np.sqrt(a),&nbsp;np.sqrt(1-a))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_13">13</td><td nowrap="nowrap">D&nbsp;=&nbsp;R*c</td><td class="diff_next"></td><td class="diff_header" id="to60_13">13</td><td nowrap="nowrap">D&nbsp;=&nbsp;R*c</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_14">14</td><td nowrap="nowrap">print(D.shape,&nbsp;D.mean())</td><td class="diff_next"></td><td class="diff_header" id="to60_14">14</td><td nowrap="nowrap">print(D.shape,&nbsp;D.mean())</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_15">15</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to60_15">15</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_16">16</td><td nowrap="nowrap">#&nbsp;T19&nbsp;—&nbsp;Atomic&nbsp;checkpoint&nbsp;writes&nbsp;(write&nbsp;to&nbsp;tmp&nbsp;then&nbsp;rename),&nbsp;avoid&nbsp;partial&nbsp;files</td><td class="diff_next"></td><td class="diff_header" id="to60_16">16</td><td nowrap="nowrap">#&nbsp;T19&nbsp;—&nbsp;Atomic&nbsp;checkpoint&nbsp;writes&nbsp;(write&nbsp;to&nbsp;tmp&nbsp;then&nbsp;rename),&nbsp;avoid&nbsp;partial&nbsp;files</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_17">17</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn,&nbsp;os,&nbsp;tempfile,&nbsp;shutil</td><td class="diff_next"></td><td class="diff_header" id="to60_17">17</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn,&nbsp;os,&nbsp;tempfile,&nbsp;shutil</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_18">18</td><td nowrap="nowrap">m&nbsp;=&nbsp;nn.Sequential(nn.Linear(20,40),&nbsp;nn.ReLU(),&nbsp;nn.Linear(40,3));&nbsp;os.makedirs('ckpt',&nbsp;exist_ok=True)</td><td class="diff_next"></td><td class="diff_header" id="to60_18">18</td><td nowrap="nowrap">m&nbsp;=&nbsp;nn.Sequential(nn.Linear(20,40),&nbsp;nn.ReLU(),&nbsp;nn.Linear(40,3));&nbsp;os.makedirs('ckpt',&nbsp;exist_ok=True)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_19">19</td><td nowrap="nowrap">state&nbsp;=&nbsp;{'model':&nbsp;m.state_dict(),&nbsp;'meta':&nbsp;{'epoch':&nbsp;1}}</td><td class="diff_next"></td><td class="diff_header" id="to60_19">19</td><td nowrap="nowrap">state&nbsp;=&nbsp;{'model':&nbsp;m.state_dict(),&nbsp;'meta':&nbsp;{'epoch':&nbsp;1}}</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_20">20</td><td nowrap="nowrap">fd,&nbsp;tmp&nbsp;=&nbsp;tempfile.mkstemp(dir='ckpt',&nbsp;prefix='tmp_',&nbsp;suffix='.pt');&nbsp;os.close(fd)</td><td class="diff_next"></td><td class="diff_header" id="to60_20">20</td><td nowrap="nowrap">fd,&nbsp;tmp&nbsp;=&nbsp;tempfile.mkstemp(dir='ckpt',&nbsp;prefix='tmp_',&nbsp;suffix='.pt');&nbsp;os.close(fd)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_21">21</td><td nowrap="nowrap">try:</td><td class="diff_next"></td><td class="diff_header" id="to60_21">21</td><td nowrap="nowrap">try:</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_22">22</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;torch.save(state,&nbsp;tmp)</td><td class="diff_next"></td><td class="diff_header" id="to60_22">22</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;torch.save(state,&nbsp;tmp)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_23">23</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;shutil.move(tmp,&nbsp;'ckpt/model.pt')</td><td class="diff_next"></td><td class="diff_header" id="to60_23">23</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;shutil.move(tmp,&nbsp;'ckpt/model.pt')</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_24">24</td><td nowrap="nowrap">finally:</td><td class="diff_next"></td><td class="diff_header" id="to60_24">24</td><td nowrap="nowrap">finally:</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_25">25</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;os.path.exists(tmp):&nbsp;os.remove(tmp)</td><td class="diff_next"></td><td class="diff_header" id="to60_25">25</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;os.path.exists(tmp):&nbsp;os.remove(tmp)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from60_26">26</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to60_26">26</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

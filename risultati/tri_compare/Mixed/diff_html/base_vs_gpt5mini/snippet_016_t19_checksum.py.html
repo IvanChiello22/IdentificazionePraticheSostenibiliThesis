@@ -1,0 +1,60 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to46__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/snippet_016_t19_checksum.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/snippet_016_t19_checksum.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next"><a href="#difflib_chg_to46__top">t</a></td><td class="diff_header" id="from46_1">1</td><td nowrap="nowrap">#&nbsp;Snippet&nbsp;16:&nbsp;t19_checksum</td><td class="diff_next"><a href="#difflib_chg_to46__top">t</a></td><td class="diff_header" id="to46_1">1</td><td nowrap="nowrap">#&nbsp;Snippet&nbsp;16:&nbsp;t19_checksum</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from46_2">2</td><td nowrap="nowrap">#&nbsp;T19&nbsp;—&nbsp;Deduplicate&nbsp;checkpoints&nbsp;by&nbsp;SHA256&nbsp;(skip&nbsp;identical&nbsp;content)</td><td class="diff_next"></td><td class="diff_header" id="to46_2">2</td><td nowrap="nowrap">#&nbsp;T19&nbsp;—&nbsp;Deduplicate&nbsp;checkpoints&nbsp;by&nbsp;SHA256&nbsp;(skip&nbsp;identical&nbsp;content)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from46_3">3</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn,&nbsp;io,&nbsp;hashlib,&nbsp;os,&nbsp;json</td><td class="diff_next"></td><td class="diff_header" id="to46_3">3</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn,&nbsp;io,&nbsp;hashlib,&nbsp;os,&nbsp;json</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from46_4">4</td><td nowrap="nowrap">m&nbsp;=&nbsp;nn.Sequential(nn.Linear(12,12),&nbsp;nn.ReLU(),&nbsp;nn.Linear(12,2));&nbsp;os.makedirs('ckpt',&nbsp;exist_ok=True)</td><td class="diff_next"></td><td class="diff_header" id="to46_4">4</td><td nowrap="nowrap">m&nbsp;=&nbsp;nn.Sequential(nn.Linear(12,12),&nbsp;nn.ReLU(),&nbsp;nn.Linear(12,2));&nbsp;os.makedirs('ckpt',&nbsp;exist_ok=True)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from46_5">5</td><td nowrap="nowrap">buf&nbsp;=&nbsp;io.BytesIO();&nbsp;torch.save(m.state_dict(),&nbsp;buf);&nbsp;data&nbsp;=&nbsp;buf.getvalue()</td><td class="diff_next"></td><td class="diff_header" id="to46_5">5</td><td nowrap="nowrap">buf&nbsp;=&nbsp;io.BytesIO();&nbsp;torch.save(m.state_dict(),&nbsp;buf);&nbsp;data&nbsp;=&nbsp;buf.getvalue()</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from46_6">6</td><td nowrap="nowrap">h&nbsp;=&nbsp;hashlib.sha256(data).hexdigest()</td><td class="diff_next"></td><td class="diff_header" id="to46_6">6</td><td nowrap="nowrap">h&nbsp;=&nbsp;hashlib.sha256(data).hexdigest()</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from46_7">7</td><td nowrap="nowrap">index&nbsp;=&nbsp;{'sha256':&nbsp;h,&nbsp;'file':&nbsp;f'ckpt/{h}.pt'}</td><td class="diff_next"></td><td class="diff_header" id="to46_7">7</td><td nowrap="nowrap">index&nbsp;=&nbsp;{'sha256':&nbsp;h,&nbsp;'file':&nbsp;f'ckpt/{h}.pt'}</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from46_8">8</td><td nowrap="nowrap">if&nbsp;not&nbsp;os.path.exists(index['file']):</td><td class="diff_next"></td><td class="diff_header" id="to46_8">8</td><td nowrap="nowrap">if&nbsp;not&nbsp;os.path.exists(index['file']):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from46_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;open(index['file'],&nbsp;'wb')&nbsp;as&nbsp;f:&nbsp;f.write(data)</td><td class="diff_next"></td><td class="diff_header" id="to46_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;open(index['file'],&nbsp;'wb')&nbsp;as&nbsp;f:&nbsp;f.write(data)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from46_10">10</td><td nowrap="nowrap">with&nbsp;open('ckpt/index.json','w')&nbsp;as&nbsp;f:&nbsp;json.dump(index,&nbsp;f)</td><td class="diff_next"></td><td class="diff_header" id="to46_10">10</td><td nowrap="nowrap">with&nbsp;open('ckpt/index.json','w')&nbsp;as&nbsp;f:&nbsp;json.dump(index,&nbsp;f)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from46_11">11</td><td nowrap="nowrap">print('done',&nbsp;h[:8])</td><td class="diff_next"></td><td class="diff_header" id="to46_11">11</td><td nowrap="nowrap">print('done',&nbsp;h[:8])</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

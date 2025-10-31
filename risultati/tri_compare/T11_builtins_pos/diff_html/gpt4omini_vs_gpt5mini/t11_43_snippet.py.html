@@ -1,0 +1,62 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to128__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/t11_43_snippet.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/t11_43_snippet.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to128__1"><a href="#difflib_chg_to128__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to128__1">n</a></td><td class="diff_header" id="to128_1">1</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;T11&nbsp;POS&nbsp;—&nbsp;snippet&nbsp;43</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_1">1</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"></td><td class="diff_header" id="to128_2">2</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_2">2</td><td nowrap="nowrap">from&nbsp;scipy.signal&nbsp;import&nbsp;convolve2d</td><td class="diff_next"></td><td class="diff_header" id="to128_3">3</td><td nowrap="nowrap">from&nbsp;scipy.signal&nbsp;import&nbsp;convolve2d</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_3">3</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to128_4">4</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to128__top">t</a></td><td class="diff_header" id="from128_4">4</td><td nowrap="nowrap"><span class="diff_sub">def&nbsp;apply_sobel_filter(image):</span></td><td class="diff_next"><a href="#difflib_chg_to128__top">t</a></td><td class="diff_header" id="to128_5">5</td><td nowrap="nowrap"><span class="diff_add">img&nbsp;=&nbsp;np.random.randn(512,&nbsp;512).astype(np.float32)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_5">5</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;sobel_x&nbsp;=&nbsp;np.array([[1,&nbsp;0,&nbsp;-1],&nbsp;[2,&nbsp;0,&nbsp;-2],&nbsp;[1,&nbsp;0,&nbsp;-1]])</span></td><td class="diff_next"></td><td class="diff_header" id="to128_6">6</td><td nowrap="nowrap"><span class="diff_add">sobel_x&nbsp;=&nbsp;np.array([[1,&nbsp;0,&nbsp;-1],</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to128_7">7</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2,&nbsp;0,&nbsp;-2],</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to128_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1,&nbsp;0,&nbsp;-1]],&nbsp;dtype=np.float32)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_6">6</td><td nowrap="nowrap"><span class="diff_chg">&nbsp;&nbsp;&nbsp;&nbsp;return</span>&nbsp;convolve2d(im<span class="diff_sub">a</span>g<span class="diff_sub">e</span>,&nbsp;sobel_x,&nbsp;mode='same',&nbsp;boundary='symm')</td><td class="diff_next"></td><td class="diff_header" id="to128_9">9</td><td nowrap="nowrap"><span class="diff_chg">gx&nbsp;=</span>&nbsp;convolve2d(img,&nbsp;sobel_x,&nbsp;mode='same',&nbsp;boundary='symm')</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_7">7</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_8">8</td><td nowrap="nowrap"><span class="diff_sub">img&nbsp;=&nbsp;np.random.randn(512,&nbsp;512)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_9">9</td><td nowrap="nowrap"><span class="diff_sub">gx&nbsp;=&nbsp;apply_sobel_filter(img)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_10">10</td><td nowrap="nowrap">print(gx.shape)</td><td class="diff_next"></td><td class="diff_header" id="to128_10">10</td><td nowrap="nowrap">print(gx.shape)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

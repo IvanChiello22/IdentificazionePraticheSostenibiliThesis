@@ -1,0 +1,39 @@
+--- BASE/snippet_100_t11_cosine_batched__t19_atomic.py
++++ gpt5mini/snippet_100_t11_cosine_batched__t19_atomic.py
+@@ -9,13 +9,29 @@
+ print(S.shape, round(S.max(),4))
+ 
+ # T19 — Atomic checkpoint writes (write to tmp then rename), avoid partial files
+-import torch, torch.nn as nn, os, tempfile, shutil
++import torch
++import torch.nn as nn
++from torch.nn.utils import prune
++import os, tempfile, shutil
+ m = nn.Sequential(nn.Linear(20,40), nn.ReLU(), nn.Linear(40,3)); os.makedirs('ckpt', exist_ok=True)
++
++# Energy-aware pruning: prune the most energy intensive layer first (here the first Linear has most params)
++prune.l1_unstructured(m[0], name='weight', amount=0.5)
++prune.remove(m[0], 'weight')  # make pruning permanent (keeps zeros)
++
+ state = {'model': m.state_dict(), 'meta': {'epoch': 1}}
+-fd, tmp = tempfile.mkstemp(dir='ckpt', prefix='tmp_', suffix='.pt'); os.close(fd)
+-try:
+-    torch.save(state, tmp)
+-    shutil.move(tmp, 'ckpt/model.pt')
+-finally:
+-    if os.path.exists(tmp): os.remove(tmp)
++
++def save_checkpoint(state, path):
++    dirpath = os.path.dirname(path) or '.'
++    os.makedirs(dirpath, exist_ok=True)
++    fd, tmp = tempfile.mkstemp(dir=dirpath, prefix='tmp_', suffix='.pt')
++    os.close(fd)
++    try:
++        torch.save(state, tmp)
++        shutil.move(tmp, path)
++    finally:
++        if os.path.exists(tmp):
++            os.remove(tmp)
++
++save_checkpoint(state, 'ckpt/model.pt')
+ print('done')

@@ -1,0 +1,72 @@
+--- BASE/snippet_062_t11_vectorized_topk_unique__t19_keras_tempfile.py
++++ gpt5mini/snippet_062_t11_vectorized_topk_unique__t19_keras_tempfile.py
+@@ -10,18 +10,65 @@
+ print(topk.shape, round(topk.mean(),4))
+ 
+ # T19 — Keras: save to tempfile then move (atomic), best‑only by loss
+-import tensorflow as tf, numpy as np, os, tempfile, shutil
++import tensorflow as tf, numpy as np, os
+ from tensorflow import keras; from tensorflow.keras import layers
+ os.makedirs('ckpt', exist_ok=True)
+ m = keras.Sequential([layers.Dense(64, activation='relu', input_shape=(20,)), layers.Dense(3)])
+ m.compile(optimizer='adam', loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))
+ x = np.random.randn(128,20).astype('float32'); y = np.random.randint(0,3,(128,))
+ best = 1e9
++
++def prune_most_param_layer(model, fraction=0.0):
++    if not (0.0 < fraction < 1.0):
++        return
++    max_params = 0
++    target_layer = None
++    for layer in model.layers:
++        w_arrays = layer.get_weights()
++        total = sum(w.size for w in w_arrays)
++        if total > max_params:
++            max_params = total
++            target_layer = layer
++    if target_layer is None:
++        return
++    w_arrays = target_layer.get_weights()
++    if not w_arrays:
++        return
++    flat = np.concatenate([w.ravel() for w in w_arrays])
++    k = int(np.ceil(flat.size * fraction))
++    if k == 0:
++        return
++    idxs = np.argsort(np.abs(flat))[:k]
++    flat[idxs] = 0
++    new_arrays = []
++    pos = 0
++    for w in w_arrays:
++        size = w.size
++        new_w = flat[pos:pos+size].reshape(w.shape)
++        new_arrays.append(new_w)
++        pos += size
++    target_layer.set_weights(new_arrays)
++
++prune_most_param_layer(m, fraction=0.0)
++
++checkpoint_epoch = tf.keras.callbacks.ModelCheckpoint(
++    filepath=os.path.join('ckpt', 'epoch-{epoch:02d}.weights.h5'),
++    save_weights_only=True,
++    save_freq='epoch',
++    verbose=0
++)
++checkpoint_best = tf.keras.callbacks.ModelCheckpoint(
++    filepath=os.path.join('ckpt', 'best.weights.h5'),
++    save_weights_only=True,
++    save_best_only=True,
++    monitor='loss',
++    mode='min',
++    verbose=0
++)
++
+ for e in range(3):
+-    hist = m.fit(x,y,epochs=1,batch_size=64,verbose=0)
++    hist = m.fit(x,y,epochs=1,batch_size=64,verbose=0,callbacks=[checkpoint_epoch, checkpoint_best])
+     loss = float(hist.history['loss'][-1])
+     if loss < best:
+         best = loss
+-        fd, tmp = tempfile.mkstemp(dir='ckpt', prefix='tmp_', suffix='.weights.h5'); os.close(fd)
+-        m.save_weights(tmp); shutil.move(tmp, 'ckpt/best.weights.h5')
+ print('done')

@@ -1,0 +1,60 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to121__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t19_41_misc.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t19_41_misc.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to121__1"><a href="#difflib_chg_to121__1">n</a></td><td class="diff_header" id="from121_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;41)&nbsp;scikit-learn&nbsp;—&nbsp;T19&nbsp;NEGATIVO:&nbsp;SGDClassifier&nbsp;senza&nbsp;joblib.dump</span></td><td class="diff_next"><a href="#difflib_chg_to121__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from121_2">2</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"></td><td class="diff_header" id="to121_1">1</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to121__2"></td><td class="diff_header" id="from121_3">3</td><td nowrap="nowrap">from&nbsp;sklearn.linear_model&nbsp;import&nbsp;SGDClassifier</td><td class="diff_next"></td><td class="diff_header" id="to121_2">2</td><td nowrap="nowrap">from&nbsp;sklearn.linear_model&nbsp;import&nbsp;SGDClassifier</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to121__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to121__2">n</a></td><td class="diff_header" id="to121_3">3</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;joblib</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to121_4">4</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from121_4">4</td><td nowrap="nowrap">X&nbsp;=&nbsp;np.random.randn(200,&nbsp;10);&nbsp;y&nbsp;=&nbsp;np.random.randint(0,2,(200,))</td><td class="diff_next"></td><td class="diff_header" id="to121_5">5</td><td nowrap="nowrap">X&nbsp;=&nbsp;np.random.randn(200,&nbsp;10);&nbsp;y&nbsp;=&nbsp;np.random.randint(0,2,(200,))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from121_5">5</td><td nowrap="nowrap">clf&nbsp;=&nbsp;SGDClassifier(loss='log_loss')</td><td class="diff_next"></td><td class="diff_header" id="to121_6">6</td><td nowrap="nowrap">clf&nbsp;=&nbsp;SGDClassifier(loss='log_loss')</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to121__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to121__top">t</a></td><td class="diff_header" id="to121_7">7</td><td nowrap="nowrap"><span class="diff_add">for&nbsp;i&nbsp;in&nbsp;range(3):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from121_6">6</td><td nowrap="nowrap"><span class="diff_chg">for&nbsp;_&nbsp;in&nbsp;range(3):</span>&nbsp;clf.partial_fit(X,&nbsp;y,&nbsp;classes=[0,1])</td><td class="diff_next"></td><td class="diff_header" id="to121_8">8</td><td nowrap="nowrap"><span class="diff_chg">&nbsp;&nbsp;&nbsp;</span>&nbsp;clf.partial_fit(X,&nbsp;y,&nbsp;classes=[0,1])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to121_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;joblib.dump(clf,&nbsp;f'sgd_clf_checkpoint_{i}.joblib')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from121_7">7</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to121_10">10</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

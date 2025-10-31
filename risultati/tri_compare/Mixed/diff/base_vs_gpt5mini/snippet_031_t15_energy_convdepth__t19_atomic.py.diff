@@ -1,0 +1,39 @@
+--- BASE/snippet_031_t15_energy_convdepth__t19_atomic.py
++++ gpt5mini/snippet_031_t15_energy_convdepth__t19_atomic.py
+@@ -15,8 +15,35 @@
+         pw.weight = nn.Parameter(pw.weight[keep].clone())
+         if pw.bias is not None: pw.bias = nn.Parameter(pw.bias[keep].clone())
+         pw.out_channels = k
++
++def prune_dsconv_out_energy(dsconv: DSConv, keep_ratio, H, W):
++    dw = dsconv.dw
++    pw = dsconv.pw
++    ksize = dw.kernel_size[0] if isinstance(dw.kernel_size, tuple) else dw.kernel_size
++    e_dw = energy_dw(dw.in_channels, H, W, ksize)
++    e_pw = energy_pw(pw.in_channels, pw.out_channels, H, W)
++    # prune the most energy intensive stage first
++    if e_pw >= e_dw:
++        prune_pw_out_energy(pw, keep_ratio, H, W)
++    else:
++        with torch.no_grad():
++            imp = dw.weight.detach().abs().view(dw.in_channels, -1).mean(1)
++            k = max(1, int(keep_ratio*dw.in_channels))
++            keep = torch.topk(imp, k).indices
++            keep = keep.sort().values
++            # update depthwise conv parameters (weights and optional bias) and channel counts
++            dw.weight = nn.Parameter(dw.weight[keep].clone())
++            if dw.bias is not None:
++                dw.bias = nn.Parameter(dw.bias[keep].clone())
++            dw.in_channels = k
++            dw.out_channels = k
++            dw.groups = k
++            # update pointwise conv input channels to match pruned depthwise
++            pw.weight = nn.Parameter(pw.weight[:, keep, :, :].clone())
++            pw.in_channels = k
++
+ net = DSConv(24, 64)
+-prune_pw_out_energy(net.pw, 0.6, 56, 56)
++prune_dsconv_out_energy(net, 0.6, 56, 56)
+ x = torch.randn(1,24,56,56); y = net(x); print(y.shape, net.pw.out_channels)
+ 
+ # T19 — Atomic checkpoint writes (write to tmp then rename), avoid partial files

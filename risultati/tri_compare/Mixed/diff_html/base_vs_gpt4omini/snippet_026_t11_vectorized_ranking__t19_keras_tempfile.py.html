@@ -1,0 +1,94 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to75__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/snippet_026_t11_vectorized_ranking__t19_keras_tempfile.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/snippet_026_t11_vectorized_ranking__t19_keras_tempfile.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to75__1"><a href="#difflib_chg_to75__1">n</a></td><td class="diff_header" id="from75_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;Snippet&nbsp;26:&nbsp;t11_vectorized_ranking&nbsp;+&nbsp;t19_keras_tempfile</span></td><td class="diff_next"><a href="#difflib_chg_to75__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_2">2</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;T11&nbsp;—&nbsp;NumPy:&nbsp;vectorized&nbsp;group&nbsp;ranking&nbsp;using&nbsp;argsort&nbsp;twice</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_3">3</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"></td><td class="diff_header" id="to75_1">1</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to75__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to75__2">n</a></td><td class="diff_header" id="to75_2">2</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;tensorflow&nbsp;as&nbsp;tf</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to75_3">3</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;os</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to75_4">4</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;tempfile</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to75_5">5</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;shutil</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to75_6">6</td><td nowrap="nowrap"><span class="diff_add">from&nbsp;tensorflow&nbsp;import&nbsp;keras</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to75_7">7</td><td nowrap="nowrap"><span class="diff_add">from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to75_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to75_9">9</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Snippet&nbsp;26:&nbsp;t11_vectorized_ranking</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_4">4</td><td nowrap="nowrap">g&nbsp;=&nbsp;np.random.randint(0,&nbsp;500,&nbsp;20000)</td><td class="diff_next"></td><td class="diff_header" id="to75_10">10</td><td nowrap="nowrap">g&nbsp;=&nbsp;np.random.randint(0,&nbsp;500,&nbsp;20000)</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to75__2"></td><td class="diff_header" id="from75_5">5</td><td nowrap="nowrap">v&nbsp;=&nbsp;np.random.randn(20000)</td><td class="diff_next"></td><td class="diff_header" id="to75_11">11</td><td nowrap="nowrap">v&nbsp;=&nbsp;np.random.randn(20000)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_6">6</td><td nowrap="nowrap">idx&nbsp;=&nbsp;np.lexsort((v,&nbsp;g))&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;sort&nbsp;by&nbsp;group&nbsp;then&nbsp;value</td><td class="diff_next"></td><td class="diff_header" id="to75_12">12</td><td nowrap="nowrap">idx&nbsp;=&nbsp;np.lexsort((v,&nbsp;g))&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;sort&nbsp;by&nbsp;group&nbsp;then&nbsp;value</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_7">7</td><td nowrap="nowrap">g_sorted&nbsp;=&nbsp;g[idx]</td><td class="diff_next"></td><td class="diff_header" id="to75_13">13</td><td nowrap="nowrap">g_sorted&nbsp;=&nbsp;g[idx]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_8">8</td><td nowrap="nowrap">ranks&nbsp;=&nbsp;np.empty_like(v,&nbsp;dtype=int)</td><td class="diff_next"></td><td class="diff_header" id="to75_14">14</td><td nowrap="nowrap">ranks&nbsp;=&nbsp;np.empty_like(v,&nbsp;dtype=int)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_9">9</td><td nowrap="nowrap">#&nbsp;positions&nbsp;of&nbsp;new&nbsp;groups</td><td class="diff_next"></td><td class="diff_header" id="to75_15">15</td><td nowrap="nowrap">#&nbsp;positions&nbsp;of&nbsp;new&nbsp;groups</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to75__3">n</a></td><td class="diff_header" id="from75_10">10</td><td nowrap="nowrap">edges&nbsp;=&nbsp;np.flatnonzero(np.r_[True,&nbsp;g_sorted[1:]!=g_sorted[:-1]])</td><td class="diff_next"><a href="#difflib_chg_to75__3">n</a></td><td class="diff_header" id="to75_16">16</td><td nowrap="nowrap">edges&nbsp;=&nbsp;np.flatnonzero(np.r_[True,&nbsp;g_sorted[1:]<span class="diff_add">&nbsp;</span>!=<span class="diff_add">&nbsp;</span>g_sorted[:-1]])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_11">11</td><td nowrap="nowrap">order&nbsp;=&nbsp;np.argsort(idx)</td><td class="diff_next"></td><td class="diff_header" id="to75_17">17</td><td nowrap="nowrap">order&nbsp;=&nbsp;np.argsort(idx)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_12">12</td><td nowrap="nowrap">#&nbsp;within-group&nbsp;rank:&nbsp;use&nbsp;arange&nbsp;with&nbsp;repeat&nbsp;lengths</td><td class="diff_next"></td><td class="diff_header" id="to75_18">18</td><td nowrap="nowrap">#&nbsp;within-group&nbsp;rank:&nbsp;use&nbsp;arange&nbsp;with&nbsp;repeat&nbsp;lengths</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to75__3"></td><td class="diff_header" id="from75_13">13</td><td nowrap="nowrap">counts&nbsp;=&nbsp;np.diff(np.r_[edges,&nbsp;len(g_sorted)])</td><td class="diff_next"></td><td class="diff_header" id="to75_19">19</td><td nowrap="nowrap">counts&nbsp;=&nbsp;np.diff(np.r_[edges,&nbsp;len(g_sorted)])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_14">14</td><td nowrap="nowrap">wg_rank&nbsp;=&nbsp;np.concatenate([np.arange(c)&nbsp;for&nbsp;c&nbsp;in&nbsp;counts])</td><td class="diff_next"></td><td class="diff_header" id="to75_20">20</td><td nowrap="nowrap">wg_rank&nbsp;=&nbsp;np.concatenate([np.arange(c)&nbsp;for&nbsp;c&nbsp;in&nbsp;counts])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_15">15</td><td nowrap="nowrap">ranks&nbsp;=&nbsp;wg_rank[order]</td><td class="diff_next"></td><td class="diff_header" id="to75_21">21</td><td nowrap="nowrap">ranks&nbsp;=&nbsp;wg_rank[order]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_16">16</td><td nowrap="nowrap">print(ranks[:10])</td><td class="diff_next"></td><td class="diff_header" id="to75_22">22</td><td nowrap="nowrap">print(ranks[:10])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_17">17</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to75_23">23</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to75__4">n</a></td><td class="diff_header" id="from75_18">18</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;T19&nbsp;—&nbsp;Keras:&nbsp;save&nbsp;to&nbsp;tempfile&nbsp;then&nbsp;move&nbsp;(atomic),&nbsp;best‑only&nbsp;by&nbsp;loss</span></td><td class="diff_next"><a href="#difflib_chg_to75__4">n</a></td><td class="diff_header" id="to75_24">24</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Snippet&nbsp;19:&nbsp;Keras&nbsp;with&nbsp;checkpoints</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to75__4"></td><td class="diff_header" id="from75_19">19</td><td nowrap="nowrap"><span class="diff_sub">import&nbsp;tensorflow&nbsp;as&nbsp;tf,&nbsp;numpy&nbsp;as&nbsp;np,&nbsp;os,&nbsp;tempfile,&nbsp;shutil</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_20">20</td><td nowrap="nowrap"><span class="diff_sub">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_21">21</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td><td class="diff_next"></td><td class="diff_header" id="to75_25">25</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_22">22</td><td nowrap="nowrap">m&nbsp;=&nbsp;keras.Sequential([layers.Dense(64,&nbsp;activation='relu',&nbsp;input_shape=(20,)),&nbsp;layers.Dense(3)])</td><td class="diff_next"></td><td class="diff_header" id="to75_26">26</td><td nowrap="nowrap">m&nbsp;=&nbsp;keras.Sequential([layers.Dense(64,&nbsp;activation='relu',&nbsp;input_shape=(20,)),&nbsp;layers.Dense(3)])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_23">23</td><td nowrap="nowrap">m.compile(optimizer='adam',&nbsp;loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))</td><td class="diff_next"></td><td class="diff_header" id="to75_27">27</td><td nowrap="nowrap">m.compile(optimizer='adam',&nbsp;loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to75__5"><a href="#difflib_chg_to75__5">n</a></td><td class="diff_header" id="from75_24">24</td><td nowrap="nowrap"><span class="diff_sub">x&nbsp;=&nbsp;np.random.randn(128,20).astype('float32');&nbsp;y&nbsp;=&nbsp;np.random.randint(0,3,(128,))</span></td><td class="diff_next"><a href="#difflib_chg_to75__5">n</a></td><td class="diff_header" id="to75_28">28</td><td nowrap="nowrap"><span class="diff_add">x&nbsp;=&nbsp;np.random.randn(128,&nbsp;20).astype('float32')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_25">25</td><td nowrap="nowrap"><span class="diff_sub">best&nbsp;=&nbsp;1e9</span></td><td class="diff_next"></td><td class="diff_header" id="to75_29">29</td><td nowrap="nowrap"><span class="diff_add">y&nbsp;=&nbsp;np.random.randint(0,&nbsp;3,&nbsp;(128,))</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to75__6"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to75_30">30</td><td nowrap="nowrap"><span class="diff_add">best_loss&nbsp;=&nbsp;float('inf')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to75_31">31</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_26">26</td><td nowrap="nowrap">for&nbsp;e&nbsp;in&nbsp;range(3):</td><td class="diff_next"></td><td class="diff_header" id="to75_32">32</td><td nowrap="nowrap">for&nbsp;e&nbsp;in&nbsp;range(3):</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to75__6">n</a></td><td class="diff_header" id="from75_27">27</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;hist&nbsp;=&nbsp;m.fit(x,y,epochs=1,batch_size=64,verbose=0)</td><td class="diff_next"><a href="#difflib_chg_to75__6">n</a></td><td class="diff_header" id="to75_33">33</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;hist&nbsp;=&nbsp;m.fit(x,<span class="diff_add">&nbsp;</span>y,<span class="diff_add">&nbsp;</span>epochs=1,<span class="diff_add">&nbsp;</span>batch_size=64,<span class="diff_add">&nbsp;</span>verbose=0)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_28">28</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;loss&nbsp;=&nbsp;float(hist.history['loss'][-1])</td><td class="diff_next"></td><td class="diff_header" id="to75_34">34</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;loss&nbsp;=&nbsp;float(hist.history['loss'][-1])</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to75__top">t</a></td><td class="diff_header" id="from75_29">29</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;loss&nbsp;&lt;&nbsp;best:</td><td class="diff_next"><a href="#difflib_chg_to75__top">t</a></td><td class="diff_header" id="to75_35">35</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;loss&nbsp;&lt;&nbsp;best<span class="diff_add">_loss</span>:</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_30">30</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;best&nbsp;=&nbsp;loss</span></td><td class="diff_next"></td><td class="diff_header" id="to75_36">36</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;best_loss&nbsp;=&nbsp;loss</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_31">31</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fd,&nbsp;tmp&nbsp;=&nbsp;tempfile.mkstemp(dir='ckpt',&nbsp;prefix='tmp_',&nbsp;suffix='.weights.h5')<span class="diff_sub">;&nbsp;os.close(fd)</span></td><td class="diff_next"></td><td class="diff_header" id="to75_37">37</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fd,&nbsp;tmp&nbsp;=&nbsp;tempfile.mkstemp(dir='ckpt',&nbsp;prefix='tmp_',&nbsp;suffix='.weights.h5')</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to75_38">38</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;os.close(fd)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to75_39">39</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m.save_weights(tmp)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_32">32</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="diff_sub">&nbsp;m.save_weights(tmp);</span>&nbsp;shutil.move(tmp,&nbsp;'ckpt/best.weights.h5')</td><td class="diff_next"></td><td class="diff_header" id="to75_40">40</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shutil.move(tmp,&nbsp;'ckpt/best.weights.h5')</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from75_33">33</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to75_41">41</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

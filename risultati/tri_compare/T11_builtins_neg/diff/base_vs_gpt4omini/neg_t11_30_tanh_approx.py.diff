@@ -1,0 +1,10 @@
+--- BASE/neg_t11_30_tanh_approx.py
++++ gpt4omini/neg_t11_30_tanh_approx.py
+@@ -1,6 +1,2 @@
+-# 30) Tanh approssimata
+-x = [-2.0, -1.0, 0.0, 1.0, 2.0]
+-y = []
+-for v in x:
+-    y.append(v/(1+abs(v)))  # approssimazione rozza
++y = [v / (1 + abs(v)) for v in x]  # approssimazione rozza
+ print(y)

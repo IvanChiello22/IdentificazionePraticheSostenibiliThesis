@@ -1,0 +1,72 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to140__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/neg_t11_47_conv2d_valid.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t11_47_conv2d_valid.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to140__1"><a href="#difflib_chg_to140__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to140__1">n</a></td><td class="diff_header" id="to140_1">1</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;47)&nbsp;Convoluzione&nbsp;2D&nbsp;(valid)&nbsp;naive</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from140_1">1</td><td nowrap="nowrap">image&nbsp;=&nbsp;[</td><td class="diff_next"></td><td class="diff_header" id="to140_2">2</td><td nowrap="nowrap">image&nbsp;=&nbsp;[</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from140_2">2</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;[1,&nbsp;2,&nbsp;3,&nbsp;4],</td><td class="diff_next"></td><td class="diff_header" id="to140_3">3</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;[1,&nbsp;2,&nbsp;3,&nbsp;4],</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from140_3">3</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;[5,&nbsp;6,&nbsp;7,&nbsp;8],</td><td class="diff_next"></td><td class="diff_header" id="to140_4">4</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;[5,&nbsp;6,&nbsp;7,&nbsp;8],</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to140__2"><a href="#difflib_chg_to140__2">n</a></td><td class="diff_header" id="from140_4">4</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;[9,<span class="diff_sub">&nbsp;</span>10,<span class="diff_sub">&nbsp;</span>11,<span class="diff_sub">&nbsp;</span>12],</td><td class="diff_next"><a href="#difflib_chg_to140__2">n</a></td><td class="diff_header" id="to140_5">5</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;[9,10,11,12],</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from140_5">5</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;[13,<span class="diff_sub">&nbsp;</span>14,<span class="diff_sub">&nbsp;</span>15,<span class="diff_sub">&nbsp;</span>16]</td><td class="diff_next"></td><td class="diff_header" id="to140_6">6</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;[13,14,15,16]</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to140__3"></td><td class="diff_header" id="from140_6">6</td><td nowrap="nowrap">]</td><td class="diff_next"></td><td class="diff_header" id="to140_7">7</td><td nowrap="nowrap">]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from140_7">7</td><td nowrap="nowrap">kernel&nbsp;=&nbsp;[</td><td class="diff_next"></td><td class="diff_header" id="to140_8">8</td><td nowrap="nowrap">kernel&nbsp;=&nbsp;[</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from140_8">8</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;[1,&nbsp;0],</td><td class="diff_next"></td><td class="diff_header" id="to140_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;[1,&nbsp;0],</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to140__3">n</a></td><td class="diff_header" id="from140_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;[0,<span class="diff_sub">&nbsp;</span>-1]</td><td class="diff_next"><a href="#difflib_chg_to140__3">n</a></td><td class="diff_header" id="to140_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;[0,-1]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from140_10">10</td><td nowrap="nowrap">]</td><td class="diff_next"></td><td class="diff_header" id="to140_11">11</td><td nowrap="nowrap">]</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to140__top">t</a></td><td class="diff_header" id="from140_11">11</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"><a href="#difflib_chg_to140__top">t</a></td><td class="diff_header" id="to140_12">12</td><td nowrap="nowrap"><span class="diff_add">H&nbsp;=&nbsp;len(image);&nbsp;W&nbsp;=&nbsp;len(image[0])</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from140_12">12</td><td nowrap="nowrap"><span class="diff_sub">import&nbsp;numpy&nbsp;as&nbsp;np</span></td><td class="diff_next"></td><td class="diff_header" id="to140_13">13</td><td nowrap="nowrap"><span class="diff_add">kH&nbsp;=&nbsp;len(kernel);&nbsp;kW&nbsp;=&nbsp;len(kernel[0])</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from140_13">13</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header" id="to140_14">14</td><td nowrap="nowrap"><span class="diff_add">out&nbsp;=&nbsp;[[0]*(W-kW+1)&nbsp;for&nbsp;_&nbsp;in&nbsp;range(H-kH+1)]</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from140_14">14</td><td nowrap="nowrap"><span class="diff_sub">image_array&nbsp;=&nbsp;np.array(image)</span></td><td class="diff_next"></td><td class="diff_header" id="to140_15">15</td><td nowrap="nowrap"><span class="diff_add">for&nbsp;i&nbsp;in&nbsp;range(H-kH+1):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from140_15">15</td><td nowrap="nowrap"><span class="diff_sub">kernel_array&nbsp;=&nbsp;np.array(kernel)</span></td><td class="diff_next"></td><td class="diff_header" id="to140_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;j&nbsp;in&nbsp;range(W-kW+1):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from140_16">16</td><td nowrap="nowrap"><span class="diff_sub">out&nbsp;=&nbsp;np.convolve(image_array.flatten(),&nbsp;kernel_array.flatten(),&nbsp;mode='valid').reshape(image_array.shape[0]&nbsp;-&nbsp;kernel_arr</span></td><td class="diff_next"></td><td class="diff_header" id="to140_17">17</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;=&nbsp;0</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap"><span class="diff_sub">ay.shape[0]&nbsp;+&nbsp;1,&nbsp;image_array.shape[1]&nbsp;-&nbsp;kernel_array.shape[1]&nbsp;+&nbsp;1).tolist()</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap">&nbsp;</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from140_17">17</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header" id="to140_18">18</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;ki&nbsp;in&nbsp;range(kH):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to140_19">19</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;kj&nbsp;in&nbsp;range(kW):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to140_20">20</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;+=&nbsp;image[i+ki][j+kj]&nbsp;*&nbsp;kernel[ki][kj]</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to140_21">21</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out[i][j]&nbsp;=&nbsp;s</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from140_18">18</td><td nowrap="nowrap">print(out)</td><td class="diff_next"></td><td class="diff_header" id="to140_22">22</td><td nowrap="nowrap">print(out)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

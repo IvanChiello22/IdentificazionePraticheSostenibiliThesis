@@ -1,0 +1,25 @@
+--- BASE/t11_13_snippet.py
++++ gpt4omini/t11_13_snippet.py
+@@ -1,9 +1,15 @@
+-# T11 POS — snippet 13
+ import numpy as np
+-B,T,D,H=2,64,128,8
+-d=D//H
+-Q=np.random.randn(B,H,T,d);K=np.random.randn(B,H,T,d);V=np.random.randn(B,H,T,d)
+-S=np.einsum('bhtd,bhsd->bhts',Q,K)/np.sqrt(d)
+-P=np.exp(S-S.max(axis=-1,keepdims=True));P/=P.sum(axis=-1,keepdims=True)
+-O=np.einsum('bhts,bhsd->bhtd',P,V)
++import tensorflow as tf
++
++B, T, D, H = 2, 64, 128, 8
++d = D // H
++Q = np.random.randn(B, H, T, d)
++K = np.random.randn(B, H, T, d)
++V = np.random.randn(B, H, T, d)
++
++S = np.einsum('bhtd,bhsd->bhts', Q, K) / np.sqrt(d)
++P = np.exp(S - np.max(S, axis=-1, keepdims=True))
++P /= np.sum(P, axis=-1, keepdims=True)
++
++O = np.einsum('bhts,bhsd->bhtd', P, V)
+ print(O.shape)

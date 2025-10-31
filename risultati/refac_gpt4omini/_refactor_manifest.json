@@ -1,0 +1,9 @@
+{
+  "src": "corpo",
+  "dst": "risultati\\refac_gpt4omini",
+  "count": 399,
+  "timestamp": 1759517889.0264258,
+  "mode": "llm",
+  "pattern": ".py",
+  "model": "gpt-4o-mini"
+}

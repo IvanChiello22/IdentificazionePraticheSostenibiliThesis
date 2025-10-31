@@ -1,0 +1,16 @@
+--- BASE/snippet_067_t11_2d_hist__t15_energy_convdepth__t19_async_threadpool.py
++++ gpt5mini/snippet_067_t11_2d_hist__t15_energy_convdepth__t19_async_threadpool.py
+@@ -32,6 +32,13 @@
+ os.makedirs('ckpt', exist_ok=True)
+ m = nn.Sequential(nn.Linear(16,16), nn.ReLU(), nn.Linear(16,2))
+ def save(path): torch.save({'state': m.state_dict()}, path)
++
++# Add a lightweight checkpoint to avoid knowledge loss (checkpoint before shard saves)
++def save_checkpoint(path='ckpt/checkpoint.pt'):
++    torch.save({'state': m.state_dict()}, path)
++
++save_checkpoint()
++
+ with ThreadPoolExecutor(max_workers=2) as ex:
+     futs = [ex.submit(save, f'ckpt/shard_{i}.pt') for i in range(3)]
+     _ = [f.result() for f in futs]

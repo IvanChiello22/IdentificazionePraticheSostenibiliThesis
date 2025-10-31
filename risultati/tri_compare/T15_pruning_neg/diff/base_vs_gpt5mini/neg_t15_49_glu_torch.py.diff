@@ -1,0 +1,15 @@
+--- BASE/neg_t15_49_glu_torch.py
++++ gpt5mini/neg_t15_49_glu_torch.py
+@@ -1,10 +1,9 @@
+-# 49) Gated Linear Unit (GLU)-like — T15 NEGATIVO: parametri completi
+ import torch, torch.nn as nn
+ class GLU(nn.Module):
+     def __init__(self, d):
+         super().__init__()
+         self.W = nn.Linear(d, 2*d)
++        self.glu = nn.GLU(dim=-1)
+     def forward(self, x):
+-        a, b = self.W(x).chunk(2, dim=-1)
+-        return a * torch.sigmoid(b)
++        return self.glu(self.W(x))
+ x = torch.randn(3,10,32); print(GLU(32)(x).shape)

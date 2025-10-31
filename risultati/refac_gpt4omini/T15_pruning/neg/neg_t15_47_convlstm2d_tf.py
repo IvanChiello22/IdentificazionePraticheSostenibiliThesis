@@ -1,0 +1,19 @@
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+
+inp = keras.Input((5, 16, 16, 1))
+x = layers.ConvLSTM2D(8, 3, padding='same', return_sequences=False)(inp)
+out = layers.Conv2D(1, 1)(x)
+model = keras.Model(inp, out)
+
+# Aggiunta di checkpoint per il salvataggio del modello durante l'allenamento
+checkpoint_callback = keras.callbacks.ModelCheckpoint(
+    filepath='model_checkpoint.h5',
+    save_weights_only=True,
+    monitor='val_loss',
+    mode='min',
+    save_best_only=True
+)
+
+print(model.count_params())

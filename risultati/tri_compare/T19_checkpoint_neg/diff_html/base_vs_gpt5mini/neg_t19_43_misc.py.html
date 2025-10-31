@@ -1,0 +1,67 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to127__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t19_43_misc.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t19_43_misc.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to127__0"><a href="#difflib_chg_to127__0">f</a></td><td class="diff_header" id="from127_1">1</td><td nowrap="nowrap">#&nbsp;43)&nbsp;XGBoost&nbsp;—&nbsp;T19&nbsp;NEGATIVO:&nbsp;train&nbsp;senza&nbsp;bst.save_model</td><td class="diff_next"><a href="#difflib_chg_to127__0">f</a></td><td class="diff_header" id="to127_1">1</td><td nowrap="nowrap">#&nbsp;43)&nbsp;XGBoost&nbsp;—&nbsp;T19&nbsp;NEGATIVO:&nbsp;train&nbsp;senza&nbsp;bst.save_model</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from127_2">2</td><td nowrap="nowrap">import&nbsp;xgboost&nbsp;as&nbsp;xgb,&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"></td><td class="diff_header" id="to127_2">2</td><td nowrap="nowrap">import&nbsp;xgboost&nbsp;as&nbsp;xgb,&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from127_3">3</td><td nowrap="nowrap">dtrain&nbsp;=&nbsp;xgb.DMatrix(np.random.randn(200,10),&nbsp;label=np.random.randint(0,2,(200,)))</td><td class="diff_next"></td><td class="diff_header" id="to127_3">3</td><td nowrap="nowrap">dtrain&nbsp;=&nbsp;xgb.DMatrix(np.random.randn(200,10),&nbsp;label=np.random.randint(0,2,(200,)))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from127_4">4</td><td nowrap="nowrap">params&nbsp;=&nbsp;{'objective':'binary:logistic','max_depth':3,'eta':0.1}</td><td class="diff_next"></td><td class="diff_header" id="to127_4">4</td><td nowrap="nowrap">params&nbsp;=&nbsp;{'objective':'binary:logistic','max_depth':3,'eta':0.1}</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to127__top">t</a></td><td class="diff_header" id="from127_5">5</td><td nowrap="nowrap"><span class="diff_sub">bst&nbsp;=&nbsp;xgb.train(params,&nbsp;dtrain,&nbsp;num_boost_round=5)</span></td><td class="diff_next"><a href="#difflib_chg_to127__top">t</a></td><td class="diff_header" id="to127_5">5</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to127_6">6</td><td nowrap="nowrap"><span class="diff_add">class&nbsp;CheckpointCallback(xgb.callback.TrainingCallback):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to127_7">7</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;__init__(self,&nbsp;filepath='xgb_checkpoint.model',&nbsp;period=1):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to127_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.filepath&nbsp;=&nbsp;filepath</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to127_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.period&nbsp;=&nbsp;period</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to127_10">10</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to127_11">11</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;after_iteration(self,&nbsp;env):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to127_12">12</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;save&nbsp;a&nbsp;checkpoint&nbsp;every&nbsp;`period`&nbsp;iterations&nbsp;to&nbsp;avoid&nbsp;knowledge&nbsp;loss&nbsp;on&nbsp;interruption</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to127_13">13</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(env.iteration&nbsp;+&nbsp;1)&nbsp;%&nbsp;self.period&nbsp;==&nbsp;0:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to127_14">14</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env.model.save_model(self.filepath)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to127_15">15</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;False&nbsp;&nbsp;#&nbsp;return&nbsp;True&nbsp;to&nbsp;stop&nbsp;training</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to127_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to127_17">17</td><td nowrap="nowrap"><span class="diff_add">bst&nbsp;=&nbsp;xgb.train(params,&nbsp;dtrain,&nbsp;num_boost_round=5,&nbsp;callbacks=[CheckpointCallback('checkpoint.model',&nbsp;period=1)])</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from127_6">6</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to127_18">18</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

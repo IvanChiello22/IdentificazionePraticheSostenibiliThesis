@@ -1,0 +1,16 @@
+--- BASE/neg_t11_38_class_weights.py
++++ gpt4omini/neg_t11_38_class_weights.py
+@@ -1,10 +1,4 @@
+-# 38) Bilanciamento pesi di classe (conteggio manuale)
+-labels = [0,0,1,2,2,2,1,1,1,1]
+-counts = {}
+-for y in labels:
+-    counts[y] = counts.get(y, 0) + 1
+-weights = {}
+-total = len(labels)
+-for c, cnt in counts.items():
+-    weights[c] = total / (cnt * len(counts))
++labels = [0, 0, 1, 2, 2, 2, 1, 1, 1, 1]
++counts = {y: labels.count(y) for y in set(labels)}
++weights = {c: len(labels) / (cnt * len(counts)) for c, cnt in counts.items()}
+ print(weights)

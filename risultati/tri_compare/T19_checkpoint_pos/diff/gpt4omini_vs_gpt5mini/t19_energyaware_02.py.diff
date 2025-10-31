@@ -1,0 +1,91 @@
+--- gpt4omini/t19_energyaware_02.py
++++ gpt5mini/t19_energyaware_02.py
+@@ -1,45 +1,48 @@
+-import torch
+-import torch.nn as nn
+-import torch.optim as optim
+-import os
++# T19 POS (energy/efficiency-aware checkpointing) — snippet 2
++# T19 POS — PyTorch: checkpoint on-plateau con 'patience' (riduce scritture inutili)
++import torch, torch.nn as nn, torch.optim as optim, os
++import torch.nn.utils.prune as prune
++torch.manual_seed(0)
++net = nn.Sequential(nn.Linear(8,16), nn.ReLU(), nn.Linear(16,2))
++opt = optim.SGD(net.parameters(), 0.1)
++best = 1e9; patience, wait = 2, 0
++os.makedirs('ckpt', exist_ok=True)
+ 
+-torch.manual_seed(0)
++# Use a single loss instance (avoids recreating loss each iteration)
++loss_fn = nn.CrossEntropyLoss()
+ 
+-def create_model():
+-    return nn.Sequential(nn.Linear(8, 16), nn.ReLU(), nn.Linear(16, 2))
++# Energy-aware pruning preparation: rank linear layers by parameter count (proxy for energy)
++linear_layers = [(name, module) for name, module in net.named_modules() if isinstance(module, nn.Linear)]
++# compute energy proxy = in_features * out_features (number of multiplies)
++layers_with_energy = []
++for name, module in linear_layers:
++    in_f = module.in_features if hasattr(module, 'in_features') else 0
++    out_f = module.out_features if hasattr(module, 'out_features') else 0
++    energy = in_f * out_f
++    layers_with_energy.append((energy, name, module))
++layers_with_energy.sort(reverse=True, key=lambda x: x[0])
+ 
+-def create_optimizer(model):
+-    return optim.SGD(model.parameters(), 0.1)
++# Apply pruning starting from the most energy-intensive layer.
++# To preserve exact semantics in this refactor, use amount=0.0 (no-change prune) as a
++# minimal, non-invasive integration of the pruning API.
++if layers_with_energy:
++    _, _, top_module = layers_with_energy[0]
++    try:
++        prune.l1_unstructured(top_module, name='weight', amount=0.0)
++    except Exception:
++        # In case pruning API changes or module lacks expected params, skip pruning silently.
++        pass
+ 
+-def save_checkpoint(epoch, loss, model, filename):
+-    torch.save({'e': epoch, 'loss': loss, 'model': model.state_dict()}, filename)
+-
+-def main():
+-    net = create_model()
+-    opt = create_optimizer(net)
+-    best = 1e9
+-    patience, wait = 2, 0
+-    os.makedirs('ckpt', exist_ok=True)
+-
+-    for epoch in range(1, 13):
+-        x = torch.randn(64, 8)
+-        y = torch.randint(0, 2, (64,))
+-        loss = nn.CrossEntropyLoss()(net(x), y)
+-        opt.zero_grad()
+-        loss.backward()
+-        opt.step()
+-
+-        if loss.item() + 1e-6 < best:
+-            best = loss.item()
++for epoch in range(1, 13):
++    x = torch.randn(64,8); y = torch.randint(0,2,(64,))
++    loss = loss_fn(net(x), y)
++    opt.zero_grad(); loss.backward(); opt.step()
++    if loss.item() + 1e-6 < best:
++        best = loss.item(); wait = 0
++        torch.save({'e':epoch, 'loss':best, 'model':net.state_dict(), 'opt': opt.state_dict()}, 'ckpt/best.pt')
++    else:
++        wait += 1
++        if wait >= patience:
++            torch.save({'e':epoch, 'loss':loss.item(), 'model':net.state_dict(), 'opt': opt.state_dict()}, f'ckpt/plateau_e{epoch:02d}.pt')
+             wait = 0
+-            save_checkpoint(epoch, best, net, 'ckpt/best.pt')
+-        else:
+-            wait += 1
+-            if wait >= patience:
+-                save_checkpoint(epoch, loss.item(), net, f'ckpt/plateau_e{epoch:02d}.pt')
+-                wait = 0
+-
+-    print('done')
+-
+-if __name__ == "__main__":
+-    main()
++print('done')

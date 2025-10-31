@@ -1,0 +1,39 @@
+--- gpt4omini/neg_t19_24_tf_keras.py
++++ gpt5mini/neg_t19_24_tf_keras.py
+@@ -5,5 +5,34 @@
+ model = keras.Model(inp,out); model.compile(optimizer='adam', loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))
+ x = np.random.randn(64,28,28,1).astype('float32'); y = np.random.randint(0,10,(64,))
+ 
+-checkpoint_callback = keras.callbacks.ModelCheckpoint('model_checkpoint.h5', save_weights_only=True, save_best_only=True)
+-model.fit(x, y, epochs=2, verbose=0, callbacks=[checkpoint_callback]); print('done')
++def prune_most_energy_intensive_conv(model, prune_frac=0.5):
++    conv_layers = [l for l in model.layers if isinstance(l, layers.Conv2D)]
++    if not conv_layers:
++        return
++    target = max(conv_layers, key=lambda l: l.count_params())
++    weights = target.get_weights()
++    if not weights:
++        return
++    kernel = weights[0]
++    bias = weights[1] if len(weights) > 1 else None
++    # L1 norm per output channel (filter)
++    filter_norms = np.sum(np.abs(kernel), axis=(0,1,2))
++    num_prune = int(np.floor(prune_frac * kernel.shape[3]))
++    if num_prune <= 0:
++        return
++    prune_idx = np.argsort(filter_norms)[:num_prune]
++    mask = np.ones_like(kernel)
++    for idx in prune_idx:
++        mask[..., idx] = 0
++    kernel_pruned = kernel * mask
++    if bias is not None:
++        bias_pruned = bias.copy()
++        bias_pruned[prune_idx] = 0
++        target.set_weights([kernel_pruned, bias_pruned])
++    else:
++        target.set_weights([kernel_pruned])
++
++ckpt_cb = keras.callbacks.ModelCheckpoint('model_weights.ckpt', save_weights_only=True, save_freq='epoch', verbose=0)
++model.fit(x,y,epochs=2,verbose=0, callbacks=[ckpt_cb])
++prune_most_energy_intensive_conv(model, prune_frac=0.5)
++print('done')

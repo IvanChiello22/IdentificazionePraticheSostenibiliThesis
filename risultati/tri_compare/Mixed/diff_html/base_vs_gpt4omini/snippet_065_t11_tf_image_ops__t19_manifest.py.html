@@ -1,0 +1,105 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to192__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/snippet_065_t11_tf_image_ops__t19_manifest.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/snippet_065_t11_tf_image_ops__t19_manifest.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to192__1"><a href="#difflib_chg_to192__1">n</a></td><td class="diff_header" id="from192_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;Snippet&nbsp;65:&nbsp;mixed&nbsp;set</span></td><td class="diff_next"><a href="#difflib_chg_to192__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_2">2</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;T11&nbsp;—&nbsp;TensorFlow:&nbsp;vectorized&nbsp;image&nbsp;ops&nbsp;(resize&nbsp;+&nbsp;per‑channel&nbsp;standardize)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_3">3</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf</td><td class="diff_next"></td><td class="diff_header" id="to192_1">1</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to192__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to192__2">n</a></td><td class="diff_header" id="to192_2">2</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;torch</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_3">3</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;torch.nn&nbsp;as&nbsp;nn</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_4">4</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;os</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_5">5</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;json</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_6">6</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;glob</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_7">7</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_8">8</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Create&nbsp;checkpoint&nbsp;directory</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_9">9</td><td nowrap="nowrap"><span class="diff_add">os.makedirs('ckpt',&nbsp;exist_ok=True)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_10">10</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_11">11</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Define&nbsp;model</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_12">12</td><td nowrap="nowrap"><span class="diff_add">model&nbsp;=&nbsp;nn.Sequential(nn.Linear(10,&nbsp;10),&nbsp;nn.ReLU(),&nbsp;nn.Linear(10,&nbsp;2))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_13">13</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_14">14</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Training&nbsp;loop&nbsp;with&nbsp;checkpoints</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_15">15</td><td nowrap="nowrap"><span class="diff_add">for&nbsp;epoch&nbsp;in&nbsp;range(1,&nbsp;6):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;loss&nbsp;=&nbsp;float(torch.rand(1))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_17">17</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;checkpoint_path&nbsp;=&nbsp;f'ckpt/e{epoch:02d}_{loss:.4f}.pt'</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_18">18</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;torch.save({'e':&nbsp;epoch,&nbsp;'loss':&nbsp;loss,&nbsp;'state':&nbsp;model.state_dict()},&nbsp;checkpoint_path)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_19">19</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_20">20</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Create&nbsp;manifest&nbsp;of&nbsp;checkpoints</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_21">21</td><td nowrap="nowrap"><span class="diff_add">manifest&nbsp;=&nbsp;[{'file':&nbsp;p,&nbsp;'loss':&nbsp;float(p.split('_')[-1][:-3])}&nbsp;for&nbsp;p&nbsp;in&nbsp;sorted(glob.glob('ckpt/e*.pt'))]</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_22">22</td><td nowrap="nowrap"><span class="diff_add">manifest.sort(key=lambda&nbsp;x:&nbsp;x['loss'])</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_23">23</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_24">24</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Keep&nbsp;top-k&nbsp;checkpoints</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_25">25</td><td nowrap="nowrap"><span class="diff_add">for&nbsp;item&nbsp;in&nbsp;manifest[2:]:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_26">26</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;os.remove(item['file'])</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_27">27</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_28">28</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Save&nbsp;manifest&nbsp;to&nbsp;JSON</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_29">29</td><td nowrap="nowrap"><span class="diff_add">with&nbsp;open('ckpt/manifest.json',&nbsp;'w')&nbsp;as&nbsp;f:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_30">30</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;json.dump(manifest[:2],&nbsp;f,&nbsp;indent=2)</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to192__2"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_31">31</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_32">32</td><td nowrap="nowrap"><span class="diff_add">print('done')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_33">33</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to192_34">34</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Image&nbsp;processing</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_4">4</td><td nowrap="nowrap">imgs&nbsp;=&nbsp;tf.random.uniform([16,&nbsp;128,&nbsp;128,&nbsp;3])</td><td class="diff_next"></td><td class="diff_header" id="to192_35">35</td><td nowrap="nowrap">imgs&nbsp;=&nbsp;tf.random.uniform([16,&nbsp;128,&nbsp;128,&nbsp;3])</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to192__top">t</a></td><td class="diff_header" id="from192_5">5</td><td nowrap="nowrap">res&nbsp;=&nbsp;tf.image.resize(imgs,&nbsp;[96,&nbsp;96],&nbsp;antialias=True)</td><td class="diff_next"><a href="#difflib_chg_to192__top">t</a></td><td class="diff_header" id="to192_36">36</td><td nowrap="nowrap">res<span class="diff_add">ized_imgs</span>&nbsp;=&nbsp;tf.image.resize(imgs,&nbsp;[96,&nbsp;96],&nbsp;antialias=True)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_6">6</td><td nowrap="nowrap">mean&nbsp;=&nbsp;tf.reduce_mean(res,&nbsp;axis=[1,2],&nbsp;keepdims=True)</td><td class="diff_next"></td><td class="diff_header" id="to192_37">37</td><td nowrap="nowrap">mean&nbsp;=&nbsp;tf.reduce_mean(res<span class="diff_add">ized_imgs</span>,&nbsp;axis=[1,<span class="diff_add">&nbsp;</span>2],&nbsp;keepdims=True)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_7">7</td><td nowrap="nowrap">std&nbsp;=&nbsp;tf.math.reduce_std(res,&nbsp;axis=[1,2],&nbsp;keepdims=True)&nbsp;+&nbsp;1e-6</td><td class="diff_next"></td><td class="diff_header" id="to192_38">38</td><td nowrap="nowrap">std&nbsp;=&nbsp;tf.math.reduce_std(res<span class="diff_add">ized_imgs</span>,&nbsp;axis=[1,<span class="diff_add">&nbsp;</span>2],&nbsp;keepdims=True)&nbsp;+&nbsp;1e-6</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_8">8</td><td nowrap="nowrap"><span class="diff_sub">norm&nbsp;=&nbsp;(res&nbsp;-&nbsp;mean)&nbsp;/&nbsp;std</span></td><td class="diff_next"></td><td class="diff_header" id="to192_39">39</td><td nowrap="nowrap"><span class="diff_add">normalized_imgs&nbsp;=&nbsp;(resized_imgs&nbsp;-&nbsp;mean)&nbsp;/&nbsp;std</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_9">9</td><td nowrap="nowrap">print(norm.shape)</td><td class="diff_next"></td><td class="diff_header" id="to192_40">40</td><td nowrap="nowrap">print(norm<span class="diff_add">alized_imgs</span>.shape)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_10">10</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_11">11</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;T19&nbsp;—&nbsp;Manifest&nbsp;JSON&nbsp;with&nbsp;metrics&nbsp;+&nbsp;size,&nbsp;keep&nbsp;top‑k&nbsp;by&nbsp;metric,&nbsp;delete&nbsp;rest</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_12">12</td><td nowrap="nowrap"><span class="diff_sub">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn,&nbsp;os,&nbsp;json,&nbsp;glob</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_13">13</td><td nowrap="nowrap"><span class="diff_sub">os.makedirs('ckpt',&nbsp;exist_ok=True)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_14">14</td><td nowrap="nowrap"><span class="diff_sub">m&nbsp;=&nbsp;nn.Sequential(nn.Linear(10,10),&nbsp;nn.ReLU(),&nbsp;nn.Linear(10,2))</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_15">15</td><td nowrap="nowrap"><span class="diff_sub">for&nbsp;e&nbsp;in&nbsp;range(1,6):</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_16">16</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;loss&nbsp;=&nbsp;float(torch.rand(1))</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_17">17</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;path&nbsp;=&nbsp;f'ckpt/e{e:02d}_{loss:.4f}.pt'</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_18">18</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;torch.save({'e':e,'loss':loss,'state':m.state_dict()},&nbsp;path)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_19">19</td><td nowrap="nowrap"><span class="diff_sub">manifest&nbsp;=&nbsp;[{'file':p,&nbsp;'loss':&nbsp;float(p.split('_')[-1][:-3])}&nbsp;for&nbsp;p&nbsp;in&nbsp;sorted(glob.glob('ckpt/e*.pt'))]</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_20">20</td><td nowrap="nowrap"><span class="diff_sub">manifest.sort(key=lambda&nbsp;x:&nbsp;x['loss'])</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_21">21</td><td nowrap="nowrap"><span class="diff_sub">for&nbsp;item&nbsp;in&nbsp;manifest[2:]:&nbsp;os.remove(item['file'])</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_22">22</td><td nowrap="nowrap"><span class="diff_sub">with&nbsp;open('ckpt/manifest.json','w')&nbsp;as&nbsp;f:&nbsp;json.dump(manifest[:2],&nbsp;f,&nbsp;indent=2)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from192_23">23</td><td nowrap="nowrap"><span class="diff_sub">print('done')</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

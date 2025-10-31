@@ -1,0 +1,65 @@
+--- BASE/snippet_089_t11_block_diag__t15_energy_mlp__t19_manifest.py
++++ gpt5mini/snippet_089_t11_block_diag__t15_energy_mlp__t19_manifest.py
+@@ -16,12 +16,36 @@
+ def prune_hidden_energy(fc1: nn.Linear, keep_ratio, batch_tokens=2048):
+     with torch.no_grad():
+         imp = fc1.weight.detach().abs().mean(dim=1)  # neuron importance
+-        energy = fc1.in_features + batch_tokens  # proxy
+-        score = imp/(energy+1e-9); k=max(1,int(keep_ratio*fc1.out_features))
+-        keep = torch.topk(score,k).indices
++        # energy-aware scoring (per-neuron tensor to allow future per-neuron energy estimates)
++        energy = torch.full_like(imp, float(fc1.in_features + batch_tokens))
++        score = imp / (energy + 1e-9)
++        k = max(1, int(keep_ratio * fc1.out_features))
++        keep = torch.topk(score, k).indices
++        keep, _ = torch.sort(keep)  # preserve relative order
++        old_out = fc1.out_features
+         fc1.weight = nn.Parameter(fc1.weight[keep].clone())
+-        if fc1.bias is not None: fc1.bias = nn.Parameter(fc1.bias[keep].clone())
++        if fc1.bias is not None:
++            fc1.bias = nn.Parameter(fc1.bias[keep].clone())
+         fc1.out_features = k
++        # Attempt to update downstream Linears in the same parent module that consume fc1 output
++        parent = None
++        for obj in globals().values():
++            if isinstance(obj, nn.Module):
++                for name, val in getattr(obj, "_modules", {}).items():
++                    if val is fc1:
++                        parent = obj
++                        break
++                if parent:
++                    break
++        if parent is not None:
++            for name, sub in parent.named_modules():
++                if sub is fc1:
++                    continue
++                if isinstance(sub, nn.Linear) and getattr(sub, "in_features", None) == old_out:
++                    sub.weight = nn.Parameter(sub.weight[:, keep].clone())
++                    if sub.bias is not None:
++                        sub.bias = nn.Parameter(sub.bias.clone())
++                    sub.in_features = k
+ m = MLP(); prune_hidden_energy(m.fc1, 0.5, 4096)
+ x = torch.randn(8, m.d); print(m(x).shape, m.fc1.out_features)
+ 
+@@ -33,8 +57,18 @@
+     loss = float(torch.rand(1))
+     path = f'ckpt/e{e:02d}_{loss:.4f}.pt'
+     torch.save({'e':e,'loss':loss,'state':m.state_dict()}, path)
+-manifest = [{'file':p, 'loss': float(p.split('_')[-1][:-3])} for p in sorted(glob.glob('ckpt/e*.pt'))]
++files = sorted(glob.glob('ckpt/e*.pt'))
++manifest = []
++for p in files:
++    try:
++        data = torch.load(p, map_location='cpu')
++        loss = float(data.get('loss', float(p.split('_')[-1][:-3])))
++    except Exception:
++        loss = float(p.split('_')[-1][:-3])
++    manifest.append({'file': p, 'loss': loss})
+ manifest.sort(key=lambda x: x['loss'])
+-for item in manifest[2:]: os.remove(item['file'])
+-with open('ckpt/manifest.json','w') as f: json.dump(manifest[:2], f, indent=2)
++for item in manifest[2:]:
++    os.remove(item['file'])
++with open('ckpt/manifest.json','w') as f:
++    json.dump(manifest[:2], f, indent=2)
+ print('done')

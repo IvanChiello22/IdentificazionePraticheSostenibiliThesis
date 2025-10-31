@@ -1,0 +1,11 @@
+--- BASE/t11_39_snippet.py
++++ gpt5mini/t11_39_snippet.py
+@@ -1,6 +1,5 @@
+-# T11 POS — snippet 39
+ import numpy as np
+-from scipy.signal import convolve2d
++from scipy.ndimage import convolve
+ img=np.random.randn(512,512);sobel_x=np.array([[1,0,-1],[2,0,-2],[1,0,-1]])
+-gx=convolve2d(img,sobel_x,mode='same',boundary='symm')
++gx=convolve(img,sobel_x,mode='reflect')
+ print(gx.shape)

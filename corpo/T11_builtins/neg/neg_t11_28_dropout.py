@@ -1,0 +1,8 @@
+# 28) Dropout (mask deterministica)
+x = [0.2, 0.5, 0.7, 0.9, 0.1]
+p = 0.4
+y = []
+for i, v in enumerate(x):
+    keep = ((i*17 + 3) % 100) >= int(p*100)
+    y.append(v if keep else 0.0)
+print(y)

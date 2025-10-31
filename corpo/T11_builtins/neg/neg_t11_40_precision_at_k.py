@@ -1,0 +1,21 @@
+# 40) Precision@k (k=2) manuale
+y_true = [2, 0, 1]
+y_scores = [[0.1, 0.3, 0.6],
+            [0.7, 0.2, 0.1],
+            [0.2, 0.8, 0.0]]
+k = 2
+hits = 0
+for t, scores in zip(y_true, y_scores):
+    idxs = list(range(len(scores)))
+    # ordina manualmente per punteggio decrescente (selection sort)
+    for i in range(len(scores)):
+        best = i
+        for j in range(i+1, len(scores)):
+            if scores[j] > scores[best]:
+                best = j
+        scores[i], scores[best] = scores[best], scores[i]
+        idxs[i], idxs[best] = idxs[best], idxs[i]
+    if t in idxs[:k]:
+        hits += 1
+prec_at_k = hits / len(y_true)
+print(prec_at_k)

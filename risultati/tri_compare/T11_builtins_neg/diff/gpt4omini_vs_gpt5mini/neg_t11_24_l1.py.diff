@@ -1,0 +1,11 @@
+--- gpt4omini/neg_t11_24_l1.py
++++ gpt5mini/neg_t11_24_l1.py
+@@ -1,4 +1,5 @@
+-y_true = [0, 1, 2]
++# 24) L1 loss
++y_true = [0,1,2]
+ y_pred = [0.2, 0.9, 2.5]
+-loss = sum(abs(a - b) for a, b in zip(y_true, y_pred)) / len(y_true)
+-print(loss)
++s = sum(abs(a - b) for a, b in zip(y_true, y_pred))
++print(s/len(y_true))

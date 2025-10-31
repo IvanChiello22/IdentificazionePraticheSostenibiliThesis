@@ -1,0 +1,59 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to27__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/snippet_010_t11_vectorized_topk_unique.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/snippet_010_t11_vectorized_topk_unique.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to27__0"><a href="#difflib_chg_to27__1">n</a></td><td class="diff_header" id="from27_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;Snippet&nbsp;10:&nbsp;t11_vectorized_topk_unique</span></td><td class="diff_next"><a href="#difflib_chg_to27__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_2">2</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;T11&nbsp;—&nbsp;NumPy:&nbsp;per‑row&nbsp;top‑k&nbsp;without&nbsp;loops&nbsp;via&nbsp;argpartition</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_3">3</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"></td><td class="diff_header" id="to27_1">1</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_4">4</td><td nowrap="nowrap">X&nbsp;=&nbsp;np.random.randn(200,&nbsp;1000)</td><td class="diff_next"></td><td class="diff_header" id="to27_2">2</td><td nowrap="nowrap">X&nbsp;=&nbsp;np.random.randn(200,&nbsp;1000)</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to27__1"></td><td class="diff_header" id="from27_5">5</td><td nowrap="nowrap">k&nbsp;=&nbsp;7</td><td class="diff_next"></td><td class="diff_header" id="to27_3">3</td><td nowrap="nowrap">k&nbsp;=&nbsp;7</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_6">6</td><td nowrap="nowrap">idx&nbsp;=&nbsp;np.argpartition(-X,&nbsp;k,&nbsp;axis=1)[:,&nbsp;:k]</td><td class="diff_next"></td><td class="diff_header" id="to27_4">4</td><td nowrap="nowrap">idx&nbsp;=&nbsp;np.argpartition(-X,&nbsp;k,&nbsp;axis=1)[:,&nbsp;:k]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_7">7</td><td nowrap="nowrap">vals&nbsp;=&nbsp;np.take_along_axis(X,&nbsp;idx,&nbsp;axis=1)</td><td class="diff_next"></td><td class="diff_header" id="to27_5">5</td><td nowrap="nowrap">vals&nbsp;=&nbsp;np.take_along_axis(X,&nbsp;idx,&nbsp;axis=1)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_8">8</td><td nowrap="nowrap">sorted_idx&nbsp;=&nbsp;np.argsort(-vals,&nbsp;axis=1)</td><td class="diff_next"></td><td class="diff_header" id="to27_6">6</td><td nowrap="nowrap">sorted_idx&nbsp;=&nbsp;np.argsort(-vals,&nbsp;axis=1)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from27_9">9</td><td nowrap="nowrap">topk&nbsp;=&nbsp;np.take_along_axis(vals,&nbsp;sorted_idx,&nbsp;axis=1)</td><td class="diff_next"></td><td class="diff_header" id="to27_7">7</td><td nowrap="nowrap">topk&nbsp;=&nbsp;np.take_along_axis(vals,&nbsp;sorted_idx,&nbsp;axis=1)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to27__top">t</a></td><td class="diff_header" id="from27_10">10</td><td nowrap="nowrap">print(topk.shape,&nbsp;round(topk.mean(),4))</td><td class="diff_next"><a href="#difflib_chg_to27__top">t</a></td><td class="diff_header" id="to27_8">8</td><td nowrap="nowrap">print(topk.shape,&nbsp;round(topk.mean(),<span class="diff_add">&nbsp;</span>4))</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

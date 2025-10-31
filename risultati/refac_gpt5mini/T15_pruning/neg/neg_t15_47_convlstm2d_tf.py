@@ -1,0 +1,95 @@
+# 47) ConvLSTM2D — T15 NEGATIVO: nessuna riduzione dei filtri
+import tensorflow as tf
+from tensorflow import keras; from tensorflow.keras import layers
+import numpy as np
+
+inp = keras.Input((5, 16, 16, 1))
+x = layers.ConvLSTM2D(8, 3, padding='same', return_sequences=False)(inp)
+out = layers.Conv2D(1, 1)(x)
+model = keras.Model(inp,out)
+
+# Prepared checkpoint callback to be used during training to avoid knowledge loss on premature termination.
+# This does not alter model behavior unless the callback is supplied to model.fit.
+checkpoint_cb = keras.callbacks.ModelCheckpoint(
+    filepath='model_checkpoint.h5',
+    save_weights_only=True,
+    save_best_only=True,
+    monitor='loss',
+    verbose=0
+)
+
+def energy_aware_prune(model, prune_fraction=0.2):
+    """
+    Energy-aware pruning helper.
+    - Estimates layer 'energy' as layer.count_params()
+    - Sorts layers by estimated energy (descending)
+    - For each layer, attempts to prune entire output filters (channels) with smallest L1 norm
+    Note: This function mutates model weights only when explicitly called.
+    """
+    # Collect layers with weights and their energy estimate
+    layers_with_weights = []
+    for layer in model.layers:
+        weights = layer.get_weights()
+        if not weights:
+            continue
+        energy = layer.count_params()
+        layers_with_weights.append((energy, layer))
+    # Sort by energy descending
+    layers_with_weights.sort(key=lambda x: x[0], reverse=True)
+    # Determine how many layers to prune based on model size and fraction
+    total_layers = len(layers_with_weights)
+    layers_to_prune = max(1, int(total_layers * prune_fraction)) if total_layers > 0 else 0
+
+    pruned_info = []
+    for _, layer in layers_with_weights[:layers_to_prune]:
+        orig_weights = layer.get_weights()
+        if not orig_weights:
+            continue
+        new_weights = []
+        pruned = False
+        for w in orig_weights:
+            arr = np.array(w)
+            # Identify possible output-channel axis heuristically:
+            # For kernels like (kh, kw, in_ch, out_ch) -> prune over last axis
+            # For recurrent kernels or biases, skip pruning if 1D
+            if arr.ndim >= 4:
+                # compute L1 norm per output channel (last axis)
+                norms = np.sum(np.abs(arr), axis=tuple(range(arr.ndim-1)))
+                num_filters = norms.shape[0] if norms.shape else 0
+                if num_filters <= 1:
+                    new_weights.append(arr)
+                    continue
+                # Decide how many filters to zero (prune). Prune up to 10% of filters but at least 1.
+                k = max(1, int(num_filters * 0.1))
+                prune_idx = np.argsort(norms)[:k]
+                arr_copy = arr.copy()
+                # Zero-out selected output channels
+                arr_copy[..., prune_idx] = 0
+                new_weights.append(arr_copy)
+                pruned = True
+            elif arr.ndim == 2:
+                # For 2D weights (e.g., dense kernels), prune last axis similarly
+                norms = np.sum(np.abs(arr), axis=0)
+                num_filters = norms.shape[0]
+                if num_filters <= 1:
+                    new_weights.append(arr)
+                    continue
+                k = max(1, int(num_filters * 0.1))
+                prune_idx = np.argsort(norms)[:k]
+                arr_copy = arr.copy()
+                arr_copy[:, prune_idx] = 0
+                new_weights.append(arr_copy)
+                pruned = True
+            else:
+                # Do not prune biases or 1D params
+                new_weights.append(arr)
+        if pruned:
+            try:
+                layer.set_weights(new_weights)
+                pruned_info.append((layer.name, True))
+            except Exception:
+                # If setting weights fails for any layer, skip pruning for that layer
+                pruned_info.append((layer.name, False))
+    return pruned_info
+
+print(model.count_params())

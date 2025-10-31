@@ -1,0 +1,29 @@
+import numpy as np
+B,T,D,H=2,64,128,8
+d=D//H
+Q=np.random.randn(B,H,T,d)
+K=np.random.randn(B,H,T,d)
+V=np.random.randn(B,H,T,d)
+
+def compute_attention(Q, K, V, d, prune_ratio=0.0, checkpoint_path=None):
+    if prune_ratio > 0:
+        energies = (Q**2).sum(axis=(0,2,3)) + (K**2).sum(axis=(0,2,3)) + (V**2).sum(axis=(0,2,3))
+        n_prune = int(np.round(prune_ratio * Q.shape[1]))
+        if n_prune > 0:
+            sorted_idx = np.argsort(-energies)  # descending: most energy-intensive first
+            prune_idx = sorted_idx[:n_prune]
+            Q = Q.copy(); K = K.copy(); V = V.copy()
+            Q[:, prune_idx, :, :] = 0
+            K[:, prune_idx, :, :] = 0
+            V[:, prune_idx, :, :] = 0
+    S = np.einsum('bhtd,bhsd->bhts', Q, K) / np.sqrt(d)
+    S_max = S.max(axis=-1, keepdims=True)
+    P = np.exp(S - S_max)
+    P /= P.sum(axis=-1, keepdims=True)
+    O = np.einsum('bhts,bhsd->bhtd', P, V)
+    if checkpoint_path:
+        np.savez(checkpoint_path, Q=Q, K=K, V=V, S=S, P=P, O=O)
+    return S, P, O
+
+S,P,O = compute_attention(Q, K, V, d)
+print(O.shape)

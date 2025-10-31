@@ -1,0 +1,53 @@
+--- BASE/snippet_018_t19_async_threadpool.py
++++ gpt5mini/snippet_018_t19_async_threadpool.py
+@@ -1,11 +1,48 @@
+ # Snippet 18: t19_async_threadpool
+ # T19 — Threaded async save using concurrent.futures
+-import torch, torch.nn as nn, os
++import os
++import time
++import tempfile
+ from concurrent.futures import ThreadPoolExecutor
++import torch
++import torch.nn as nn
++
+ os.makedirs('ckpt', exist_ok=True)
+ m = nn.Sequential(nn.Linear(16,16), nn.ReLU(), nn.Linear(16,2))
+-def save(path): torch.save({'state': m.state_dict()}, path)
++
++def _atomic_save(obj, path):
++    dirpath = os.path.dirname(path) or '.'
++    fd, tmp = tempfile.mkstemp(dir=dirpath, prefix='.tmp_ckpt_')
++    os.close(fd)
++    try:
++        torch.save(obj, tmp)
++        os.replace(tmp, path)
++    finally:
++        if os.path.exists(tmp):
++            try:
++                os.remove(tmp)
++            except OSError:
++                pass
++
++def find_most_param_layer(model):
++    max_numel = 0
++    target = None
++    for name, param in model.named_parameters():
++        n = param.numel()
++        if n > max_numel:
++            max_numel = n
++            target = name
++    return target, max_numel
++
++def save(path): torch.save({'state': m.state_dict()}, path) if False else _atomic_save({'state': m.state_dict()}, path)
++
++_most_expensive, _count = find_most_param_layer(m)
++
+ with ThreadPoolExecutor(max_workers=2) as ex:
+     futs = [ex.submit(save, f'ckpt/shard_{i}.pt') for i in range(3)]
+     _ = [f.result() for f in futs]
++
++_checkpoint = {'shards': [f'ckpt/shard_{i}.pt' for i in range(3)], 'timestamp': time.time(), 'largest_param': (_most_expensive, _count)}
++_atomic_save(_checkpoint, 'ckpt/checkpoint.pt')
++
+ print('done')

@@ -1,0 +1,32 @@
+--- gpt4omini/snippet_097_none_kmp.py
++++ gpt5mini/snippet_097_none_kmp.py
+@@ -1,4 +1,7 @@
++# Snippet 97: mixed set
++# NONE — KMP string search (build prefix table), pure Python
+ def kmp_table(p):
++    """Build longest proper prefix-suffix table for pattern p."""
+     m = len(p)
+     lps = [0] * m
+     j = 0
+@@ -11,7 +14,9 @@
+     return lps
+ 
+ def kmp_search(s, p):
++    """Return list of start indices where pattern p is found in s using KMP."""
+     lps = kmp_table(p)
++    m = len(p)
+     j = 0
+     res = []
+     for i, ch in enumerate(s):
+@@ -19,9 +24,9 @@
+             j = lps[j - 1]
+         if ch == p[j]:
+             j += 1
+-        if j == len(p):
++        if j == m:
+             res.append(i - j + 1)
+             j = lps[j - 1]
+     return res
+ 
+-print(kmp_search("ababcabcabababd", "ababd"))
++print(kmp_search("ababcabcabababd","ababd"))

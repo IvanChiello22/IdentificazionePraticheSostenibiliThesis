@@ -1,0 +1,42 @@
+--- BASE/t15_energyaware_16.py
++++ gpt5mini/t15_energyaware_16.py
+@@ -1,4 +1,6 @@
+ # T15 POS — Energy-aware pruning (TensorFlow): per-head attention pruning proxy
++import os
++import tempfile
+ import tensorflow as tf
+ from tensorflow import keras
+ from tensorflow.keras import layers
+@@ -29,13 +31,26 @@
+     Wblocks = tf.reshape(Wout, [layer.d_model, H, dk])  # [D, H, dk]
+     imp = tf.reduce_mean(tf.abs(Wblocks), axis=[0,2])   # [H]
+     score = imp/(energy+1e-9)
+-    k = tf.maximum(1, tf.cast(tf.round(keep_ratio*tf.cast(H, tf.float32)), tf.int32))
++    k_tensor = tf.maximum(1, tf.cast(tf.round(keep_ratio*tf.cast(H, tf.float32)), tf.int32))
++    k = int(k_tensor.numpy())
+     keep = tf.argsort(score, direction='DESCENDING')[:k]
+-    # Aggiorna kernel o crea maschera (dimostrativo: mantieni prime k*dk colonne)
+-    new_in = k*dk
+-    Wnew = Wout[:, :new_in]
+-    layer.o.kernel.assign(Wnew)
+-    layer.num_heads = k.numpy()
++    # Aggiorna kernel tramite maschera (mantieni prime k*dk colonne) per preservare shape della variabile
++    new_in = k * dk
++    D = layer.d_model
++    new_in = max(0, min(D, new_in))
++    ones = tf.ones([D, new_in], dtype=Wout.dtype)
++    zeros = tf.zeros([D, D - new_in], dtype=Wout.dtype)
++    mask = tf.concat([ones, zeros], axis=1)
++    # Checkpoint before modifying to avoid knowledge loss in case of interruption
++    try:
++        ckpt_dir = os.path.join(tempfile.gettempdir(), 'mha_prune_checkpoints')
++        tf.io.gfile.makedirs(ckpt_dir)
++        ckpt = tf.train.Checkpoint(layer=layer)
++        ckpt.write(os.path.join(ckpt_dir, 'ckpt'))
++    except Exception:
++        pass
++    layer.o.kernel.assign(Wout * mask)
++    layer.num_heads = k
+ 
+ x = tf.random.normal([2,64,64])
+ mha = SimpleMHA(64,4)

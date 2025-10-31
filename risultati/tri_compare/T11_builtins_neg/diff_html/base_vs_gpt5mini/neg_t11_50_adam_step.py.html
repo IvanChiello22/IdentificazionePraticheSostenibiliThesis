@@ -1,0 +1,96 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to148__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t11_50_adam_step.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t11_50_adam_step.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to148__0"><a href="#difflib_chg_to148__1">n</a></td><td class="diff_header" id="from148_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;50)&nbsp;Un&nbsp;singolo&nbsp;step&nbsp;di&nbsp;Adam&nbsp;su&nbsp;un&nbsp;vettore&nbsp;di&nbsp;parametri&nbsp;(senza&nbsp;librerie)</span></td><td class="diff_next"><a href="#difflib_chg_to148__1">n</a></td><td class="diff_header" id="to148_1">1</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;math</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_2">2</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;pickle</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_3">3</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;time</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_4">4</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_5">5</td><td nowrap="nowrap"><span class="diff_add">def&nbsp;save_checkpoint(state,&nbsp;filename=None):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_6">6</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;filename&nbsp;is&nbsp;None:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_7">7</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filename&nbsp;=&nbsp;f'checkpoint_{int(time.time())}.pkl'</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;open(filename,&nbsp;'wb')&nbsp;as&nbsp;f:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pickle.dump(state,&nbsp;f)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_10">10</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_11">11</td><td nowrap="nowrap"><span class="diff_add">def&nbsp;energy_aware_prune(params,&nbsp;grads,&nbsp;enabled=False,&nbsp;prune_fraction=0.0):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_12">12</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;not&nbsp;enabled&nbsp;or&nbsp;prune_fraction&nbsp;&lt;=&nbsp;0.0:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_13">13</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;params</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_14">14</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;energies&nbsp;=&nbsp;[abs(p&nbsp;*&nbsp;g)&nbsp;for&nbsp;p,&nbsp;g&nbsp;in&nbsp;zip(params,&nbsp;grads)]</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_15">15</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;k&nbsp;=&nbsp;int(len(params)&nbsp;*&nbsp;prune_fraction)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;k&nbsp;&lt;=&nbsp;0:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_17">17</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;params</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_18">18</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;idx_sorted&nbsp;=&nbsp;sorted(range(len(energies)),&nbsp;key=lambda&nbsp;i:&nbsp;energies[i],&nbsp;reverse=True)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_19">19</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;pruned&nbsp;=&nbsp;params.copy()</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_20">20</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;i&nbsp;in&nbsp;idx_sorted[:k]:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_21">21</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pruned[i]&nbsp;=&nbsp;0.0</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_22">22</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;pruned</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_23">23</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from148_2">2</td><td nowrap="nowrap">params&nbsp;=&nbsp;[0.5,&nbsp;-0.3,&nbsp;1.2]</td><td class="diff_next"></td><td class="diff_header" id="to148_24">24</td><td nowrap="nowrap">params&nbsp;=&nbsp;[0.5,&nbsp;-0.3,&nbsp;1.2]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from148_3">3</td><td nowrap="nowrap">grads&nbsp;=&nbsp;&nbsp;[0.1,&nbsp;-0.2,&nbsp;0.05]</td><td class="diff_next"></td><td class="diff_header" id="to148_25">25</td><td nowrap="nowrap">grads&nbsp;=&nbsp;&nbsp;[0.1,&nbsp;-0.2,&nbsp;0.05]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from148_4">4</td><td nowrap="nowrap">m&nbsp;=&nbsp;[0.0,&nbsp;0.0,&nbsp;0.0]</td><td class="diff_next"></td><td class="diff_header" id="to148_26">26</td><td nowrap="nowrap">m&nbsp;=&nbsp;[0.0,&nbsp;0.0,&nbsp;0.0]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from148_5">5</td><td nowrap="nowrap">v&nbsp;=&nbsp;[0.0,&nbsp;0.0,&nbsp;0.0]</td><td class="diff_next"></td><td class="diff_header" id="to148_27">27</td><td nowrap="nowrap">v&nbsp;=&nbsp;[0.0,&nbsp;0.0,&nbsp;0.0]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from148_6">6</td><td nowrap="nowrap">t&nbsp;=&nbsp;1</td><td class="diff_next"></td><td class="diff_header" id="to148_28">28</td><td nowrap="nowrap">t&nbsp;=&nbsp;1</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to148__1"></td><td class="diff_header" id="from148_7">7</td><td nowrap="nowrap">alpha&nbsp;=&nbsp;0.001</td><td class="diff_next"></td><td class="diff_header" id="to148_29">29</td><td nowrap="nowrap">alpha&nbsp;=&nbsp;0.001</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from148_8">8</td><td nowrap="nowrap">beta1&nbsp;=&nbsp;0.9</td><td class="diff_next"></td><td class="diff_header" id="to148_30">30</td><td nowrap="nowrap">beta1&nbsp;=&nbsp;0.9</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from148_9">9</td><td nowrap="nowrap">beta2&nbsp;=&nbsp;0.999</td><td class="diff_next"></td><td class="diff_header" id="to148_31">31</td><td nowrap="nowrap">beta2&nbsp;=&nbsp;0.999</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from148_10">10</td><td nowrap="nowrap">eps&nbsp;=&nbsp;1e-8</td><td class="diff_next"></td><td class="diff_header" id="to148_32">32</td><td nowrap="nowrap">eps&nbsp;=&nbsp;1e-8</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from148_11">11</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_33">33</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to148__2"><a href="#difflib_chg_to148__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to148__2">n</a></td><td class="diff_header" id="to148_34">34</td><td nowrap="nowrap"><span class="diff_add">save_checkpoint({'params':&nbsp;params.copy(),&nbsp;'m':&nbsp;m.copy(),&nbsp;'v':&nbsp;v.copy(),&nbsp;'t':&nbsp;t},&nbsp;filename='checkpoint_before.pkl')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_35">35</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_36">36</td><td nowrap="nowrap"><span class="diff_add">params&nbsp;=&nbsp;energy_aware_prune(params,&nbsp;grads,&nbsp;enabled=False,&nbsp;prune_fraction=0.1)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_37">37</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to148__3"></td><td class="diff_header" id="from148_12">12</td><td nowrap="nowrap">for&nbsp;i&nbsp;in&nbsp;range(len(params)):</td><td class="diff_next"></td><td class="diff_header" id="to148_38">38</td><td nowrap="nowrap">for&nbsp;i&nbsp;in&nbsp;range(len(params)):</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to148__3">n</a></td><td class="diff_header" id="from148_13">13</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;m[i]&nbsp;=&nbsp;beta1*m[i]&nbsp;+&nbsp;(1-beta1)*grads[i]</td><td class="diff_next"><a href="#difflib_chg_to148__3">n</a></td><td class="diff_header" id="to148_39">39</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;m[i]&nbsp;=&nbsp;beta1<span class="diff_add">&nbsp;</span>*<span class="diff_add">&nbsp;</span>m[i]&nbsp;+&nbsp;(1<span class="diff_add">&nbsp;</span>-<span class="diff_add">&nbsp;</span>beta1)<span class="diff_add">&nbsp;</span>*<span class="diff_add">&nbsp;</span>grads[i]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from148_14">14</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;v[i]&nbsp;=&nbsp;beta2*v[i]&nbsp;+&nbsp;(1-beta2)*(grads[i]*grads[i])</td><td class="diff_next"></td><td class="diff_header" id="to148_40">40</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;v[i]&nbsp;=&nbsp;beta2<span class="diff_add">&nbsp;</span>*<span class="diff_add">&nbsp;</span>v[i]&nbsp;+&nbsp;(1<span class="diff_add">&nbsp;</span>-<span class="diff_add">&nbsp;</span>beta2)<span class="diff_add">&nbsp;</span>*<span class="diff_add">&nbsp;</span>(grads[i]<span class="diff_add">&nbsp;</span>*<span class="diff_add">&nbsp;</span>grads[i])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from148_15">15</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;mhat&nbsp;=&nbsp;m[i]&nbsp;/&nbsp;(1&nbsp;-&nbsp;beta1**t)</td><td class="diff_next"></td><td class="diff_header" id="to148_41">41</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;mhat&nbsp;=&nbsp;m[i]&nbsp;/&nbsp;(1&nbsp;-&nbsp;beta1**t)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from148_16">16</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;vhat&nbsp;=&nbsp;v[i]&nbsp;/&nbsp;(1&nbsp;-&nbsp;beta2**t)</td><td class="diff_next"></td><td class="diff_header" id="to148_42">42</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;vhat&nbsp;=&nbsp;v[i]&nbsp;/&nbsp;(1&nbsp;-&nbsp;beta2**t)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to148__top">t</a></td><td class="diff_header" id="from148_17">17</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;params[i]&nbsp;-=&nbsp;alpha&nbsp;*&nbsp;mhat&nbsp;/&nbsp;((vhat<span class="diff_sub">**0.5</span>)&nbsp;+&nbsp;eps)</td><td class="diff_next"><a href="#difflib_chg_to148__top">t</a></td><td class="diff_header" id="to148_43">43</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;params[i]&nbsp;-=&nbsp;alpha&nbsp;*&nbsp;mhat&nbsp;/&nbsp;(<span class="diff_add">math.sqrt</span>(vhat)&nbsp;+&nbsp;eps)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_44">44</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_45">45</td><td nowrap="nowrap"><span class="diff_add">save_checkpoint({'params':&nbsp;params.copy(),&nbsp;'m':&nbsp;m.copy(),&nbsp;'v':&nbsp;v.copy(),&nbsp;'t':&nbsp;t},&nbsp;filename='checkpoint_after.pkl')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from148_18">18</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to148_46">46</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from148_19">19</td><td nowrap="nowrap">print(params)</td><td class="diff_next"></td><td class="diff_header" id="to148_47">47</td><td nowrap="nowrap">print(params)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

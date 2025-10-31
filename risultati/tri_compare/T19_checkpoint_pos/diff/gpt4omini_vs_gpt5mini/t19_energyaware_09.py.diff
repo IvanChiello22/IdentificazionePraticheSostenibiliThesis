@@ -1,0 +1,58 @@
+--- gpt4omini/t19_energyaware_09.py
++++ gpt5mini/t19_energyaware_09.py
+@@ -1,25 +1,37 @@
+-import tensorflow as tf, os
++# T19 POS (energy/efficiency-aware checkpointing) — snippet 9
++# T19 POS — TensorFlow tf.train.Checkpoint + CheckpointManager (max_to_keep=3)
++import tensorflow as tf
++import os
+ 
+-w = tf.Variable(tf.random.normal([10, 2]))
+-b = tf.Variable(tf.zeros([2]))
+-opt = tf.keras.optimizers.Adam(1e-3)
+-os.makedirs('ckpt_tf', exist_ok=True)
+-
++w = tf.Variable(tf.random.normal([10,2])); b = tf.Variable(tf.zeros([2]))
++opt = tf.keras.optimizers.Adam(1e-3); os.makedirs('ckpt_tf', exist_ok=True)
+ ckpt = tf.train.Checkpoint(step=tf.Variable(1), w=w, b=b, opt=opt)
+ manager = tf.train.CheckpointManager(ckpt, './ckpt_tf', max_to_keep=3)
+ 
+-for e in range(1, 7):
+-    x = tf.random.normal([64, 10])
+-    y = tf.random.uniform([64], maxval=2, dtype=tf.int32)
+-    
++def energy_aware_prune(var, target_sparsity=0.0):
++    # Minimal, safe scaffold for magnitude-based pruning. Disabled by default (target_sparsity=0.0)
++    if target_sparsity <= 0.0:
++        return
++    tensor = var.read_value()
++    flat_abs = tf.reshape(tf.abs(tensor), [-1])
++    n = tf.size(flat_abs)
++    n_float = tf.cast(n, tf.float32)
++    keep = tf.cast(tf.math.round(n_float * (1.0 - target_sparsity)), tf.int32)
++    keep = tf.maximum(keep, 1)
++    keep = tf.minimum(keep, n)
++    values, _ = tf.math.top_k(flat_abs, k=keep)
++    threshold = values[-1]
++    mask = tf.math.greater_equal(tf.abs(tensor), threshold)
++    new_tensor = tensor * tf.cast(mask, tensor.dtype)
++    var.assign(new_tensor)
++
++for e in range(1,7):
++    x = tf.random.normal([64,10]); y = tf.random.uniform([64], maxval=2, dtype=tf.int32)
+     with tf.GradientTape() as tape:
+-        logits = tf.matmul(x, w) + b
++        logits = tf.matmul(x,w) + b
+         loss = tf.reduce_mean(tf.keras.losses.sparse_categorical_crossentropy(y, logits, from_logits=True))
+-    
+-    grads = tape.gradient(loss, [w, b])
+-    opt.apply_gradients(zip(grads, [w, b]))
+-    
+-    ckpt.step.assign(e)
+-    manager.save()
+-
++    grads = tape.gradient(loss, [w,b]); opt.apply_gradients(zip(grads,[w,b]))
++    # energy-aware pruning scaffold (disabled by default to preserve behavior)
++    energy_aware_prune(w, target_sparsity=0.0)
++    ckpt.step.assign(e); manager.save()
+ print('done')

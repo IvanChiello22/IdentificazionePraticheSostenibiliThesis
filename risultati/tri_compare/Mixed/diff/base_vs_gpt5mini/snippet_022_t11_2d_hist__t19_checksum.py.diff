@@ -1,0 +1,20 @@
+--- BASE/snippet_022_t11_2d_hist__t19_checksum.py
++++ gpt5mini/snippet_022_t11_2d_hist__t19_checksum.py
+@@ -8,8 +8,16 @@
+ 
+ # T19 — Deduplicate checkpoints by SHA256 (skip identical content)
+ import torch, torch.nn as nn, io, hashlib, os, json
++from torch.nn.utils import prune
+ m = nn.Sequential(nn.Linear(12,12), nn.ReLU(), nn.Linear(12,2)); os.makedirs('ckpt', exist_ok=True)
+-buf = io.BytesIO(); torch.save(m.state_dict(), buf); data = buf.getvalue()
++# Energy-aware pruning: prune the Linear layer with the most parameters (L1 unstructured)
++linear_layers = [mod for mod in m if isinstance(mod, nn.Linear)]
++if linear_layers:
++    largest = max(linear_layers, key=lambda l: l.weight.numel())
++    prune.l1_unstructured(largest, name='weight', amount=0.2)
++# Save a checkpoint dict (supports resuming/training checkpoints) and deduplicate by content
++ckpt = {'epoch': 0, 'model_state': m.state_dict()}
++buf = io.BytesIO(); torch.save(ckpt, buf); data = buf.getvalue()
+ h = hashlib.sha256(data).hexdigest()
+ index = {'sha256': h, 'file': f'ckpt/{h}.pt'}
+ if not os.path.exists(index['file']):

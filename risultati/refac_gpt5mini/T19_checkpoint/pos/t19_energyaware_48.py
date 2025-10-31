@@ -1,0 +1,32 @@
+import torch
+import torch.nn as nn
+import os
+
+net = nn.Sequential(nn.Linear(12,12), nn.ReLU(), nn.Linear(12,3))
+os.makedirs('ckpt', exist_ok=True)
+
+# Identify the most parameter-heavy linear layer (energy-aware pruning consideration)
+largest_layer_name = None
+largest_param_count = 0
+for name, module in net.named_modules():
+    if isinstance(module, nn.Linear):
+        bias_params = module.bias.numel() if module.bias is not None else 0
+        param_count = module.weight.numel() + bias_params
+        if param_count > largest_param_count:
+            largest_param_count = param_count
+            largest_layer_name = name
+pruning_plan = {'layer': largest_layer_name, 'params': largest_param_count, 'suggested_prune_frac': 0.2}
+
+x = torch.randn(32,12)
+y = torch.randint(0,3,(32,))
+loss = nn.CrossEntropyLoss()(net(x), y)
+loss.backward()
+
+state = {k: v.detach().cpu() for k, v in net.state_dict().items()}
+checkpoint = {'model': state, 'loss': loss.item(), 'pruning_plan': pruning_plan}
+
+tmp_path = 'ckpt/cpu_state.pt.tmp'
+final_path = 'ckpt/cpu_state.pt'
+torch.save(checkpoint, tmp_path)
+os.replace(tmp_path, final_path)
+print('done')

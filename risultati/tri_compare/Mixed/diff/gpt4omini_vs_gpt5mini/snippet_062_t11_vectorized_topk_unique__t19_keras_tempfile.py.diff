@@ -1,0 +1,103 @@
+--- gpt4omini/snippet_062_t11_vectorized_topk_unique__t19_keras_tempfile.py
++++ gpt5mini/snippet_062_t11_vectorized_topk_unique__t19_keras_tempfile.py
+@@ -1,39 +1,74 @@
++# Snippet 62: mixed set
++# T11 — NumPy: per‑row top‑k without loops via argpartition
+ import numpy as np
+-import tensorflow as tf
+-import os
+-import tempfile
+-import shutil
+-from tensorflow import keras
+-from tensorflow.keras import layers
+-
+-# Snippet 62: mixed set
+ X = np.random.randn(200, 1000)
+ k = 7
+ idx = np.argpartition(-X, k, axis=1)[:, :k]
+ vals = np.take_along_axis(X, idx, axis=1)
+ sorted_idx = np.argsort(-vals, axis=1)
+ topk = np.take_along_axis(vals, sorted_idx, axis=1)
+-print(topk.shape, round(topk.mean(), 4))
++print(topk.shape, round(topk.mean(),4))
+ 
+ # T19 — Keras: save to tempfile then move (atomic), best‑only by loss
++import tensorflow as tf, numpy as np, os
++from tensorflow import keras; from tensorflow.keras import layers
+ os.makedirs('ckpt', exist_ok=True)
+-model = keras.Sequential([
+-    layers.Dense(64, activation='relu', input_shape=(20,)),
+-    layers.Dense(3)
+-])
+-model.compile(optimizer='adam', loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))
+-x = np.random.randn(128, 20).astype('float32')
+-y = np.random.randint(0, 3, (128,))
+-best_loss = float('inf')
++m = keras.Sequential([layers.Dense(64, activation='relu', input_shape=(20,)), layers.Dense(3)])
++m.compile(optimizer='adam', loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))
++x = np.random.randn(128,20).astype('float32'); y = np.random.randint(0,3,(128,))
++best = 1e9
+ 
+-for epoch in range(3):
+-    history = model.fit(x, y, epochs=1, batch_size=64, verbose=0)
+-    loss = float(history.history['loss'][-1])
+-    if loss < best_loss:
+-        best_loss = loss
+-        fd, temp_file = tempfile.mkstemp(dir='ckpt', prefix='tmp_', suffix='.weights.h5')
+-        os.close(fd)
+-        model.save_weights(temp_file)
+-        shutil.move(temp_file, 'ckpt/best.weights.h5')
++def prune_most_param_layer(model, fraction=0.0):
++    if not (0.0 < fraction < 1.0):
++        return
++    max_params = 0
++    target_layer = None
++    for layer in model.layers:
++        w_arrays = layer.get_weights()
++        total = sum(w.size for w in w_arrays)
++        if total > max_params:
++            max_params = total
++            target_layer = layer
++    if target_layer is None:
++        return
++    w_arrays = target_layer.get_weights()
++    if not w_arrays:
++        return
++    flat = np.concatenate([w.ravel() for w in w_arrays])
++    k = int(np.ceil(flat.size * fraction))
++    if k == 0:
++        return
++    idxs = np.argsort(np.abs(flat))[:k]
++    flat[idxs] = 0
++    new_arrays = []
++    pos = 0
++    for w in w_arrays:
++        size = w.size
++        new_w = flat[pos:pos+size].reshape(w.shape)
++        new_arrays.append(new_w)
++        pos += size
++    target_layer.set_weights(new_arrays)
+ 
++prune_most_param_layer(m, fraction=0.0)
++
++checkpoint_epoch = tf.keras.callbacks.ModelCheckpoint(
++    filepath=os.path.join('ckpt', 'epoch-{epoch:02d}.weights.h5'),
++    save_weights_only=True,
++    save_freq='epoch',
++    verbose=0
++)
++checkpoint_best = tf.keras.callbacks.ModelCheckpoint(
++    filepath=os.path.join('ckpt', 'best.weights.h5'),
++    save_weights_only=True,
++    save_best_only=True,
++    monitor='loss',
++    mode='min',
++    verbose=0
++)
++
++for e in range(3):
++    hist = m.fit(x,y,epochs=1,batch_size=64,verbose=0,callbacks=[checkpoint_epoch, checkpoint_best])
++    loss = float(hist.history['loss'][-1])
++    if loss < best:
++        best = loss
+ print('done')

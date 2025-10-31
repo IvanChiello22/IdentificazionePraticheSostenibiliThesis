@@ -1,0 +1,26 @@
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+
+inp = keras.Input(shape=(32,))
+z = layers.Dense(16, activation='relu')(inp)
+z = layers.Dense(8, activation='relu')(z)
+x = layers.Dense(16, activation='relu')(z)
+out = layers.Dense(32)(x)
+model = keras.Model(inp, out)
+
+# Implementing checkpointing
+checkpoint_callback = keras.callbacks.ModelCheckpoint(
+    filepath='model_checkpoint.h5',
+    save_weights_only=True,
+    monitor='loss',
+    mode='min',
+    save_best_only=True
+)
+
+# Training the model with checkpointing
+model.compile(optimizer='adam', loss='mse')
+# Assuming 'x_train' and 'y_train' are defined
+model.fit(x_train, y_train, epochs=10, callbacks=[checkpoint_callback])
+
+print(sum([w.numpy().size if hasattr(w, 'numpy') else w.shape.num_elements() if hasattr(w.shape, 'num_elements') else 0 for w in model.weights]))

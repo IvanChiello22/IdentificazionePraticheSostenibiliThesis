@@ -1,0 +1,41 @@
+--- BASE/neg_t11_49_kmeans_one_iter.py
++++ gpt4omini/neg_t11_49_kmeans_one_iter.py
+@@ -1,4 +1,3 @@
+-# 49) K-means: una iterazione (assegnazione + nuovi centroidi)
+ points = [(1,2),(1,4),(1,0),(10,2),(10,4),(10,0)]
+ centroids = [(1,2),(10,2)]
+ k = len(centroids)
+@@ -7,23 +6,25 @@
+ # Assegnazione
+ for i, p in enumerate(points):
+     best_c = 0
+-    best_d = None
++    best_d = float('inf')
+     for c_idx, c in enumerate(centroids):
+-        dx = p[0]-c[0]; dy = p[1]-c[1]
++        dx = p[0]-c[0]
++        dy = p[1]-c[1]
+         d = dx*dx + dy*dy
+-        if best_d is None or d < best_d:
+-            best_d = d; best_c = c_idx
++        if d < best_d:
++            best_d = d
++            best_c = c_idx
+     assign[i] = best_c
+ 
+ # Ricalcolo centroidi
+-new_centroids = [(0.0,0.0) for _ in range(k)]
++new_centroids = [(0.0, 0.0) for _ in range(k)]
+ counts = [0]*k
+-for (px,py), a in zip(points, assign):
++for (px, py), a in zip(points, assign):
+     cx, cy = new_centroids[a]
+-    new_centroids[a] = (cx+px, cy+py)
++    new_centroids[a] = (cx + px, cy + py)
+     counts[a] += 1
+ for i in range(k):
+     if counts[i] > 0:
+         cx, cy = new_centroids[i]
+-        new_centroids[i] = (cx/counts[i], cy/counts[i])
++        new_centroids[i] = (cx / counts[i], cy / counts[i])
+ print(assign, new_centroids)

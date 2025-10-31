@@ -1,0 +1,21 @@
+--- BASE/neg_t11_14_conv1d_valid.py
++++ gpt4omini/neg_t11_14_conv1d_valid.py
+@@ -1,10 +1,10 @@
+-# 14) Convoluzione 1D (valid)
+ signal = [1, 2, 3, 4, 5]
+ kernel = [1, 0, -1]
+-out = []
+-for i in range(len(signal) - len(kernel) + 1):
+-    s = 0
+-    for k in range(len(kernel)):
+-        s += signal[i+k] * kernel[k]
+-    out.append(s)
+-print(out)
++
++def convolve_1d(signal, kernel):
++    output_length = len(signal) - len(kernel) + 1
++    out = [sum(signal[i + k] * kernel[k] for k in range(len(kernel))) for i in range(output_length)]
++    return out
++
++result = convolve_1d(signal, kernel)
++print(result)

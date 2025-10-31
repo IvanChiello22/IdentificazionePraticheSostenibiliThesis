@@ -1,0 +1,13 @@
+--- BASE/neg_t11_28_dropout.py
++++ gpt5mini/neg_t11_28_dropout.py
+@@ -1,8 +1,6 @@
+ # 28) Dropout (mask deterministica)
+ x = [0.2, 0.5, 0.7, 0.9, 0.1]
+ p = 0.4
+-y = []
+-for i, v in enumerate(x):
+-    keep = ((i*17 + 3) % 100) >= int(p*100)
+-    y.append(v if keep else 0.0)
++threshold = int(p * 100)
++y = [v if ((i * 17 + 3) % 100) >= threshold else 0.0 for i, v in enumerate(x)]
+ print(y)

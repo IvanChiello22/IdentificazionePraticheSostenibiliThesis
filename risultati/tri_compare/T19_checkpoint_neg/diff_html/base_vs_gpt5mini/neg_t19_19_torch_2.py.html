@@ -1,0 +1,75 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to55__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t19_19_torch_2.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t19_19_torch_2.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to55__0"><a href="#difflib_chg_to55__0">f</a></td><td class="diff_header" id="from55_1">1</td><td nowrap="nowrap">#&nbsp;19)&nbsp;PyTorch&nbsp;—&nbsp;T19&nbsp;NEGATIVO:&nbsp;UNet&nbsp;tiny,&nbsp;nessuna&nbsp;persistenza</td><td class="diff_next"><a href="#difflib_chg_to55__0">f</a></td><td class="diff_header" id="to55_1">1</td><td nowrap="nowrap">#&nbsp;19)&nbsp;PyTorch&nbsp;—&nbsp;T19&nbsp;NEGATIVO:&nbsp;UNet&nbsp;tiny,&nbsp;nessuna&nbsp;persistenza</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from55_2">2</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn,&nbsp;torch.nn.functional&nbsp;as&nbsp;F</td><td class="diff_next"></td><td class="diff_header" id="to55_2">2</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn,&nbsp;torch.nn.functional&nbsp;as&nbsp;F</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to55__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to55__1">n</a></td><td class="diff_header" id="to55_3">3</td><td nowrap="nowrap"><span class="diff_add">from&nbsp;torch.nn.utils&nbsp;import&nbsp;prune</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from55_3">3</td><td nowrap="nowrap">class&nbsp;U(nn.Module):</td><td class="diff_next"></td><td class="diff_header" id="to55_4">4</td><td nowrap="nowrap">class&nbsp;U(nn.Module):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from55_4">4</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;__init__(self):</td><td class="diff_next"></td><td class="diff_header" id="to55_5">5</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;__init__(self):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from55_5">5</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super().__init__()</td><td class="diff_next"></td><td class="diff_header" id="to55_6">6</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super().__init__()</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from55_6">6</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.c1&nbsp;=&nbsp;nn.Conv2d(1,8,3,padding=1)</td><td class="diff_next"></td><td class="diff_header" id="to55_7">7</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.c1&nbsp;=&nbsp;nn.Conv2d(1,8,3,padding=1)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from55_7">7</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.c2&nbsp;=&nbsp;nn.Conv2d(8,16,3,padding=1)</td><td class="diff_next"></td><td class="diff_header" id="to55_8">8</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.c2&nbsp;=&nbsp;nn.Conv2d(8,16,3,padding=1)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from55_8">8</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.c3&nbsp;=&nbsp;nn.Conv2d(16,8,3,padding=1)</td><td class="diff_next"></td><td class="diff_header" id="to55_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.c3&nbsp;=&nbsp;nn.Conv2d(16,8,3,padding=1)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from55_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.out&nbsp;=&nbsp;nn.Conv2d(8,1,1)</td><td class="diff_next"></td><td class="diff_header" id="to55_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.out&nbsp;=&nbsp;nn.Conv2d(8,1,1)</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to55__1"></td><td class="diff_header" id="from55_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;forward(self,x):</td><td class="diff_next"></td><td class="diff_header" id="to55_11">11</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;forward(self,x):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from55_11">11</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;=&nbsp;F.relu(self.c1(x));&nbsp;b&nbsp;=&nbsp;F.relu(self.c2(a))</td><td class="diff_next"></td><td class="diff_header" id="to55_12">12</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;=&nbsp;F.relu(self.c1(x));&nbsp;b&nbsp;=&nbsp;F.relu(self.c2(a))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from55_12">12</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u&nbsp;=&nbsp;F.interpolate(b,&nbsp;scale_factor=1,&nbsp;mode='nearest')</td><td class="diff_next"></td><td class="diff_header" id="to55_13">13</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u&nbsp;=&nbsp;F.interpolate(b,&nbsp;scale_factor=1,&nbsp;mode='nearest')</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from55_13">13</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;F.relu(self.c3(u));&nbsp;return&nbsp;self.out(d)</td><td class="diff_next"></td><td class="diff_header" id="to55_14">14</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;=&nbsp;F.relu(self.c3(u));&nbsp;return&nbsp;self.out(d)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from55_14">14</td><td nowrap="nowrap">net&nbsp;=&nbsp;U();&nbsp;opt&nbsp;=&nbsp;torch.optim.SGD(net.parameters(),&nbsp;0.05)</td><td class="diff_next"></td><td class="diff_header" id="to55_15">15</td><td nowrap="nowrap">net&nbsp;=&nbsp;U();&nbsp;opt&nbsp;=&nbsp;torch.optim.SGD(net.parameters(),&nbsp;0.05)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to55__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to55__2">n</a></td><td class="diff_header" id="to55_16">16</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Energy-aware&nbsp;pruning:&nbsp;prune&nbsp;the&nbsp;most&nbsp;parameter-intensive&nbsp;conv&nbsp;layer&nbsp;first</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to55_17">17</td><td nowrap="nowrap"><span class="diff_add">conv_layers&nbsp;=&nbsp;[net.c1,&nbsp;net.c2,&nbsp;net.c3]</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to55__2"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to55_18">18</td><td nowrap="nowrap"><span class="diff_add">most_expensive&nbsp;=&nbsp;max(conv_layers,&nbsp;key=lambda&nbsp;m:&nbsp;getattr(m,&nbsp;'weight').numel())</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to55_19">19</td><td nowrap="nowrap"><span class="diff_add">prune.l1_unstructured(most_expensive,&nbsp;name='weight',&nbsp;amount=0.2)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from55_15">15</td><td nowrap="nowrap">for&nbsp;e&nbsp;in&nbsp;range(2):</td><td class="diff_next"></td><td class="diff_header" id="to55_20">20</td><td nowrap="nowrap">for&nbsp;e&nbsp;in&nbsp;range(2):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from55_16">16</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;torch.randn(4,1,32,32);&nbsp;y&nbsp;=&nbsp;net(x).abs().mean()</td><td class="diff_next"></td><td class="diff_header" id="to55_21">21</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;torch.randn(4,1,32,32);&nbsp;y&nbsp;=&nbsp;net(x).abs().mean()</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from55_17">17</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;y.backward();&nbsp;opt.step();&nbsp;opt.zero_grad()</td><td class="diff_next"></td><td class="diff_header" id="to55_22">22</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;y.backward();&nbsp;opt.step();&nbsp;opt.zero_grad()</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to55__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to55__top">t</a></td><td class="diff_header" id="to55_23">23</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Checkpoint&nbsp;to&nbsp;avoid&nbsp;knowledge&nbsp;loss&nbsp;on&nbsp;premature&nbsp;termination</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to55_24">24</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;torch.save({'epoch':&nbsp;e,&nbsp;'model_state_dict':&nbsp;net.state_dict(),&nbsp;'optimizer_state_dict':&nbsp;opt.state_dict()},&nbsp;f'checkpoin</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap">&nbsp;</td><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap"><span class="diff_add">t_epoch_{e}.pth')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from55_18">18</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to55_25">25</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

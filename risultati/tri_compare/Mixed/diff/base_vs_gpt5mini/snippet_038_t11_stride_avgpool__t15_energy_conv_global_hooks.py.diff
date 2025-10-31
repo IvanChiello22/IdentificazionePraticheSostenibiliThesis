@@ -1,0 +1,32 @@
+--- BASE/snippet_038_t11_stride_avgpool__t15_energy_conv_global_hooks.py
++++ gpt5mini/snippet_038_t11_stride_avgpool__t15_energy_conv_global_hooks.py
+@@ -26,8 +26,27 @@
+ def prune_out(conv, keep_ratio):
+     with torch.no_grad():
+         imp = conv.weight.detach().abs().view(conv.out_channels, -1).mean(1)
+-        e = torch.tensor(float(energy.get(conv.__class__.__name__, 1.0)))
++        # find module name within the model to look up collected energy stats
++        name = None
++        for n, m in net.named_modules():
++            if m is conv:
++                name = n
++                break
++        e = torch.tensor(float(energy.get(name, 1.0)))
+         score = imp/(e+1e-9); k=max(1,int(keep_ratio*conv.out_channels))
+         keep = torch.topk(score,k).indices
+         conv.weight = nn.Parameter(conv.weight[keep].clone()); conv.out_channels = k
+-prune_out(net.c2, 0.7); print(net.c2.out_channels)
++
++# Prune starting from the most energy intensive convolutional layers
++conv_modules = [net.c1, net.c2, net.c3]
++mod_energies = []
++for module in conv_modules:
++    mod_name = next((n for n, m in net.named_modules() if m is module), None)
++    mod_energies.append((module, energy.get(mod_name, 0)))
++
++# sort by descending energy and checkpoint before pruning
++conv_modules_sorted = [m for m, _ in sorted(mod_energies, key=lambda x: x[1], reverse=True)]
++torch.save(net.state_dict(), 'checkpoint_pre_prune.pth')
++for m in conv_modules_sorted:
++    prune_out(m, 0.7)
++print(net.c2.out_channels)

@@ -1,0 +1,34 @@
+--- BASE/snippet_035_t11_haversine__t15_energy_convdepth.py
++++ gpt5mini/snippet_035_t11_haversine__t15_energy_convdepth.py
+@@ -29,6 +29,30 @@
+         pw.weight = nn.Parameter(pw.weight[keep].clone())
+         if pw.bias is not None: pw.bias = nn.Parameter(pw.bias[keep].clone())
+         pw.out_channels = k
++
++def save_checkpoint(state, filepath):
++    torch.save(state, filepath)
++
++def prune_model_pw_energy(model: nn.Module, keep_ratio: float, H: int, W: int):
++    # collect pointwise conv layers (kernel_size == 1) and their energies
++    pw_layers = []
++    for name, module in model.named_modules():
++        if isinstance(module, nn.Conv2d):
++            k = module.kernel_size
++            if isinstance(k, tuple):
++                is_pw = (k[0] == 1 and k[1] == 1)
++            else:
++                is_pw = (k == 1)
++            if is_pw:
++                e = energy_pw(module.in_channels, module.out_channels, H, W)
++                pw_layers.append((e, module))
++    # prune starting from highest energy
++    pw_layers.sort(key=lambda x: x[0], reverse=True)
++    for _, pw in pw_layers:
++        prune_pw_out_energy(pw, keep_ratio, H, W)
++
+ net = DSConv(24, 64)
+-prune_pw_out_energy(net.pw, 0.6, 56, 56)
++save_checkpoint({"model_state": net.state_dict()}, "checkpoint_preprune.pt")
++prune_model_pw_energy(net, 0.6, 56, 56)
++save_checkpoint({"model_state": net.state_dict()}, "checkpoint_postprune.pt")
+ x = torch.randn(1,24,56,56); y = net(x); print(y.shape, net.pw.out_channels)

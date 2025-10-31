@@ -1,0 +1,46 @@
+--- BASE/snippet_037_t11_block_diag__t15_energy_transformer_block.py
++++ gpt5mini/snippet_037_t11_block_diag__t15_energy_transformer_block.py
+@@ -25,6 +25,11 @@
+ def head_energy(T, dk): return T*T*dk + T*T + T*dk
+ def prune_heads_energy(o: nn.Linear, h, dk, keep_ratio, T):
+     with torch.no_grad():
++        # checkpoint pre-prune
++        try:
++            torch.save({'state_dict': o.state_dict(), 'h': h, 'dk': dk, 'keep_ratio': keep_ratio, 'T': T}, 'checkpoint_prune_heads_before.pth')
++        except Exception:
++            pass
+         H=h; D=H*dk; W=o.weight.detach()
+         blocks = W[:, :D].view(W.size(0), H, dk)
+         imp = blocks.abs().mean(dim=(0,2))  # per-head importance
+@@ -34,9 +39,19 @@
+         new_in = dk*k
+         o.weight = nn.Parameter(W[:, :new_in].clone())
+         if o.bias is not None: o.bias = nn.Parameter(o.bias.clone())
++        # checkpoint post-prune
++        try:
++            torch.save({'state_dict': o.state_dict(), 'kept_heads': keep, 'k': k}, 'checkpoint_prune_heads_after.pth')
++        except Exception:
++            pass
+         return k
+ def prune_ffn_energy(fc1: nn.Linear, keep_ratio, tokens):
+     with torch.no_grad():
++        # checkpoint pre-prune
++        try:
++            torch.save({'state_dict': fc1.state_dict(), 'keep_ratio': keep_ratio, 'tokens': tokens}, 'checkpoint_prune_ffn_before.pth')
++        except Exception:
++            pass
+         imp = fc1.weight.detach().abs().mean(1)
+         e = fc1.in_features + tokens
+         k = max(1,int(keep_ratio*fc1.out_features))
+@@ -44,6 +59,11 @@
+         fc1.weight = nn.Parameter(fc1.weight[keep].clone())
+         if fc1.bias is not None: fc1.bias = nn.Parameter(fc1.bias[keep].clone())
+         fc1.out_features = k
++        # checkpoint post-prune
++        try:
++            torch.save({'state_dict': fc1.state_dict(), 'kept_indices': keep, 'k': k}, 'checkpoint_prune_ffn_after.pth')
++        except Exception:
++            pass
+ blk = Block()
+ new_h = prune_heads_energy(blk.o, blk.h, blk.dk, 0.5, T=64)
+ prune_ffn_energy(blk.fc1, 0.6, tokens=4096)

@@ -1,0 +1,28 @@
+--- BASE/snippet_013_t15_energy_transformer_block.py
++++ gpt5mini/snippet_013_t15_energy_transformer_block.py
+@@ -24,7 +24,13 @@
+         keep = torch.topk(score,k).indices.tolist()
+         new_in = dk*k
+         o.weight = nn.Parameter(W[:, :new_in].clone())
++        o.in_features = new_in
+         if o.bias is not None: o.bias = nn.Parameter(o.bias.clone())
++        # checkpoint the pruned linear to avoid knowledge loss
++        try:
++            torch.save(o.state_dict(), 'prune_heads_checkpoint.pth')
++        except Exception:
++            pass
+         return k
+ def prune_ffn_energy(fc1: nn.Linear, keep_ratio, tokens):
+     with torch.no_grad():
+@@ -35,6 +41,11 @@
+         fc1.weight = nn.Parameter(fc1.weight[keep].clone())
+         if fc1.bias is not None: fc1.bias = nn.Parameter(fc1.bias[keep].clone())
+         fc1.out_features = k
++        # checkpoint the pruned fc1 to avoid knowledge loss
++        try:
++            torch.save(fc1.state_dict(), 'prune_ffn_checkpoint.pth')
++        except Exception:
++            pass
+ blk = Block()
+ new_h = prune_heads_energy(blk.o, blk.h, blk.dk, 0.5, T=64)
+ prune_ffn_energy(blk.fc1, 0.6, tokens=4096)

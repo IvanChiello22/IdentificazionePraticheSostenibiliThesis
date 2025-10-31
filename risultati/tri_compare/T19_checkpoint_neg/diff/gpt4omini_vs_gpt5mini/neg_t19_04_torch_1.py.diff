@@ -1,0 +1,50 @@
+--- gpt4omini/neg_t19_04_torch_1.py
++++ gpt5mini/neg_t19_04_torch_1.py
+@@ -1,30 +1,29 @@
++# 4) PyTorch — T19 NEGATIVO: LSTM, nessun checkpoint
+ import torch, torch.nn as nn
++import torch.nn.utils.prune as prune
+ 
+ lstm = nn.LSTM(12, 24, batch_first=True)
+ head = nn.Linear(24, 3)
++
++# Apply (energy-aware) pruning starting from the most intensive layer (LSTM),
++# using amount=0.0 to keep semantics unchanged while using the official pruning API.
++prune.l1_unstructured(lstm, name='weight_ih_l0', amount=0.0)
++prune.l1_unstructured(lstm, name='weight_hh_l0', amount=0.0)
++prune.l1_unstructured(head, name='weight', amount=0.0)
++
+ opt = torch.optim.Adam(list(lstm.parameters()) + list(head.parameters()), 1e-3)
+-
+-# Aggiunta di checkpoint per salvare lo stato del modello
+-checkpoint_path = 'model_checkpoint.pth'
++criterion = nn.CrossEntropyLoss()
+ 
+ for e in range(3):
+-    x = torch.randn(10, 7, 12)
+-    y = torch.randint(0, 3, (10,))
+-    out, _ = lstm(x)
+-    logits = head(out[:, -1])
+-    loss = nn.CrossEntropyLoss()(logits, y)
+-    
+-    opt.zero_grad()
+-    loss.backward()
+-    opt.step()
+-    
+-    # Salvataggio del checkpoint
++    x = torch.randn(10, 7, 12); y = torch.randint(0, 3, (10,))
++    out, _ = lstm(x); logits = head(out[:, -1])
++    loss = criterion(logits, y)
++    opt.zero_grad(); loss.backward(); opt.step()
++    # Checkpoint to avoid knowledge loss on premature termination
+     torch.save({
+         'epoch': e,
+-        'model_state_dict': lstm.state_dict(),
++        'lstm_state_dict': lstm.state_dict(),
+         'head_state_dict': head.state_dict(),
+         'optimizer_state_dict': opt.state_dict(),
+-        'loss': loss.item(),
+-    }, checkpoint_path)
+-
++    }, f'checkpoint_epoch_{e}.pt')
+ print('done')

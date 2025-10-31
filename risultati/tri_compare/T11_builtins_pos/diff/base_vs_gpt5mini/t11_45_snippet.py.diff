@@ -1,0 +1,22 @@
+--- BASE/t11_45_snippet.py
++++ gpt5mini/t11_45_snippet.py
+@@ -3,7 +3,16 @@
+ B,T,D,H=2,64,128,8
+ d=D//H
+ Q=np.random.randn(B,H,T,d);K=np.random.randn(B,H,T,d);V=np.random.randn(B,H,T,d)
+-S=np.einsum('bhtd,bhsd->bhts',Q,K)/np.sqrt(d)
+-P=np.exp(S-S.max(axis=-1,keepdims=True));P/=P.sum(axis=-1,keepdims=True)
+-O=np.einsum('bhts,bhsd->bhtd',P,V)
++def stable_softmax(x, axis=-1):
++    x_max = x.max(axis=axis, keepdims=True)
++    e = np.exp(x - x_max)
++    return e / e.sum(axis=axis, keepdims=True)
++scale = 1.0/np.sqrt(d)
++Q_flat = Q.reshape(-1, T, d)
++K_flat = K.reshape(-1, T, d)
++V_flat = V.reshape(-1, T, d)
++S_flat = np.matmul(Q_flat, K_flat.transpose(0,2,1)) * scale
++P_flat = stable_softmax(S_flat, axis=-1)
++O_flat = np.matmul(P_flat, V_flat)
++O = O_flat.reshape(B, H, T, d)
+ print(O.shape)

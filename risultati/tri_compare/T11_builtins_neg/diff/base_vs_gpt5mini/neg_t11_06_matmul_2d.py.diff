@@ -1,0 +1,12 @@
+--- BASE/neg_t11_06_matmul_2d.py
++++ gpt5mini/neg_t11_06_matmul_2d.py
+@@ -7,8 +7,6 @@
+ C = [[0]*len(B[0]) for _ in range(len(A))]
+ for i in range(len(A)):
+     for k in range(len(B[0])):
+-        s = 0
+-        for j in range(len(B)):
+-            s += A[i][j] * B[j][k]
++        s = sum(A[i][j] * B[j][k] for j in range(len(B)))
+         C[i][k] = s
+ print(C)

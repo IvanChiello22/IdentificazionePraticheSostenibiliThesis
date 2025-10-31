@@ -1,0 +1,24 @@
+import io
+import torch, torch.nn as nn
+import torch.nn.utils.prune as prune
+net = nn.Sequential(nn.Conv1d(3,16,5,padding=2), nn.ReLU(), nn.Conv1d(16,8,3,padding=1), nn.AdaptiveAvgPool1d(1), nn.Flatten(), nn.Linear(8,2))
+opt = torch.optim.SGD(net.parameters(), 0.05)
+# Energy-aware pruning: prune the most energy-intensive Conv1d layer (small amount)
+conv_layers = [(i, m) for i, m in enumerate(net) if isinstance(m, nn.Conv1d)]
+if conv_layers:
+    costs = []
+    for i, m in conv_layers:
+        k = m.kernel_size[0] if isinstance(m.kernel_size, tuple) else m.kernel_size
+        costs.append((i, m, m.out_channels * m.in_channels * k))
+    _, layer_to_prune, _ = max(costs, key=lambda t: t[2])
+    prune.l1_unstructured(layer_to_prune, name='weight', amount=0.1)
+criterion = nn.CrossEntropyLoss()
+checkpoints = []
+for e in range(2):
+    x = torch.randn(8,3,100); y = torch.randint(0,2,(8,))
+    loss = criterion(net(x), y)
+    opt.zero_grad(); loss.backward(); opt.step()
+    buf = io.BytesIO()
+    torch.save({'epoch': e + 1, 'model_state': net.state_dict(), 'opt_state': opt.state_dict()}, buf)
+    checkpoints.append(buf.getvalue())
+print('done')

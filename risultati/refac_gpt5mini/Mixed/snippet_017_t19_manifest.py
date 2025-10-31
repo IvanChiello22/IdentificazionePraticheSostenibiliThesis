@@ -1,0 +1,42 @@
+# Snippet 17: t19_manifest
+# T19 — Manifest JSON with metrics + size, keep top‑k by metric, delete rest
+import torch, torch.nn as nn, os, json, glob
+from torch.nn.utils import prune
+os.makedirs('ckpt', exist_ok=True)
+m = nn.Sequential(nn.Linear(10,10), nn.ReLU(), nn.Linear(10,2))
+
+# Energy-aware pruning: prune the most parameter-heavy layer first (small amount)
+linear_layers = [(name, mod) for name, mod in m.named_modules() if isinstance(mod, nn.Linear)]
+if linear_layers:
+    # sort by total parameters descending
+    linear_layers.sort(key=lambda nm: sum(p.numel() for p in nm[1].parameters()), reverse=True)
+    target_name, target_mod = linear_layers[0]
+    prune.l1_unstructured(target_mod, name='weight', amount=0.2)
+    prune.remove(target_mod, 'weight')  # make pruning permanent
+
+for e in range(1,6):
+    loss = float(torch.rand(1))
+    path = f'ckpt/e{e:02d}_{loss:.4f}.pt'
+    tmp_path = path + '.tmp'
+    torch.save({'e':e,'loss':loss,'state':m.state_dict()}, tmp_path)
+    os.replace(tmp_path, path)  # atomic checkpoint save
+
+manifest = []
+for p in sorted(glob.glob('ckpt/e*.pt')):
+    try:
+        loss_val = float(p.split('_')[-1][:-3])
+    except Exception:
+        loss_val = None
+    size_bytes = os.path.getsize(p)
+    manifest.append({'file': p, 'loss': loss_val, 'size': size_bytes})
+
+manifest.sort(key=lambda x: x['loss'])
+for item in manifest[2:]:
+    try:
+        os.remove(item['file'])
+    except FileNotFoundError:
+        pass
+
+with open('ckpt/manifest.json','w') as f:
+    json.dump(manifest[:2], f, indent=2)
+print('done')

@@ -1,0 +1,70 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to143__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/neg_t19_48_extra.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t19_48_extra.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to143__0"><a href="#difflib_chg_to143__0">f</a></td><td class="diff_header" id="from143_1">1</td><td nowrap="nowrap">from&nbsp;xgboost&nbsp;import&nbsp;XGBClassifier</td><td class="diff_next"><a href="#difflib_chg_to143__0">f</a></td><td class="diff_header" id="to143_1">1</td><td nowrap="nowrap">from&nbsp;xgboost&nbsp;import&nbsp;XGBClassifier</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from143_2">2</td><td nowrap="nowrap">from&nbsp;sklearn.datasets&nbsp;import&nbsp;make_classification</td><td class="diff_next"></td><td class="diff_header" id="to143_2">2</td><td nowrap="nowrap">from&nbsp;sklearn.datasets&nbsp;import&nbsp;make_classification</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to143__top">t</a></td><td class="diff_header" id="from143_3">3</td><td nowrap="nowrap"><span class="diff_sub">from&nbsp;sklearn.model_selection&nbsp;import&nbsp;train_test_split</span></td><td class="diff_next"><a href="#difflib_chg_to143__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from143_4">4</td><td nowrap="nowrap"><span class="diff_sub">import&nbsp;joblib</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from143_5">5</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from143_6">6</td><td nowrap="nowrap">X,<span class="diff_sub">&nbsp;</span>y&nbsp;=&nbsp;make_classification(n_samples=200,&nbsp;n_features=10,&nbsp;random_state=0)</td><td class="diff_next"></td><td class="diff_header" id="to143_3">3</td><td nowrap="nowrap">X,y&nbsp;=&nbsp;make_classification(n_samples=200,&nbsp;n_features=10,&nbsp;random_state=0)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from143_7">7</td><td nowrap="nowrap"><span class="diff_sub">X_train,&nbsp;X_val,&nbsp;y_train,&nbsp;y_val&nbsp;=&nbsp;train_test_split(X,&nbsp;y,&nbsp;test_size=0.2,&nbsp;random_state=0)</span></td><td class="diff_next"></td><td class="diff_header" id="to143_4">4</td><td nowrap="nowrap"><span class="diff_add">total_estimators&nbsp;=&nbsp;50</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from143_8">8</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header" id="to143_5">5</td><td nowrap="nowrap"><span class="diff_add">chunk_size&nbsp;=&nbsp;10</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from143_9">9</td><td nowrap="nowrap"><span class="diff_sub">model&nbsp;=&nbsp;XGBClassifier(n_estimators=50,&nbsp;max_depth=3,&nbsp;learning_rate=0.1,&nbsp;verbosity=0)</span></td><td class="diff_next"></td><td class="diff_header" id="to143_6">6</td><td nowrap="nowrap"><span class="diff_add">base_kwargs&nbsp;=&nbsp;dict(max_depth=3,&nbsp;learning_rate=0.1,&nbsp;verbosity=0)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from143_10">10</td><td nowrap="nowrap"><span class="diff_sub">model.fit(X_train,&nbsp;y_train)</span></td><td class="diff_next"></td><td class="diff_header" id="to143_7">7</td><td nowrap="nowrap"><span class="diff_add">prev_booster&nbsp;=&nbsp;None</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from143_11">11</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header" id="to143_8">8</td><td nowrap="nowrap"><span class="diff_add">model&nbsp;=&nbsp;None</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from143_12">12</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;Save&nbsp;the&nbsp;model&nbsp;as&nbsp;a&nbsp;checkpoint</span></td><td class="diff_next"></td><td class="diff_header" id="to143_9">9</td><td nowrap="nowrap"><span class="diff_add">for&nbsp;start&nbsp;in&nbsp;range(0,&nbsp;total_estimators,&nbsp;chunk_size):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from143_13">13</td><td nowrap="nowrap"><span class="diff_sub">joblib.dump(model,&nbsp;'xgb_model_checkpoint.pkl')</span></td><td class="diff_next"></td><td class="diff_header" id="to143_10">10</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;n&nbsp;=&nbsp;min(chunk_size,&nbsp;total_estimators&nbsp;-&nbsp;start)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from143_14">14</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header" id="to143_11">11</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;model&nbsp;=&nbsp;XGBClassifier(n_estimators=n,&nbsp;**base_kwargs)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to143_12">12</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;prev_booster&nbsp;is&nbsp;None:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to143_13">13</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;model.fit(X,&nbsp;y)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to143_14">14</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;else:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to143_15">15</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;model.fit(X,&nbsp;y,&nbsp;xgb_model=prev_booster)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to143_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;model.save_model(f"xgb_checkpoint_{start+n}.json")</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to143_17">17</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;prev_booster&nbsp;=&nbsp;model.get_booster()</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from143_15">15</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to143_18">18</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

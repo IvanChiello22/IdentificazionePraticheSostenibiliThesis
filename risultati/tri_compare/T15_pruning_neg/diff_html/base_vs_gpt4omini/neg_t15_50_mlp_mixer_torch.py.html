@@ -1,0 +1,73 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to147__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t15_50_mlp_mixer_torch.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/neg_t15_50_mlp_mixer_torch.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to147__1"><a href="#difflib_chg_to147__1">n</a></td><td class="diff_header" id="from147_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;50)&nbsp;MLP-Mixer&nbsp;mini&nbsp;—&nbsp;T15&nbsp;NEGATIVO:&nbsp;nessuna&nbsp;sparsificazione/pruning</span></td><td class="diff_next"><a href="#difflib_chg_to147__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to147__2"></td><td class="diff_header" id="from147_2">2</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn</td><td class="diff_next"></td><td class="diff_header" id="to147_1">1</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to147__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to147__2">n</a></td><td class="diff_header" id="to147_2">2</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from147_3">3</td><td nowrap="nowrap">class&nbsp;Mixer(nn.Module):</td><td class="diff_next"></td><td class="diff_header" id="to147_3">3</td><td nowrap="nowrap">class&nbsp;Mixer(nn.Module):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from147_4">4</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;__init__(self,&nbsp;tokens=16,&nbsp;dims=32):</td><td class="diff_next"></td><td class="diff_header" id="to147_4">4</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;__init__(self,&nbsp;tokens=16,&nbsp;dims=32):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from147_5">5</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super().__init__()</td><td class="diff_next"></td><td class="diff_header" id="to147_5">5</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super().__init__()</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to147__3">n</a></td><td class="diff_header" id="from147_6">6</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.token_mlp&nbsp;=&nbsp;nn.Sequential(nn.Linear(tokens,&nbsp;tokens*2),&nbsp;nn.GELU(),&nbsp;nn.Linear(tokens*2,&nbsp;tokens))</span></td><td class="diff_next"><a href="#difflib_chg_to147__3">n</a></td><td class="diff_header" id="to147_6">6</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.token_mlp&nbsp;=&nbsp;nn.Sequential(</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from147_7">7</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.channel_mlp&nbsp;=&nbsp;nn.Sequential(nn.Linear(dims,&nbsp;dims*2),&nbsp;nn.GELU(),&nbsp;nn.Linear(dims*2,&nbsp;dims))</span></td><td class="diff_next"></td><td class="diff_header" id="to147_7">7</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nn.Linear(tokens,&nbsp;tokens&nbsp;*&nbsp;2),</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to147_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nn.GELU(),</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to147_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nn.Linear(tokens&nbsp;*&nbsp;2,&nbsp;tokens)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to147_10">10</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to147_11">11</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.channel_mlp&nbsp;=&nbsp;nn.Sequential(</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to147_12">12</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nn.Linear(dims,&nbsp;dims&nbsp;*&nbsp;2),</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to147__3"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to147_13">13</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nn.GELU(),</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to147_14">14</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nn.Linear(dims&nbsp;*&nbsp;2,&nbsp;dims)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to147_15">15</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to147__4"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to147_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from147_8">8</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;forward(self,&nbsp;x):&nbsp;&nbsp;#&nbsp;x:&nbsp;B,T,D</td><td class="diff_next"></td><td class="diff_header" id="to147_17">17</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;forward(self,&nbsp;x):&nbsp;&nbsp;#&nbsp;x:&nbsp;B,T,D</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to147__4">n</a></td><td class="diff_header" id="from147_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;=&nbsp;x&nbsp;+&nbsp;self.token_mlp(x.transpose(1,2)).transpose(1,2)</td><td class="diff_next"><a href="#difflib_chg_to147__4">n</a></td><td class="diff_header" id="to147_18">18</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;=&nbsp;x&nbsp;+&nbsp;self.token_mlp(x.transpose(1,<span class="diff_add">&nbsp;</span>2)).transpose(1,<span class="diff_add">&nbsp;</span>2)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from147_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;z&nbsp;=&nbsp;y&nbsp;+&nbsp;self.channel_mlp(y)</td><td class="diff_next"></td><td class="diff_header" id="to147_19">19</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;z&nbsp;=&nbsp;y&nbsp;+&nbsp;self.channel_mlp(y)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from147_11">11</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;z</td><td class="diff_next"></td><td class="diff_header" id="to147_20">20</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;z</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to147__top">t</a></td><td class="diff_header" id="from147_12">12</td><td nowrap="nowrap"><span class="diff_sub">x&nbsp;=&nbsp;torch.randn(2,16,32);&nbsp;print(Mixer()(x).shape)</span></td><td class="diff_next"><a href="#difflib_chg_to147__top">t</a></td><td class="diff_header" id="to147_21">21</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to147_22">22</td><td nowrap="nowrap"><span class="diff_add">x&nbsp;=&nbsp;torch.randn(2,&nbsp;16,&nbsp;32)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to147_23">23</td><td nowrap="nowrap"><span class="diff_add">print(Mixer()(x).shape)</span></td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

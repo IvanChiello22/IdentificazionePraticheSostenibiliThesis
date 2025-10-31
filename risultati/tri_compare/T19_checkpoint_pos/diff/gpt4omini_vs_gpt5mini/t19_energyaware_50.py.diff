@@ -1,0 +1,61 @@
+--- gpt4omini/t19_energyaware_50.py
++++ gpt5mini/t19_energyaware_50.py
+@@ -1,31 +1,37 @@
+-import torch
+-import torch.nn as nn
+-import torch.optim as optim
+-import os
+-
++# T19 POS (energy/efficiency-aware checkpointing) — snippet 50
++# T19 POS — PyTorch: checkpoint on-plateau con 'patience' (riduce scritture inutili)
++import torch, torch.nn as nn, torch.optim as optim, os
++from torch.nn.utils import prune
+ torch.manual_seed(0)
+-net = nn.Sequential(nn.Linear(8, 16), nn.ReLU(), nn.Linear(16, 2))
++net = nn.Sequential(nn.Linear(8,16), nn.ReLU(), nn.Linear(16,2))
+ opt = optim.SGD(net.parameters(), 0.1)
+-best_loss = float('inf')
+-patience, wait = 2, 0
++best = 1e9; patience, wait = 2, 0
+ os.makedirs('ckpt', exist_ok=True)
+ 
++# Use a single loss instance (avoid recreating each iteration)
++loss_fn = nn.CrossEntropyLoss()
++
++# Energy-aware pruning: prune the layer with the most parameters (L1 unstructured)
++linear_layers = [m for m in net.modules() if isinstance(m, nn.Linear)]
++if linear_layers:
++    largest_layer = max(linear_layers, key=lambda m: sum(p.numel() for p in m.parameters()))
++    # prune 20% of the weights in the most parameter-heavy layer
++    prune.l1_unstructured(largest_layer, name='weight', amount=0.2)
++
+ for epoch in range(1, 13):
+-    x = torch.randn(64, 8)
+-    y = torch.randint(0, 2, (64,))
+-    loss = nn.CrossEntropyLoss()(net(x), y)
+-    opt.zero_grad()
+-    loss.backward()
+-    opt.step()
+-    
+-    if loss.item() + 1e-6 < best_loss:
+-        best_loss = loss.item()
+-        wait = 0
+-        torch.save({'e': epoch, 'loss': best_loss, 'model': net.state_dict()}, 'ckpt/best.pt')
++    x = torch.randn(64,8); y = torch.randint(0,2,(64,))
++    loss = loss_fn(net(x), y)
++    opt.zero_grad(); loss.backward(); opt.step()
++    if loss.item() + 1e-6 < best:
++        best = loss.item(); wait = 0
++        tmp = 'ckpt/best.pt.tmp'
++        torch.save({'e':epoch, 'loss':best, 'model':net.state_dict()}, tmp)
++        os.replace(tmp, 'ckpt/best.pt')
+     else:
+         wait += 1
+         if wait >= patience:
+-            torch.save({'e': epoch, 'loss': loss.item(), 'model': net.state_dict()}, f'ckpt/plateau_e{epoch:02d}.pt')
++            tmp = f'ckpt/plateau_e{epoch:02d}.pt.tmp'
++            torch.save({'e':epoch, 'loss':loss.item(), 'model':net.state_dict()}, tmp)
++            os.replace(tmp, f'ckpt/plateau_e{epoch:02d}.pt')
+             wait = 0
+-
+ print('done')

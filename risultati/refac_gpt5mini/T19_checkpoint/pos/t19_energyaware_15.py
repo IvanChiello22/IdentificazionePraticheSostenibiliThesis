@@ -1,0 +1,40 @@
+import torch, torch.nn as nn, os
+from torch.nn.utils import prune
+
+net = nn.Sequential(nn.Linear(10,20), nn.ReLU(), nn.Linear(20,2)); os.makedirs('ckpt', exist_ok=True)
+opt = torch.optim.Adam(net.parameters(), 1e-3); ema=None; best=1e9
+
+# Sustainable tactic: optional energy-aware pruning (disabled by default to preserve original behavior)
+ENABLE_PRUNING = False
+def _layer_has_weights(m):
+    return hasattr(m, 'weight') and isinstance(getattr(m, 'weight'), torch.nn.Parameter)
+
+def get_most_param_layer(model):
+    max_params = 0
+    target = None
+    for m in model.modules():
+        if _layer_has_weights(m):
+            cnt = m.weight.numel()
+            if cnt > max_params:
+                max_params = cnt
+                target = m
+    return target
+
+def apply_energy_aware_pruning(model, amount=0.2):
+    layer = get_most_param_layer(model)
+    if layer is not None:
+        prune.l1_unstructured(layer, name='weight', amount=amount)
+
+if ENABLE_PRUNING:
+    apply_energy_aware_pruning(net, amount=0.2)
+
+criterion = nn.CrossEntropyLoss()
+for e in range(1,11):
+    x=torch.randn(64,10); y=torch.randint(0,2,(64,))
+    loss=criterion(net(x), y)
+    ema = loss.item() if ema is None else 0.9*ema + 0.1*loss.item()
+    opt.zero_grad(); loss.backward(); opt.step()
+    if ema < best:
+        best = ema
+        torch.save({'e':e,'ema_loss':best,'model':net.state_dict(), 'opt': opt.state_dict()}, 'ckpt/best_ema.pt')
+print('done')

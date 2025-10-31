@@ -1,0 +1,42 @@
+--- BASE/t15_energyaware_36.py
++++ gpt5mini/t15_energyaware_36.py
+@@ -27,11 +27,27 @@
+         if conv.bias is not None: conv.bias = nn.Parameter(conv.bias[keep].clone())
+         conv.out_channels = k
+ 
++def compute_conv_energy(conv, in_shape=(1,3,32,32)):
++    B,C,H,W = in_shape
++    kh,kw = conv.kernel_size
++    Ho = (H + 2*conv.padding[0] - conv.dilation[0]*(kh-1) - 1)//conv.stride[0] + 1
++    Wo = (W + 2*conv.padding[1] - conv.dilation[1]*(kw-1) - 1)//conv.stride[1] + 1
++    return Ho*Wo*conv.in_channels*kh*kw
++
+ # Teacher pre-pruning
+ teacher = TinyNet(); student = TinyNet()
+-# Pruning energy-aware
+-prune_conv_out_energy(student.c1, 0.75, (1,3,32,32))
+-prune_conv_out_energy(student.c2, 0.6, (1,16,32,32))
++# Pruning energy-aware: prune layers starting from the most energy intensive
++layers_to_prune = [
++    ('c1', student.c1, 0.75, (1,3,32,32)),
++    ('c2', student.c2, 0.6, (1,16,32,32)),
++]
++# sort by computed energy descending
++layers_sorted = sorted(layers_to_prune, key=lambda t: compute_conv_energy(t[1], t[3]), reverse=True)
++for name, conv, keep_ratio, in_shape in layers_sorted:
++    prune_conv_out_energy(conv, keep_ratio, in_shape)
++
++# Checkpoint after pruning (pre-fine-tune)
++torch.save(student.state_dict(), 'student_checkpoint_pre_kd.pt')
+ 
+ # Light KD fine-tune (demo su batch random)
+ x = torch.randn(8,3,32,32)
+@@ -39,4 +55,8 @@
+ slog = student(x)
+ loss_kd = F.mse_loss(F.log_softmax(slog,dim=-1), F.log_softmax(tlog,dim=-1))
+ loss_kd.backward()  # solo dimostrativo
++
++# Checkpoint after KD
++torch.save(student.state_dict(), 'student_checkpoint_post_kd.pt')
++
+ print(student(x).shape, 'KD_loss=', float(loss_kd))

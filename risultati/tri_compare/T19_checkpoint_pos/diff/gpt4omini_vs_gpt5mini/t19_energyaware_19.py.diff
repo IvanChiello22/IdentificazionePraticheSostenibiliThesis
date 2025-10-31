@@ -1,0 +1,73 @@
+--- gpt4omini/t19_energyaware_19.py
++++ gpt5mini/t19_energyaware_19.py
+@@ -1,28 +1,51 @@
+-import torch
+-import torch.nn as nn
+-import time
+-import os
++import torch, torch.nn as nn, time, os
++import torch.nn.utils.prune as prune
++net = nn.Sequential(nn.Linear(32,64), nn.ReLU(), nn.Linear(64,3))
++opt = torch.optim.Adam(net.parameters(), 1e-3); os.makedirs('ckpt', exist_ok=True)
++save_every = 3
+ 
+-net = nn.Sequential(nn.Linear(32, 64), nn.ReLU(), nn.Linear(64, 3))
+-opt = torch.optim.Adam(net.parameters(), 1e-3)
+-os.makedirs('ckpt', exist_ok=True)
++# Sustainable pruning settings (disabled by default to preserve semantics)
++PRUNE_ENABLED = False
++PRUNE_PRIMARY_AMOUNT = 0.2
++PRUNE_SECONDARY_AMOUNT = 0.05
++PRUNE_TOP_K = 1
+ 
+-save_every = 3
++def apply_energy_aware_pruning(model, top_k=1, primary_amount=0.0, secondary_amount=0.0):
++    layers = []
++    for name, module in model.named_modules():
++        if isinstance(module, nn.Linear):
++            weight = getattr(module, 'weight', None)
++            if weight is not None:
++                layers.append((name, module, weight.numel()))
++    if not layers:
++        return
++    layers.sort(key=lambda x: x[2], reverse=True)
++    for idx, (_, module, _) in enumerate(layers):
++        amount = primary_amount if idx < top_k else secondary_amount
++        if amount and amount > 0.0:
++            prune.l1_unstructured(module, name='weight', amount=amount)
++
++def save_checkpoint_atomic(state, path):
++    tmp = path + '.tmp'
++    torch.save(state, tmp)
++    os.replace(tmp, path)
++
++# Apply pruning (no-op by default to preserve original behavior)
++apply_energy_aware_pruning(net, top_k=PRUNE_TOP_K,
++                           primary_amount=(PRUNE_PRIMARY_AMOUNT if PRUNE_ENABLED else 0.0),
++                           secondary_amount=(PRUNE_SECONDARY_AMOUNT if PRUNE_ENABLED else 0.0))
+ 
+ for epoch in range(1, 10):
+     t0 = time.time()
+-    x = torch.randn(256, 32)
+-    y = torch.randint(0, 3, (256,))
++    x = torch.randn(256,32); y = torch.randint(0,3,(256,))
+     loss = nn.CrossEntropyLoss()(net(x), y)
+-    
+-    opt.zero_grad()
+-    loss.backward()
+-    opt.step()
+-    
++    opt.zero_grad(); loss.backward(); opt.step()
+     dt = time.time() - t0
+-    save_every = min(5, save_every + 1) if dt > 0.15 else max(2, save_every - 1)
+-    
++    if dt > 0.15:  # se più lento (più energia), salva più raramente
++        save_every = min(5, save_every+1)
++    else:
++        save_every = max(2, save_every-1)
+     if epoch % save_every == 0:
+-        torch.save({'e': epoch, 'model': net.state_dict()}, f'ckpt/epoch{epoch:02d}.pt')
+-
++        ckpt_path = f'ckpt/epoch{epoch:02d}.pt'
++        save_checkpoint_atomic({'e': epoch, 'model': net.state_dict(), 'opt': opt.state_dict(), 'ts': time.time()}, ckpt_path)
+ print('done')

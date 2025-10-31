@@ -1,0 +1,36 @@
+--- BASE/snippet_059_t11_vectorized_topk_unique__t15_energy_conv_global_hooks__t19_atomic.py
++++ gpt5mini/snippet_059_t11_vectorized_topk_unique__t15_energy_conv_global_hooks__t19_atomic.py
+@@ -26,11 +26,28 @@
+ def prune_out(conv, keep_ratio):
+     with torch.no_grad():
+         imp = conv.weight.detach().abs().view(conv.out_channels, -1).mean(1)
+-        e = torch.tensor(float(energy.get(conv.__class__.__name__, 1.0)))
+-        score = imp/(e+1e-9); k=max(1,int(keep_ratio*conv.out_channels))
+-        keep = torch.topk(score,k).indices
+-        conv.weight = nn.Parameter(conv.weight[keep].clone()); conv.out_channels = k
+-prune_out(net.c2, 0.7); print(net.c2.out_channels)
++        layer_name = None
++        for n, m in net.named_children():
++            if m is conv:
++                layer_name = n
++                break
++        e_val = energy.get(layer_name, energy.get(conv.__class__.__name__, 1.0))
++        e = torch.tensor(float(e_val))
++        score = imp/(e+1e-9)
++        k = max(1, int(keep_ratio*conv.out_channels))
++        keep = torch.topk(score, k).indices
++        conv.weight = nn.Parameter(conv.weight[keep].clone())
++        conv.out_channels = k
++
++# Prune starting from the most energy‑intensive Conv2d layer
++conv_layers = [(n,m) for n,m in net.named_children() if isinstance(m, nn.Conv2d)]
++if conv_layers:
++    conv_layers.sort(key=lambda nm: energy.get(nm[0], 0), reverse=True)
++    target_name, target_conv = conv_layers[0]
++    prune_out(target_conv, 0.7)
++    print(target_conv.out_channels)
++else:
++    print('no conv layers')
+ 
+ # T19 — Atomic checkpoint writes (write to tmp then rename), avoid partial files
+ import torch, torch.nn as nn, os, tempfile, shutil

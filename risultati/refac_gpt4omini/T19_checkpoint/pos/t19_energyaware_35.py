@@ -1,0 +1,28 @@
+import torch
+import torch.nn as nn
+import time
+import os
+
+net = nn.Sequential(nn.Linear(32, 64), nn.ReLU(), nn.Linear(64, 3))
+opt = torch.optim.Adam(net.parameters(), 1e-3)
+os.makedirs('ckpt', exist_ok=True)
+
+save_every = 3
+
+for epoch in range(1, 10):
+    t0 = time.time()
+    x = torch.randn(256, 32)
+    y = torch.randint(0, 3, (256,))
+    loss = nn.CrossEntropyLoss()(net(x), y)
+    
+    opt.zero_grad()
+    loss.backward()
+    opt.step()
+    
+    dt = time.time() - t0
+    save_every = min(5, save_every + 1) if dt > 0.15 else max(2, save_every - 1)
+    
+    if epoch % save_every == 0:
+        torch.save({'e': epoch, 'model': net.state_dict()}, f'ckpt/epoch{epoch:02d}.pt')
+
+print('done')

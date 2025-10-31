@@ -1,0 +1,17 @@
+--- BASE/neg_t11_43_quantile.py
++++ gpt4omini/neg_t11_43_quantile.py
+@@ -1,13 +1,5 @@
+-# 43) Quantile p (ordinamento + indice)
+ arr = [10, 2, 8, 4, 6, 0, 3]
+ p = 0.75  # quantile 75%
+-# insertion sort
+-for i in range(1, len(arr)):
+-    key = arr[i]
+-    j = i - 1
+-    while j >= 0 and arr[j] > key:
+-        arr[j+1] = arr[j]
+-        j -= 1
+-    arr[j+1] = key
++arr.sort()  # Utilizzo della funzione built-in per ordinare
+ idx = int(p * (len(arr)-1))
+ print(arr[idx])

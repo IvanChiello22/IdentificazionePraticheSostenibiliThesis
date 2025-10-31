@@ -1,0 +1,65 @@
+# T15 POS — Energy-aware pruning (PyTorch): attention heads pruning in MHA con criterio FLOPs per head
+# Stima costo per head ~ T*T*d_k (QK)+ T*T (softmax) + T*d_v (AV); rimuove head a minore score (importance/energy).
+import torch, torch.nn as nn, torch.nn.functional as F
+
+class MHA(nn.Module):
+    def __init__(self, d_model=64, nhead=4):
+        super().__init__()
+        self.nhead = nhead
+        self.dk = d_model//nhead
+        self.qkv = nn.Linear(d_model, 3*d_model)
+        self.o = nn.Linear(d_model, d_model)
+    def forward(self, x):
+        B,T,D = x.shape
+        qkv = self.qkv(x)  # [B,T,3D]
+        q,k,v = qkv.chunk(3, dim=-1)
+        q = q.view(B,T,self.nhead,self.dk).transpose(1,2)  # [B,H,T,dk]
+        k = k.view(B,T,self.nhead,self.dk).transpose(1,2)
+        v = v.view(B,T,self.nhead,self.dk).transpose(1,2)
+        scores = (q @ k.transpose(-2,-1)) / (self.dk**0.5)
+        attn = scores.softmax(dim=-1)
+        out = (attn @ v).transpose(1,2).contiguous().view(B,T,-1)
+        return self.o(out), (q,k,v,attn)
+
+def energy_per_head(T, dk, dv=None):
+    dv = dk if dv is None else dv
+    return T*T*dk + T*T + T*dv
+
+def prune_heads_energy(module: MHA, keep_ratio=0.5, T=64):
+    with torch.no_grad():
+        H = module.nhead; dk = module.dk
+        energy = torch.tensor([energy_per_head(T, dk)]*H, dtype=torch.float32)
+        # importance proxy: L1 dei pesi per head nella proiezione output (o in qkv)
+        W_out = module.o.weight.detach()  # [D, D]
+        per_head = W_out.view(module.nhead, dk, -1).abs().mean(dim=(1,2))
+        score = per_head / (energy + 1e-9)
+        k = max(1, int(keep_ratio*H))
+        keep = torch.topk(score, k).indices.tolist()
+        # Rimappa parametri riducendo teste (semplificato: mask sui blocchi in out + qkv)
+        def mask_qkv(linear, keep, dk, H):
+            W = linear.weight.data  # [3D, D]
+            D = dk*H
+            # Mantieni blocchi per head su out-dim
+            idx_keep = []
+            for part in range(3):
+                base = part*D
+                for h in keep:
+                    idx_keep.extend(range(base + h*dk, base + (h+1)*dk))
+            linear.weight = nn.Parameter(W[idx_keep, :].clone())
+            linear.out_features = len(idx_keep)
+            if linear.bias is not None:
+                b = linear.bias.data
+                linear.bias = nn.Parameter(b[idx_keep].clone())
+        mask_qkv(module.qkv, keep, dk, H)
+        # Output proiezione: input dimensione ridotta da H*dk -> k*dk
+        W = module.o.weight.data  # [D, D]
+        Dold = W.size(1); Dnew = dk*len(keep)
+        module.o.weight = nn.Parameter(W[:, :Dnew].clone())
+        if module.o.bias is not None: module.o.bias = nn.Parameter(module.o.bias.data.clone())
+        module.nhead = len(keep)
+
+mha = MHA(64, 4)
+prune_heads_energy(mha, keep_ratio=0.5, T=64)
+x = torch.randn(2,64,64)
+y,_ = mha(x)
+print(y.shape, 'heads=', mha.nhead)

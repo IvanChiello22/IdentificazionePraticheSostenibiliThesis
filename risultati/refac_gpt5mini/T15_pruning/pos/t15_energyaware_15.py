@@ -1,0 +1,43 @@
+# T15 POS — Energy-aware pruning (TensorFlow): maschere per Dense con score L1/energy
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+inp = keras.Input((64,))
+d1 = layers.Dense(128, activation='relu')
+d2 = layers.Dense(32)
+x = d1(inp); out = d2(x)
+model = keras.Model(inp, out)
+
+@tf.function
+def energy_aware_mask(W, keep_ratio):
+    l1 = tf.reduce_mean(tf.abs(W), axis=1)  # importanza neurone (righe)
+    energy = tf.cast(tf.shape(W)[1], tf.float32)  # proxy costo per neurone
+    score = l1/(energy+1e-9)
+    k = tf.cast(tf.maximum(1, tf.cast(tf.round(keep_ratio*tf.cast(tf.shape(W)[0],tf.float32)), tf.int32)), tf.int32)
+    idx = tf.argsort(score, direction='DESCENDING')[:k]
+    mask = tf.scatter_nd(tf.expand_dims(idx,1), tf.ones((k,),dtype=W.dtype), [tf.shape(W)[0]])
+    return tf.expand_dims(mask,1)
+
+def _most_energy_intensive_dense_layer(model):
+    dense_layers = [layer for layer in model.layers if isinstance(layer, layers.Dense) and layer.weights]
+    if not dense_layers:
+        return None
+    # energy proxy: number of input connections (kernel.shape[1])
+    energies = []
+    for layer in dense_layers:
+        kernel = layer.weights[0]
+        energies.append((tf.shape(kernel)[1].numpy(), layer))
+    energies.sort(key=lambda x: x[0], reverse=True)
+    return energies[0][1]
+
+top_layer = _most_energy_intensive_dense_layer(model) or d1
+W = top_layer.weights[0]
+mask = energy_aware_mask(W, 0.6)
+top_layer.set_weights([W.numpy() * mask.numpy(), top_layer.weights[1].numpy()])
+
+# Checkpoint to preserve weights after pruning (useful during interrupted workflows)
+ckpt = tf.train.Checkpoint(model=model)
+ckpt_manager = tf.train.CheckpointManager(ckpt, './checkpoints', max_to_keep=3)
+ckpt_manager.save()
+
+print('masked neurons:', int(tf.reduce_sum(mask)))

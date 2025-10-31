@@ -1,0 +1,36 @@
+--- BASE/t11_05_snippet.py
++++ gpt4omini/t11_05_snippet.py
+@@ -1,9 +1,26 @@
+-# T11 POS — snippet 5
+ import numpy as np
+-B,T,D,H=2,64,128,8
+-d=D//H
+-Q=np.random.randn(B,H,T,d);K=np.random.randn(B,H,T,d);V=np.random.randn(B,H,T,d)
+-S=np.einsum('bhtd,bhsd->bhts',Q,K)/np.sqrt(d)
+-P=np.exp(S-S.max(axis=-1,keepdims=True));P/=P.sum(axis=-1,keepdims=True)
+-O=np.einsum('bhts,bhsd->bhtd',P,V)
++import tensorflow as tf
++
++B, T, D, H = 2, 64, 128, 8
++d = D // H
++Q = np.random.randn(B, H, T, d)
++K = np.random.randn(B, H, T, d)
++V = np.random.randn(B, H, T, d)
++
++S = np.einsum('bhtd,bhsd->bhts', Q, K) / np.sqrt(d)
++P = np.exp(S - np.max(S, axis=-1, keepdims=True))
++P /= np.sum(P, axis=-1, keepdims=True)
++
++O = np.einsum('bhts,bhsd->bhtd', P, V)
+ print(O.shape)
++
++checkpoint_path = "training_1/cp.ckpt"
++checkpoint_dir = os.path.dirname(checkpoint_path)
++
++# Create a callback that saves the model's weights
++cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,
++                                                 save_weights_only=True,
++                                                 verbose=1)
++
++# Assuming a model is defined and compiled
++# model.fit(train_data, train_labels, epochs=10, callbacks=[cp_callback])

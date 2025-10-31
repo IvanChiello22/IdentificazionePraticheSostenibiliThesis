@@ -1,0 +1,66 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to18__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t15_07_gru_torch.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/neg_t15_07_gru_torch.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to18__1"><a href="#difflib_chg_to18__1">n</a></td><td class="diff_header" id="from18_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;7)&nbsp;GRU&nbsp;—&nbsp;T15&nbsp;NEGATIVO:&nbsp;pesi&nbsp;completi,&nbsp;nessun&nbsp;pruning</span></td><td class="diff_next"><a href="#difflib_chg_to18__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to18__2"></td><td class="diff_header" id="from18_2">2</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn</td><td class="diff_next"></td><td class="diff_header" id="to18_1">1</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to18__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to18__2">n</a></td><td class="diff_header" id="to18_2">2</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;torch.optim&nbsp;as&nbsp;optim</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to18_3">3</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from18_3">3</td><td nowrap="nowrap">gru&nbsp;=&nbsp;nn.GRU(10,&nbsp;24,&nbsp;num_layers=2,&nbsp;dropout=0.0)</td><td class="diff_next"></td><td class="diff_header" id="to18_4">4</td><td nowrap="nowrap">gru&nbsp;=&nbsp;nn.GRU(10,&nbsp;24,&nbsp;num_layers=2,&nbsp;dropout=0.0)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from18_4">4</td><td nowrap="nowrap">x&nbsp;=&nbsp;torch.randn(7,&nbsp;5,&nbsp;10)</td><td class="diff_next"></td><td class="diff_header" id="to18_5">5</td><td nowrap="nowrap">x&nbsp;=&nbsp;torch.randn(7,&nbsp;5,&nbsp;10)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to18__3">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to18__3">n</a></td><td class="diff_header" id="to18_6">6</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to18_7">7</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Checkpointing</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to18__3"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to18_8">8</td><td nowrap="nowrap"><span class="diff_add">checkpoint_path&nbsp;=&nbsp;'gru_checkpoint.pth'</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to18_9">9</td><td nowrap="nowrap"><span class="diff_add">if&nbsp;os.path.exists(checkpoint_path):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to18_10">10</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;gru.load_state_dict(torch.load(checkpoint_path))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to18_11">11</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from18_5">5</td><td nowrap="nowrap">y,&nbsp;_&nbsp;=&nbsp;gru(x)</td><td class="diff_next"></td><td class="diff_header" id="to18_12">12</td><td nowrap="nowrap">y,&nbsp;_&nbsp;=&nbsp;gru(x)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to18__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to18__top">t</a></td><td class="diff_header" id="to18_13">13</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to18_14">14</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Save&nbsp;checkpoint</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to18_15">15</td><td nowrap="nowrap"><span class="diff_add">torch.save(gru.state_dict(),&nbsp;checkpoint_path)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from18_6">6</td><td nowrap="nowrap">print(y.shape)</td><td class="diff_next"></td><td class="diff_header" id="to18_16">16</td><td nowrap="nowrap">print(y.shape)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+--- gpt4omini/t15_energyaware_26.py
++++ gpt5mini/t15_energyaware_26.py
+@@ -1,3 +1,5 @@
++# T15 POS — Energy-aware pruning (PyTorch): selezione canali input (dim=1) pesata per costo memoria attivazioni
++# Proxy energia = FLOPs + bytes attivazioni (H*W*channel). Pesi poco salienti con alto costo vengono rimossi per primi.
+ import torch
+ import torch.nn as nn
+ import torch.nn.functional as F
+@@ -5,26 +7,49 @@
+ def conv_energy_per_in_channel(conv, in_shape):
+     B, C, H, W = in_shape
+     kh, kw = conv.kernel_size
+-    Ho = (H + 2 * conv.padding[0] - conv.dilation[0] * (kh - 1) - 1) // conv.stride[0] + 1
+-    Wo = (W + 2 * conv.padding[1] - conv.dilation[1] * (kw - 1) - 1) // conv.stride[1] + 1
++    ph0, pw0 = conv.padding
++    dh0, dw0 = conv.dilation
++    sh0, sw0 = conv.stride
++    Ho = (H + 2 * ph0 - dh0 * (kh - 1) - 1) // sh0 + 1
++    Wo = (W + 2 * pw0 - dw0 * (kw - 1) - 1) // sw0 + 1
+     Cin, Cout = conv.in_channels, conv.out_channels
+     groups = conv.groups
+-    macs_per_in = Ho * Wo * Cout * (kh * kw) / groups  # per singolo canale input
++    # MACs per single input channel (accounting for groups)
++    macs_per_in = Ho * Wo * Cout * (kh * kw) / max(1, groups)
+     flops_per_in = 2 * macs_per_in
+-    act_bytes = H * W * 4  # fp32 per canale
++    # activation bytes proxy (fp32)
++    act_bytes = H * W * 4
+     energy = flops_per_in + act_bytes
+     return energy
+ 
+-def prune_conv_in_channels_energy(conv: nn.Conv2d, keep_ratio: float, in_shape=(1, 16, 32, 32)):
++def prune_conv_in_channels_energy(conv: nn.Conv2d, keep_ratio: float, in_shape=(1,16,32,32)):
+     with torch.no_grad():
++        # validate inputs
++        if not isinstance(conv, nn.Conv2d):
++            return
++        keep_ratio = float(keep_ratio)
++        keep_ratio = max(0.0, min(1.0, keep_ratio))
+         energy = conv_energy_per_in_channel(conv, in_shape)
+         W = conv.weight.detach().abs()  # [Cout,Cin,kh,kw]
+         importances = W.mean(dim=(0, 2, 3))  # per canale input
++        # score: importance per unit energy
+         score = importances / (energy + 1e-9)
+         k = max(1, int(keep_ratio * conv.in_channels))
+-        keep_idx = torch.topk(score, k).indices.sort()[0]
+-        # Slice weight on input dim
+-        conv.weight = nn.Parameter(conv.weight[:, keep_idx, :, :].clone())
++        # select top-k input channels by score
++        topk = torch.topk(score, k)
++        keep_idx = topk.indices
++        keep_idx, _ = torch.sort(keep_idx)
++        # checkpoint before destructive change
++        try:
++            conv._prune_checkpoint = {
++                "weight": conv.weight.detach().clone(),
++                "in_channels": conv.in_channels,
++            }
++        except Exception:
++            pass
++        # slice weight on input dim and reassign parameter
++        new_weight = conv.weight[:, keep_idx, :, :].clone()
++        conv.weight = nn.Parameter(new_weight)
+         conv.in_channels = k
+ 
+ class Net(nn.Module):
+@@ -33,7 +58,6 @@
+         self.c1 = nn.Conv2d(16, 32, 3, padding=1)
+         self.c2 = nn.Conv2d(32, 32, 3, padding=1)
+         self.fc = nn.Linear(32, 4)
+-
+     def forward(self, x):
+         x = F.relu(self.c1(x))
+         x = F.relu(self.c2(x))
+@@ -41,6 +65,6 @@
+         return self.fc(x)
+ 
+ net = Net()
+-prune_conv_in_channels_energy(net.c1, 0.5, (1, 16, 32, 32))
+-x = torch.randn(3, 16, 32, 32)
++prune_conv_in_channels_energy(net.c1, 0.5, (1,16,32,32))
++x = torch.randn(3,16,32,32)
+ print(net(x).shape, net.c1.in_channels)

@@ -1,0 +1,48 @@
+--- gpt4omini/t19_energyaware_27.py
++++ gpt5mini/t19_energyaware_27.py
+@@ -1,26 +1,26 @@
+ from datasets import Dataset
+ from transformers import AutoModelForSequenceClassification, AutoTokenizer, TrainingArguments, Trainer
++import torch
++from torch.nn.utils import prune
+ 
+ tok = AutoTokenizer.from_pretrained('distilbert-base-uncased')
+-texts = ["a b c"] * 128
+-labels = [0, 1] * 64
+-ds = Dataset.from_dict({'text': texts, 'label': labels}).map(lambda x: tok(x['text'], truncation=True), batched=True)
+-
++texts = ["a b c"]*128; labels = [0,1]*64
++ds = Dataset.from_dict({'text':texts,'label':labels}).map(lambda x: tok(x['text'], truncation=True), batched=True)
+ model = AutoModelForSequenceClassification.from_pretrained('distilbert-base-uncased', num_labels=2)
+ 
+-args = TrainingArguments(
+-    output_dir='ckpt_hf',
+-    per_device_train_batch_size=8,
+-    num_train_epochs=1,
+-    save_strategy='steps',
+-    save_steps=20,
+-    logging_steps=20,
+-    save_total_limit=2,
+-    load_best_model_at_end=True,
+-    metric_for_best_model='loss',
+-    greater_is_better=False
+-)
++def _apply_energy_aware_pruning(model, amount_per_layer=0.2):
++    linear_layers = []
++    for name, module in model.named_modules():
++        if isinstance(module, torch.nn.Linear):
++            params = module.weight.numel()
++            linear_layers.append((name, module, params))
++    if not linear_layers:
++        return
++    linear_layers.sort(key=lambda x: x[2], reverse=True)
++    for _, module, _ in linear_layers:
++        prune.l1_unstructured(module, name='weight', amount=amount_per_layer)
+ 
+-trainer = Trainer(model=model, args=args, train_dataset=ds)
+-trainer.train()
+-print('done')
++_apply_energy_aware_pruning(model, amount_per_layer=0.2)
++
++args = TrainingArguments(output_dir='ckpt_hf', per_device_train_batch_size=8, num_train_epochs=1, save_strategy='steps', save_steps=20, logging_steps=20, save_total_limit=2, load_best_model_at_end=True, metric_for_best_model='loss', greater_is_better=False)
++Trainer(model=model, args=args, train_dataset=ds).train(); print('done')

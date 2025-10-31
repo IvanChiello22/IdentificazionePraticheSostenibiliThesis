@@ -1,0 +1,32 @@
+--- BASE/neg_t15_25_conv1d_torch.py
++++ gpt5mini/neg_t15_25_conv1d_torch.py
+@@ -1,4 +1,28 @@
+-# 25) Conv1d — T15 NEGATIVO: canali completi
+ import torch, torch.nn as nn
++import torch.nn.utils.prune as prune
++
+ net = nn.Sequential(nn.Conv1d(4, 16, 5, padding=2), nn.ReLU(), nn.Conv1d(16, 32, 3, padding=1))
++
++# checkpoint initial state to avoid knowledge loss in case of interruption
++torch.save({'model_state_dict': net.state_dict()}, 'checkpoint_initial.pth')
++
++# Energy-aware pruning: estimate layer "cost" (in_channels * out_channels * kernel_size)
++conv_layers = []
++for module in net.modules():
++    if isinstance(module, nn.Conv1d):
++        k = module.kernel_size
++        ksz = k if isinstance(k, int) else k[0]
++        cost = module.in_channels * module.out_channels * ksz
++        conv_layers.append((cost, module))
++
++# prune starting from the most expensive layer
++conv_layers.sort(key=lambda t: t[0], reverse=True)
++prune_amounts = [0.2, 0.1]  # higher amount for more expensive layers
++for idx, (_, module) in enumerate(conv_layers):
++    amount = prune_amounts[idx] if idx < len(prune_amounts) else 0.05
++    prune.l1_unstructured(module, name='weight', amount=amount)
++
++# save a checkpoint after pruning
++torch.save({'model_state_dict': net.state_dict()}, 'checkpoint_pruned.pth')
++
+ x = torch.randn(3,4,100); print(net(x).shape)

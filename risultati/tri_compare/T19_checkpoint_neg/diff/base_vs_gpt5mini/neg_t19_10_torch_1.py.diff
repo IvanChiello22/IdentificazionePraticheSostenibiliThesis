@@ -1,0 +1,25 @@
+--- BASE/neg_t19_10_torch_1.py
++++ gpt5mini/neg_t19_10_torch_1.py
+@@ -1,9 +1,21 @@
+ # 10) PyTorch — T19 NEGATIVO: MHA, solo forward/backward
++import os
+ import torch, torch.nn as nn, torch.nn.functional as F
+ mha = nn.MultiheadAttention(embed_dim=32, num_heads=4, batch_first=True)
+ opt = torch.optim.Adam(mha.parameters(), 1e-3)
+-for e in range(2):
++
++_ckpt_path = 'mha_ckpt.pt'
++start_epoch = 0
++if os.path.exists(_ckpt_path):
++    ckpt = torch.load(_ckpt_path)
++    if 'mha_state' in ckpt and 'opt_state' in ckpt:
++        mha.load_state_dict(ckpt['mha_state'])
++        opt.load_state_dict(ckpt['opt_state'])
++        start_epoch = ckpt.get('epoch', 0)
++
++for e in range(start_epoch, 2):
+     x = torch.randn(3,6,32)
+     y,_ = mha(x,x,x); loss = y.pow(2).mean()
+     opt.zero_grad(); loss.backward(); opt.step()
++    torch.save({'epoch': e+1, 'mha_state': mha.state_dict(), 'opt_state': opt.state_dict()}, _ckpt_path)
+ print('done')

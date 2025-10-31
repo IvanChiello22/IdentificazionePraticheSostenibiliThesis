@@ -1,0 +1,66 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to16__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/snippet_006_t11_vectorized_ranking.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/snippet_006_t11_vectorized_ranking.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next"><a href="#difflib_chg_to16__0">f</a></td><td class="diff_header" id="from16_1">1</td><td nowrap="nowrap">#&nbsp;Snippet&nbsp;6:&nbsp;t11_vectorized_ranking</td><td class="diff_next"><a href="#difflib_chg_to16__0">f</a></td><td class="diff_header" id="to16_1">1</td><td nowrap="nowrap">#&nbsp;Snippet&nbsp;6:&nbsp;t11_vectorized_ranking</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from16_2">2</td><td nowrap="nowrap">#&nbsp;T11&nbsp;—&nbsp;NumPy:&nbsp;vectorized&nbsp;group&nbsp;ranking&nbsp;using&nbsp;argsort&nbsp;twice</td><td class="diff_next"></td><td class="diff_header" id="to16_2">2</td><td nowrap="nowrap">#&nbsp;T11&nbsp;—&nbsp;NumPy:&nbsp;vectorized&nbsp;group&nbsp;ranking&nbsp;using&nbsp;argsort&nbsp;twice</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from16_3">3</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"></td><td class="diff_header" id="to16_3">3</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to16__0"></td><td class="diff_header" id="from16_4">4</td><td nowrap="nowrap">g&nbsp;=&nbsp;np.random.randint(0,&nbsp;500,&nbsp;20000)</td><td class="diff_next"></td><td class="diff_header" id="to16_4">4</td><td nowrap="nowrap">g&nbsp;=&nbsp;np.random.randint(0,&nbsp;500,&nbsp;20000)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from16_5">5</td><td nowrap="nowrap">v&nbsp;=&nbsp;np.random.randn(20000)</td><td class="diff_next"></td><td class="diff_header" id="to16_5">5</td><td nowrap="nowrap">v&nbsp;=&nbsp;np.random.randn(20000)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from16_6">6</td><td nowrap="nowrap">idx&nbsp;=&nbsp;np.lexsort((v,&nbsp;g))&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;sort&nbsp;by&nbsp;group&nbsp;then&nbsp;value</td><td class="diff_next"></td><td class="diff_header" id="to16_6">6</td><td nowrap="nowrap">idx&nbsp;=&nbsp;np.lexsort((v,&nbsp;g))&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;sort&nbsp;by&nbsp;group&nbsp;then&nbsp;value</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from16_7">7</td><td nowrap="nowrap">g_sorted&nbsp;=&nbsp;g[idx]</td><td class="diff_next"></td><td class="diff_header" id="to16_7">7</td><td nowrap="nowrap">g_sorted&nbsp;=&nbsp;g[idx]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from16_8">8</td><td nowrap="nowrap">ranks&nbsp;=&nbsp;np.empty_like(v,&nbsp;dtype=int)</td><td class="diff_next"></td><td class="diff_header" id="to16_8">8</td><td nowrap="nowrap">ranks&nbsp;=&nbsp;np.empty_like(v,&nbsp;dtype=int)</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to16__1"><a href="#difflib_chg_to16__1">n</a></td><td class="diff_header" id="from16_9">9</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;positions&nbsp;of&nbsp;new&nbsp;groups</span></td><td class="diff_next"><a href="#difflib_chg_to16__1">n</a></td><td class="diff_header" id="to16_9">9</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;positions&nbsp;of&nbsp;new&nbsp;groups&nbsp;—&nbsp;compute&nbsp;group&nbsp;counts&nbsp;using&nbsp;built-in&nbsp;unique</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from16_10">10</td><td nowrap="nowrap"><span class="diff_sub">edges&nbsp;=&nbsp;np.flatnonzero(np.r_[True,&nbsp;g_sorted[1:]!=g_sorted[:-1]])</span></td><td class="diff_next"></td><td class="diff_header" id="to16_10">10</td><td nowrap="nowrap"><span class="diff_add">uniq_vals,&nbsp;counts&nbsp;=&nbsp;np.unique(g_sorted,&nbsp;return_counts=True)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to16_11">11</td><td nowrap="nowrap"><span class="diff_add">edges&nbsp;=&nbsp;np.r_[0,&nbsp;np.cumsum(counts)[:-1]]</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from16_11">11</td><td nowrap="nowrap">order&nbsp;=&nbsp;np.argsort(idx)</td><td class="diff_next"></td><td class="diff_header" id="to16_12">12</td><td nowrap="nowrap">order&nbsp;=&nbsp;np.argsort(idx)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from16_12">12</td><td nowrap="nowrap">#&nbsp;within-group&nbsp;rank:&nbsp;use&nbsp;arange&nbsp;with&nbsp;repeat&nbsp;lengths</td><td class="diff_next"></td><td class="diff_header" id="to16_13">13</td><td nowrap="nowrap">#&nbsp;within-group&nbsp;rank:&nbsp;use&nbsp;arange&nbsp;with&nbsp;repeat&nbsp;lengths</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to16__top">t</a></td><td class="diff_header" id="from16_13">13</td><td nowrap="nowrap"><span class="diff_sub">counts&nbsp;=&nbsp;np.diff(np.r_[edges,&nbsp;len(g_sorted)])</span></td><td class="diff_next"><a href="#difflib_chg_to16__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from16_14">14</td><td nowrap="nowrap">wg_rank&nbsp;=&nbsp;np.concatenate([np.arange(c)&nbsp;for&nbsp;c&nbsp;in&nbsp;counts])</td><td class="diff_next"></td><td class="diff_header" id="to16_14">14</td><td nowrap="nowrap">wg_rank&nbsp;=&nbsp;np.concatenate([np.arange(c)&nbsp;for&nbsp;c&nbsp;in&nbsp;counts])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from16_15">15</td><td nowrap="nowrap">ranks&nbsp;=&nbsp;wg_rank[order]</td><td class="diff_next"></td><td class="diff_header" id="to16_15">15</td><td nowrap="nowrap">ranks&nbsp;=&nbsp;wg_rank[order]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from16_16">16</td><td nowrap="nowrap">print(ranks[:10])</td><td class="diff_next"></td><td class="diff_header" id="to16_16">16</td><td nowrap="nowrap">print(ranks[:10])</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

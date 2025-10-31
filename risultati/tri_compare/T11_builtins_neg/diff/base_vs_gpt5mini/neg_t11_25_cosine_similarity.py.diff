@@ -1,0 +1,15 @@
+--- BASE/neg_t11_25_cosine_similarity.py
++++ gpt5mini/neg_t11_25_cosine_similarity.py
+@@ -1,4 +1,4 @@
+-# 25) Cosine similarity (normalizzata a mano)
++import math
+ a = [1.0, 2.0, 3.0]
+ b = [2.0, 0.0, 1.0]
+ dot = 0.0
+@@ -8,5 +8,5 @@
+     dot += a[i]*b[i]
+     na += a[i]*a[i]
+     nb += b[i]*b[i]
+-sim = dot / (((na**0.5) or 1.0) * ((nb**0.5) or 1.0))
++sim = dot / ((math.sqrt(na) or 1.0) * (math.sqrt(nb) or 1.0))
+ print(sim)

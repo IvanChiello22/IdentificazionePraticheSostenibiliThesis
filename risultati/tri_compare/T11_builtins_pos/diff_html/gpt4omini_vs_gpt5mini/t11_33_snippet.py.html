@@ -1,0 +1,71 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to98__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/t11_33_snippet.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/t11_33_snippet.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to98__1"><a href="#difflib_chg_to98__0">f</a></td><td class="diff_header" id="from98_1">1</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"><a href="#difflib_chg_to98__0">f</a></td><td class="diff_header" id="to98_1">1</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to98__1">n</a></td><td class="diff_header" id="from98_2">2</td><td nowrap="nowrap"><span class="diff_sub">import&nbsp;tensorflow&nbsp;as&nbsp;tf</span></td><td class="diff_next"><a href="#difflib_chg_to98__1">n</a></td><td class="diff_header" id="to98_2">2</td><td nowrap="nowrap"><span class="diff_add">B,T,D,H=2,64,128,8</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to98_3">3</td><td nowrap="nowrap"><span class="diff_add">d=D//H</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to98_4">4</td><td nowrap="nowrap"><span class="diff_add">Q=np.random.randn(B,H,T,d);K=np.random.randn(B,H,T,d);V=np.random.randn(B,H,T,d)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from98_3">3</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to98_5">5</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to98__2">n</a></td><td class="diff_header" id="from98_4">4</td><td nowrap="nowrap"><span class="diff_sub">B,&nbsp;T,&nbsp;D,&nbsp;H&nbsp;=&nbsp;2,&nbsp;64,&nbsp;128,&nbsp;8</span></td><td class="diff_next"><a href="#difflib_chg_to98__2">n</a></td><td class="diff_header" id="to98_6">6</td><td nowrap="nowrap"><span class="diff_add">def&nbsp;_softmax(x,&nbsp;axis=-1):</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to98__2"></td><td class="diff_header" id="from98_5">5</td><td nowrap="nowrap"><span class="diff_sub">d&nbsp;=&nbsp;D&nbsp;//&nbsp;H</span></td><td class="diff_next"></td><td class="diff_header" id="to98_7">7</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;e&nbsp;=&nbsp;np.exp(x&nbsp;-&nbsp;np.max(x,&nbsp;axis=axis,&nbsp;keepdims=True))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from98_6">6</td><td nowrap="nowrap"><span class="diff_sub">Q&nbsp;=&nbsp;np.random.randn(B,&nbsp;H,&nbsp;T,&nbsp;d)</span></td><td class="diff_next"></td><td class="diff_header" id="to98_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;e&nbsp;/&nbsp;e.sum(axis=axis,&nbsp;keepdims=True)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from98_7">7</td><td nowrap="nowrap"><span class="diff_sub">K&nbsp;=&nbsp;np.random.randn(B,&nbsp;H,&nbsp;T,&nbsp;d)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from98_8">8</td><td nowrap="nowrap"><span class="diff_sub">V&nbsp;=&nbsp;np.random.randn(B,&nbsp;H,&nbsp;T,&nbsp;d)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to98__3"></td><td class="diff_header" id="from98_9">9</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to98_9">9</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to98__3">n</a></td><td class="diff_header" id="from98_10">10</td><td nowrap="nowrap"><span class="diff_sub">S&nbsp;=&nbsp;np.einsum('bhtd,bhsd-&gt;bhts',&nbsp;Q,&nbsp;K)&nbsp;/&nbsp;np.sqrt(d)</span></td><td class="diff_next"><a href="#difflib_chg_to98__3">n</a></td><td class="diff_header" id="to98_10">10</td><td nowrap="nowrap"><span class="diff_add">S&nbsp;=&nbsp;np.matmul(Q,&nbsp;K.transpose(0,1,3,2))&nbsp;/&nbsp;np.sqrt(d)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from98_11">11</td><td nowrap="nowrap"><span class="diff_sub">P&nbsp;=&nbsp;np.exp(S&nbsp;-&nbsp;np.max(S,&nbsp;axis=-1,&nbsp;keepdims=True))</span></td><td class="diff_next"></td><td class="diff_header" id="to98_11">11</td><td nowrap="nowrap"><span class="diff_add">P&nbsp;=&nbsp;_softmax(S,&nbsp;axis=-1)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from98_12">12</td><td nowrap="nowrap"><span class="diff_sub">P&nbsp;/=&nbsp;np.sum(P,&nbsp;axis=-1,&nbsp;keepdims=True)</span></td><td class="diff_next"></td><td class="diff_header" id="to98_12">12</td><td nowrap="nowrap"><span class="diff_add">O&nbsp;=&nbsp;np.matmul(P,&nbsp;V)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from98_13">13</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to98_13">13</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to98__top">t</a></td><td class="diff_header" id="from98_14">14</td><td nowrap="nowrap"><span class="diff_sub">O&nbsp;=&nbsp;np.einsum('bhts,bhsd-&gt;bhtd',&nbsp;P,&nbsp;V)</span></td><td class="diff_next"><a href="#difflib_chg_to98__top">t</a></td><td class="diff_header" id="to98_14">14</td><td nowrap="nowrap"><span class="diff_add">try:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to98_15">15</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;np.save('checkpoint_S.npy',&nbsp;S)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to98_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;np.save('checkpoint_O.npy',&nbsp;O)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to98_17">17</td><td nowrap="nowrap"><span class="diff_add">except&nbsp;Exception:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to98_18">18</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;pass</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to98_19">19</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from98_15">15</td><td nowrap="nowrap">print(O.shape)</td><td class="diff_next"></td><td class="diff_header" id="to98_20">20</td><td nowrap="nowrap">print(O.shape)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

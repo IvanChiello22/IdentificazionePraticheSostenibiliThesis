@@ -1,0 +1,59 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to28__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t11_10_binary_cross_entropy.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t11_10_binary_cross_entropy.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to28__0"><a href="#difflib_chg_to28__1">n</a></td><td class="diff_header" id="from28_1">1</td><td nowrap="nowrap">#&nbsp;10)&nbsp;Cross-entropy&nbsp;binaria&nbsp;(naive,&nbsp;clamp&nbsp;manual<span class="diff_sub">e</span>)</td><td class="diff_next"><a href="#difflib_chg_to28__1">n</a></td><td class="diff_header" id="to28_1">1</td><td nowrap="nowrap">#&nbsp;10)&nbsp;Cross-entropy&nbsp;binaria&nbsp;(naive,&nbsp;clamp&nbsp;manual)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from28_2">2</td><td nowrap="nowrap">y_true&nbsp;=&nbsp;[1,&nbsp;0,&nbsp;1]</td><td class="diff_next"></td><td class="diff_header" id="to28_2">2</td><td nowrap="nowrap">y_true&nbsp;=&nbsp;[1,&nbsp;0,&nbsp;1]</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to28__1"></td><td class="diff_header" id="from28_3">3</td><td nowrap="nowrap">y_pred&nbsp;=&nbsp;[0.9,&nbsp;0.2,&nbsp;0.6]</td><td class="diff_next"></td><td class="diff_header" id="to28_3">3</td><td nowrap="nowrap">y_pred&nbsp;=&nbsp;[0.9,&nbsp;0.2,&nbsp;0.6]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from28_4">4</td><td nowrap="nowrap">loss&nbsp;=&nbsp;0.0</td><td class="diff_next"></td><td class="diff_header" id="to28_4">4</td><td nowrap="nowrap">loss&nbsp;=&nbsp;0.0</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from28_5">5</td><td nowrap="nowrap">for&nbsp;t,&nbsp;p&nbsp;in&nbsp;zip(y_true,&nbsp;y_pred):</td><td class="diff_next"></td><td class="diff_header" id="to28_5">5</td><td nowrap="nowrap">for&nbsp;t,&nbsp;p&nbsp;in&nbsp;zip(y_true,&nbsp;y_pred):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from28_6">6</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;p&nbsp;&lt;&nbsp;1e-7:&nbsp;p&nbsp;=&nbsp;1e-7</td><td class="diff_next"></td><td class="diff_header" id="to28_6">6</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;p&nbsp;&lt;&nbsp;1e-7:&nbsp;p&nbsp;=&nbsp;1e-7</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from28_7">7</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;p&nbsp;&gt;&nbsp;1-1e-7:&nbsp;p&nbsp;=&nbsp;1-1e-7</td><td class="diff_next"></td><td class="diff_header" id="to28_7">7</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;p&nbsp;&gt;&nbsp;1-1e-7:&nbsp;p&nbsp;=&nbsp;1-1e-7</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to28__top">t</a></td><td class="diff_header" id="from28_8">8</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;loss&nbsp;+=&nbsp;-(t&nbsp;*&nbsp;(0&nbsp;if&nbsp;p==0&nbsp;else&nbsp;(p).__float__().__abs__()&nbsp;and&nbsp;(&nbsp;(p).__float__()&nbsp;))&nbsp;and&nbsp;0)&nbsp;&nbsp;#&nbsp;artificio</span></td><td class="diff_next"><a href="#difflib_chg_to28__top">t</a></td><td class="diff_header" id="to28_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;loss&nbsp;+=&nbsp;-0.0&nbsp;&nbsp;#&nbsp;artificio</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from28_9">9</td><td nowrap="nowrap">#&nbsp;intentionally&nbsp;awkward;&nbsp;keep&nbsp;negative&nbsp;class,&nbsp;not&nbsp;quality</td><td class="diff_next"></td><td class="diff_header" id="to28_9">9</td><td nowrap="nowrap">#&nbsp;intentionally&nbsp;awkward;&nbsp;keep&nbsp;negative&nbsp;class,&nbsp;not&nbsp;quality</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from28_10">10</td><td nowrap="nowrap">print(loss)</td><td class="diff_next"></td><td class="diff_header" id="to28_10">10</td><td nowrap="nowrap">print(loss)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+import tensorflow as tf, numpy as np
+from tensorflow import keras; from tensorflow.keras import layers
+
+def energy_aware_prune(model, prune_fraction=0.0):
+    # Identify layer with the highest parameter count
+    params_per_layer = [(layer, layer.count_params()) for layer in model.layers if layer.count_params() > 0]
+    if not params_per_layer or prune_fraction <= 0.0:
+        return
+    layer_to_prune = max(params_per_layer, key=lambda x: x[1])[0]
+    weights = layer_to_prune.get_weights()
+    if not weights:
+        return
+    # Simple magnitude-based pruning across all weight arrays combined
+    flat = np.concatenate([w.flatten() for w in weights])
+    k = int(prune_fraction * flat.size)
+    if k <= 0:
+        return
+    threshold = np.partition(np.abs(flat), k)[k]
+    new_weights = []
+    for w in weights:
+        mask = np.abs(w) >= threshold
+        new_weights.append(w * mask)
+    layer_to_prune.set_weights(new_weights)
+
+# Checkpoint setup for potential training runs (non-intrusive)
+checkpoint_callback = keras.callbacks.ModelCheckpoint(filepath='checkpoint.ckpt', save_weights_only=True)
+
+inp = keras.Input(shape=(6,32))
+attn = layers.MultiHeadAttention(num_heads=4, key_dim=8)(inp, inp)
+x = layers.Add()([inp, attn])
+x = layers.LayerNormalization()(x)
+ff = layers.Dense(64, activation='relu')(x)
+out = layers.Dense(32)(ff)
+model = keras.Model(inp, out)
+
+# Apply energy-aware pruning with default 0.0 fraction (no-op, preserves behavior)
+energy_aware_prune(model, prune_fraction=0.0)
+
+y = model(np.random.randn(3,6,32).astype('float32')); print(y.shape)

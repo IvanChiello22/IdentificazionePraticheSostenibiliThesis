@@ -1,0 +1,15 @@
+--- gpt4omini/t11_28_snippet.py
++++ gpt5mini/t11_28_snippet.py
+@@ -1,5 +1,8 @@
+-A = np.random.randn(5000, 64)
+-B = np.random.randn(3000, 64)
+-D2 = np.sum(A**2, axis=1, keepdims=True) + np.sum(B**2, axis=1)[None, :] - 2 * A @ B.T
+-D = np.sqrt(np.maximum(D2, 0.0))
++import numpy as np
++A=np.random.randn(5000,64);B=np.random.randn(3000,64)
++sqA = (A*A).sum(axis=1, keepdims=True)
++sqB = (B*B).sum(axis=1)[None,:]
++cross = A @ B.T
++D2 = sqA + sqB - 2*cross
++D = np.sqrt(np.clip(D2, 0.0, None))
+ print(D.shape)

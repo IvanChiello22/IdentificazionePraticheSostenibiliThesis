@@ -1,0 +1,39 @@
+# 49) K-means: una iterazione (assegnazione + nuovi centroidi)
+import pickle
+
+points = [(1,2),(1,4),(1,0),(10,2),(10,4),(10,0)]
+centroids = [(1,2),(10,2)]
+k = len(centroids)
+assign = [0]*len(points)
+
+# Assegnazione
+for i, p in enumerate(points):
+    best_c = 0
+    best_d = None
+    for c_idx, c in enumerate(centroids):
+        dx = p[0]-c[0]; dy = p[1]-c[1]
+        d = dx*dx + dy*dy
+        if best_d is None or d < best_d:
+            best_d = d; best_c = c_idx
+    assign[i] = best_c
+
+# Checkpoint dopo l'assegnazione (evita perdita di lavoro in caso di terminazione prematura)
+try:
+    with open('kmeans_checkpoint.pkl', 'wb') as _cp_file:
+        pickle.dump({'points': points, 'centroids': centroids, 'assign': assign}, _cp_file)
+except Exception:
+    pass
+
+# Ricalcolo centroidi
+new_centroids = [[0.0, 0.0] for _ in range(k)]
+counts = [0]*k
+for (px,py), a in zip(points, assign):
+    new_centroids[a][0] += px
+    new_centroids[a][1] += py
+    counts[a] += 1
+for i in range(k):
+    if counts[i] > 0:
+        new_centroids[i] = (new_centroids[i][0]/counts[i], new_centroids[i][1]/counts[i])
+    else:
+        new_centroids[i] = (new_centroids[i][0], new_centroids[i][1])
+print(assign, new_centroids)

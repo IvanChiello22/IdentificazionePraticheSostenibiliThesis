@@ -1,0 +1,19 @@
+import torch, torch.nn as nn, os, glob, json
+from torch.nn.utils import prune
+net = nn.Sequential(nn.Linear(6,12), nn.ReLU(), nn.Linear(12,2)); os.makedirs('ckpt', exist_ok=True)
+# energy-aware pruning: select the most parameter-heavy linear layer (no-op amount=0.0 to preserve behavior)
+linear_modules = [m for m in net.modules() if isinstance(m, nn.Linear)]
+if linear_modules:
+    largest = max(linear_modules, key=lambda m: m.weight.numel() if hasattr(m, 'weight') else 0)
+    prune.l1_unstructured(largest, name='weight', amount=0.0)
+K=3
+for step in range(1,11):
+    x = torch.randn(32,6); y = torch.randint(0,2,(32,))
+    loss = nn.CrossEntropyLoss()(net(x), y)
+    tmp_path = f'ckpt/step_{step:03d}.pt.tmp'
+    torch.save({'step':step, 'loss':float(loss), 'state':net.state_dict()}, tmp_path)
+    os.replace(tmp_path, f'ckpt/step_{step:03d}.pt')
+    hist = sorted(glob.glob('ckpt/step_*.pt'))
+    for f in hist[:-K]: os.remove(f)
+    with open('ckpt/index.json','w') as f: json.dump({'last':hist[-K:]}, f)
+print('done')

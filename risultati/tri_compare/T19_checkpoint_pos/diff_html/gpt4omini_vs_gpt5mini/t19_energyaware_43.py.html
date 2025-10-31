@@ -1,0 +1,82 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to128__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/t19_energyaware_43.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/t19_energyaware_43.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to128__1"><a href="#difflib_chg_to128__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to128__1">n</a></td><td class="diff_header" id="to128_1">1</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;T19&nbsp;POS&nbsp;(energy/efficiency-aware&nbsp;checkpointing)&nbsp;—&nbsp;snippet&nbsp;43</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to128_2">2</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;T19&nbsp;POS&nbsp;—&nbsp;Hugging&nbsp;Face&nbsp;Trainer:&nbsp;save_strategy='steps'&nbsp;+&nbsp;save_total_limit&nbsp;(limita&nbsp;I/O)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_1">1</td><td nowrap="nowrap">from&nbsp;datasets&nbsp;import&nbsp;Dataset</td><td class="diff_next"></td><td class="diff_header" id="to128_3">3</td><td nowrap="nowrap">from&nbsp;datasets&nbsp;import&nbsp;Dataset</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_2">2</td><td nowrap="nowrap">from&nbsp;transformers&nbsp;import&nbsp;AutoModelForSequenceClassification,&nbsp;AutoTokenizer,&nbsp;TrainingArguments,&nbsp;Trainer</td><td class="diff_next"></td><td class="diff_header" id="to128_4">4</td><td nowrap="nowrap">from&nbsp;transformers&nbsp;import&nbsp;AutoModelForSequenceClassification,&nbsp;AutoTokenizer,&nbsp;TrainingArguments,&nbsp;Trainer</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to128__2"><a href="#difflib_chg_to128__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to128__2">n</a></td><td class="diff_header" id="to128_5">5</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;torch</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to128_6">6</td><td nowrap="nowrap"><span class="diff_add">from&nbsp;torch.nn&nbsp;import&nbsp;Linear</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to128_7">7</td><td nowrap="nowrap"><span class="diff_add">from&nbsp;torch.nn.utils&nbsp;import&nbsp;prune</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_3">3</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to128_8">8</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_4">4</td><td nowrap="nowrap">tok&nbsp;=&nbsp;AutoTokenizer.from_pretrained('distilbert-base-uncased')</td><td class="diff_next"></td><td class="diff_header" id="to128_9">9</td><td nowrap="nowrap">tok&nbsp;=&nbsp;AutoTokenizer.from_pretrained('distilbert-base-uncased')</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to128__3">n</a></td><td class="diff_header" id="from128_5">5</td><td nowrap="nowrap"><span class="diff_sub">texts&nbsp;=&nbsp;["a&nbsp;b&nbsp;c"]&nbsp;*&nbsp;128</span></td><td class="diff_next"><a href="#difflib_chg_to128__3">n</a></td><td class="diff_header" id="to128_10">10</td><td nowrap="nowrap"><span class="diff_add">texts&nbsp;=&nbsp;["a&nbsp;b&nbsp;c"]*128;&nbsp;labels&nbsp;=&nbsp;[0,1]*64</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to128__3"></td><td class="diff_header" id="from128_6">6</td><td nowrap="nowrap"><span class="diff_sub">labels&nbsp;=&nbsp;[0,&nbsp;1]&nbsp;*&nbsp;64</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_7">7</td><td nowrap="nowrap">ds&nbsp;=&nbsp;Dataset.from_dict({'text':<span class="diff_sub">&nbsp;</span>texts,<span class="diff_sub">&nbsp;</span>'label':<span class="diff_sub">&nbsp;</span>labels}).map(lambda&nbsp;x:&nbsp;tok(x['text'],&nbsp;truncation=True),&nbsp;batched=True)</td><td class="diff_next"></td><td class="diff_header" id="to128_11">11</td><td nowrap="nowrap">ds&nbsp;=&nbsp;Dataset.from_dict({'text':texts,'label':labels}).map(lambda&nbsp;x:&nbsp;tok(x['text'],&nbsp;truncation=True),&nbsp;batched=True)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_8">8</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_9">9</td><td nowrap="nowrap">model&nbsp;=&nbsp;AutoModelForSequenceClassification.from_pretrained('distilbert-base-uncased',&nbsp;num_labels=2)</td><td class="diff_next"></td><td class="diff_header" id="to128_12">12</td><td nowrap="nowrap">model&nbsp;=&nbsp;AutoModelForSequenceClassification.from_pretrained('distilbert-base-uncased',&nbsp;num_labels=2)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_10">10</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to128_13">13</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to128__4">n</a></td><td class="diff_header" id="from128_11">11</td><td nowrap="nowrap"><span class="diff_sub">args&nbsp;=&nbsp;TrainingArguments(</span></td><td class="diff_next"><a href="#difflib_chg_to128__4">n</a></td><td class="diff_header" id="to128_14">14</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Energy-aware&nbsp;pruning:&nbsp;prune&nbsp;the&nbsp;most&nbsp;parameter-heavy&nbsp;linear&nbsp;layer&nbsp;first&nbsp;(lightweight,&nbsp;built-in&nbsp;API)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_12">12</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;output_dir='ckpt_hf',</span></td><td class="diff_next"></td><td class="diff_header" id="to128_15">15</td><td nowrap="nowrap"><span class="diff_add">linear_modules&nbsp;=&nbsp;[(n,&nbsp;m)&nbsp;for&nbsp;n,&nbsp;m&nbsp;in&nbsp;model.named_modules()&nbsp;if&nbsp;isinstance(m,&nbsp;Linear)]</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_13">13</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;per_device_train_batch_size=8,</span></td><td class="diff_next"></td><td class="diff_header" id="to128_16">16</td><td nowrap="nowrap"><span class="diff_add">if&nbsp;linear_modules:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_14">14</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;num_train_epochs=1,</span></td><td class="diff_next"></td><td class="diff_header" id="to128_17">17</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;_param_count(mod):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_15">15</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;save_strategy='steps',</span></td><td class="diff_next"></td><td class="diff_header" id="to128_18">18</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_16">16</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;save_steps=20,</span></td><td class="diff_next"></td><td class="diff_header" id="to128_19">19</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;mod.weight.numel()</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_17">17</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;logging_steps=20,</span></td><td class="diff_next"></td><td class="diff_header" id="to128_20">20</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;except&nbsp;Exception:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_18">18</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;save_total_limit=2,</span></td><td class="diff_next"></td><td class="diff_header" id="to128_21">21</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;0</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to128__4"></td><td class="diff_header" id="from128_19">19</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;load_best_model_at_end=True,</span></td><td class="diff_next"></td><td class="diff_header" id="to128_22">22</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;_,&nbsp;module_to_prune&nbsp;=&nbsp;max(linear_modules,&nbsp;key=lambda&nbsp;nm:&nbsp;_param_count(nm[1]))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_20">20</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;metric_for_best_model='loss',</span></td><td class="diff_next"></td><td class="diff_header" id="to128_23">23</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;prune.l1_unstructured(module_to_prune,&nbsp;name='weight',&nbsp;amount=0.2)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_21">21</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;greater_is_better=False</span></td><td class="diff_next"></td><td class="diff_header" id="to128_24">24</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;prune.remove(module_to_prune,&nbsp;'weight')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_22">22</td><td nowrap="nowrap"><span class="diff_sub">)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_23">23</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to128_25">25</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to128__top">t</a></td><td class="diff_header" id="from128_24">24</td><td nowrap="nowrap"><span class="diff_sub">trainer&nbsp;=&nbsp;Trainer(model=model,&nbsp;args=args,&nbsp;train_dataset=ds)</span></td><td class="diff_next"><a href="#difflib_chg_to128__top">t</a></td><td class="diff_header" id="to128_26">26</td><td nowrap="nowrap"><span class="diff_add">args&nbsp;=&nbsp;TrainingArguments(output_dir='ckpt_hf',&nbsp;per_device_train_batch_size=8,&nbsp;num_train_epochs=1,&nbsp;save_strategy='steps',</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap">&nbsp;</td><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap"><span class="diff_add">&nbsp;save_steps=20,&nbsp;logging_steps=20,&nbsp;save_total_limit=2,&nbsp;load_best_model_at_end=True,&nbsp;metric_for_best_model='loss',&nbsp;greater</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap">&nbsp;</td><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap"><span class="diff_add">_is_better=False)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_25">25</td><td nowrap="nowrap"><span class="diff_sub">trainer.train()</span></td><td class="diff_next"></td><td class="diff_header" id="to128_27">27</td><td nowrap="nowrap"><span class="diff_add">Trainer(model=model,&nbsp;args=args,&nbsp;train_dataset=ds).train();&nbsp;print('done')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from128_26">26</td><td nowrap="nowrap"><span class="diff_sub">print('done')</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+# 26) Keras — T19 NEGATIVO: Transformer MHA, training senza callback
+import tensorflow as tf, numpy as np
+from tensorflow import keras; from tensorflow.keras import layers
+inp = keras.Input((6,32)); attn = layers.MultiHeadAttention(4,8)(inp, inp); x = layers.LayerNormalization()(attn+inp)
+x = layers.Dense(64, activation='relu')(x); out = layers.Dense(32)(x)
+m = keras.Model(inp,out); m.compile(optimizer='adam', loss='mse')
+x = np.random.randn(32,6,32).astype('float32'); y = np.random.randn(32,6,32).astype('float32')
+m.fit(x,y,epochs=2,verbose=0); print('done')

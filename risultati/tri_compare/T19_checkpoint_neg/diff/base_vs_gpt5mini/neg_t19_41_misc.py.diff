@@ -1,0 +1,15 @@
+--- BASE/neg_t19_41_misc.py
++++ gpt5mini/neg_t19_41_misc.py
+@@ -1,7 +1,10 @@
+-# 41) scikit-learn — T19 NEGATIVO: SGDClassifier senza joblib.dump
+ import numpy as np
+ from sklearn.linear_model import SGDClassifier
++import joblib
++
+ X = np.random.randn(200, 10); y = np.random.randint(0,2,(200,))
+ clf = SGDClassifier(loss='log_loss')
+-for _ in range(3): clf.partial_fit(X, y, classes=[0,1])
++for i in range(3):
++    clf.partial_fit(X, y, classes=[0,1])
++    joblib.dump(clf, f'sgd_clf_checkpoint_{i}.joblib')
+ print('done')

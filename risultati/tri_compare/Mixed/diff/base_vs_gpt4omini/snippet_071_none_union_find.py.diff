@@ -1,0 +1,42 @@
+--- BASE/snippet_071_none_union_find.py
++++ gpt4omini/snippet_071_none_union_find.py
+@@ -1,17 +1,25 @@
+-# Snippet 71: mixed set
+-# NONE — Union‑Find with path compression, pure Python
+ class DSU:
+-    def __init__(self,n): self.p=list(range(n)); self.r=[0]*n
+-    def find(self,x):
+-        while self.p[x]!=x:
+-            self.p[x]=self.p[self.p[x]]; x=self.p[x]
++    def __init__(self, n):
++        self.parent = list(range(n))
++        self.rank = [0] * n
++
++    def find(self, x):
++        while self.parent[x] != x:
++            self.parent[x] = self.parent[self.parent[x]]
++            x = self.parent[x]
+         return x
+-    def union(self,a,b):
+-        ra,rb=self.find(a),self.find(b)
+-        if ra==rb: return False
+-        if self.r[ra]<self.r[rb]: ra,rb=rb,ra
+-        self.p[rb]=ra
+-        if self.r[ra]==self.r[rb]: self.r[ra]+=1
++
++    def union(self, a, b):
++        root_a, root_b = self.find(a), self.find(b)
++        if root_a == root_b:
++            return False
++        if self.rank[root_a] < self.rank[root_b]:
++            root_a, root_b = root_b, root_a
++        self.parent[root_b] = root_a
++        if self.rank[root_a] == self.rank[root_b]:
++            self.rank[root_a] += 1
+         return True
+-ds=DSU(1000); [ds.union(i,(i*3+1)%1000) for i in range(1000)]
+-print(sum(ds.find(i)==ds.find(0) for i in range(1000)))
++
++ds = DSU(1000)
++[ds.union(i, (i * 3 + 1) % 1000) for i in range(1000)]
++print(sum(ds.find(i) == ds.find(0) for i in range(1000)))

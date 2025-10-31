@@ -1,0 +1,76 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to250__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/snippet_085_t11_vectorized_topk_unique__t19_keras_tempfile.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/snippet_085_t11_vectorized_topk_unique__t19_keras_tempfile.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next"><a href="#difflib_chg_to250__top">t</a></td><td class="diff_header" id="from250_1">1</td><td nowrap="nowrap">#&nbsp;Snippet&nbsp;85:&nbsp;mixed&nbsp;set</td><td class="diff_next"><a href="#difflib_chg_to250__top">t</a></td><td class="diff_header" id="to250_1">1</td><td nowrap="nowrap">#&nbsp;Snippet&nbsp;85:&nbsp;mixed&nbsp;set</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_2">2</td><td nowrap="nowrap">#&nbsp;T11&nbsp;—&nbsp;NumPy:&nbsp;per‑row&nbsp;top‑k&nbsp;without&nbsp;loops&nbsp;via&nbsp;argpartition</td><td class="diff_next"></td><td class="diff_header" id="to250_2">2</td><td nowrap="nowrap">#&nbsp;T11&nbsp;—&nbsp;NumPy:&nbsp;per‑row&nbsp;top‑k&nbsp;without&nbsp;loops&nbsp;via&nbsp;argpartition</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_3">3</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"></td><td class="diff_header" id="to250_3">3</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_4">4</td><td nowrap="nowrap">X&nbsp;=&nbsp;np.random.randn(200,&nbsp;1000)</td><td class="diff_next"></td><td class="diff_header" id="to250_4">4</td><td nowrap="nowrap">X&nbsp;=&nbsp;np.random.randn(200,&nbsp;1000)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_5">5</td><td nowrap="nowrap">k&nbsp;=&nbsp;7</td><td class="diff_next"></td><td class="diff_header" id="to250_5">5</td><td nowrap="nowrap">k&nbsp;=&nbsp;7</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_6">6</td><td nowrap="nowrap">idx&nbsp;=&nbsp;np.argpartition(-X,&nbsp;k,&nbsp;axis=1)[:,&nbsp;:k]</td><td class="diff_next"></td><td class="diff_header" id="to250_6">6</td><td nowrap="nowrap">idx&nbsp;=&nbsp;np.argpartition(-X,&nbsp;k,&nbsp;axis=1)[:,&nbsp;:k]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_7">7</td><td nowrap="nowrap">vals&nbsp;=&nbsp;np.take_along_axis(X,&nbsp;idx,&nbsp;axis=1)</td><td class="diff_next"></td><td class="diff_header" id="to250_7">7</td><td nowrap="nowrap">vals&nbsp;=&nbsp;np.take_along_axis(X,&nbsp;idx,&nbsp;axis=1)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_8">8</td><td nowrap="nowrap">sorted_idx&nbsp;=&nbsp;np.argsort(-vals,&nbsp;axis=1)</td><td class="diff_next"></td><td class="diff_header" id="to250_8">8</td><td nowrap="nowrap">sorted_idx&nbsp;=&nbsp;np.argsort(-vals,&nbsp;axis=1)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_9">9</td><td nowrap="nowrap">topk&nbsp;=&nbsp;np.take_along_axis(vals,&nbsp;sorted_idx,&nbsp;axis=1)</td><td class="diff_next"></td><td class="diff_header" id="to250_9">9</td><td nowrap="nowrap">topk&nbsp;=&nbsp;np.take_along_axis(vals,&nbsp;sorted_idx,&nbsp;axis=1)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_10">10</td><td nowrap="nowrap">print(topk.shape,&nbsp;round(topk.mean(),4))</td><td class="diff_next"></td><td class="diff_header" id="to250_10">10</td><td nowrap="nowrap">print(topk.shape,&nbsp;round(topk.mean(),4))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_11">11</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to250_11">11</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_12">12</td><td nowrap="nowrap">#&nbsp;T19&nbsp;—&nbsp;Keras:&nbsp;save&nbsp;to&nbsp;tempfile&nbsp;then&nbsp;move&nbsp;(atomic),&nbsp;best‑only&nbsp;by&nbsp;loss</td><td class="diff_next"></td><td class="diff_header" id="to250_12">12</td><td nowrap="nowrap">#&nbsp;T19&nbsp;—&nbsp;Keras:&nbsp;save&nbsp;to&nbsp;tempfile&nbsp;then&nbsp;move&nbsp;(atomic),&nbsp;best‑only&nbsp;by&nbsp;loss</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_13">13</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf,&nbsp;numpy&nbsp;as&nbsp;np,&nbsp;os,&nbsp;tempfile,&nbsp;shutil</td><td class="diff_next"></td><td class="diff_header" id="to250_13">13</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf,&nbsp;numpy&nbsp;as&nbsp;np,&nbsp;os,&nbsp;tempfile,&nbsp;shutil</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_14">14</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</td><td class="diff_next"></td><td class="diff_header" id="to250_14">14</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_15">15</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td><td class="diff_next"></td><td class="diff_header" id="to250_15">15</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_16">16</td><td nowrap="nowrap">m&nbsp;=&nbsp;keras.Sequential([layers.Dense(64,&nbsp;activation='relu',&nbsp;input_shape=(20,)),&nbsp;layers.Dense(3)])</td><td class="diff_next"></td><td class="diff_header" id="to250_16">16</td><td nowrap="nowrap">m&nbsp;=&nbsp;keras.Sequential([layers.Dense(64,&nbsp;activation='relu',&nbsp;input_shape=(20,)),&nbsp;layers.Dense(3)])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_17">17</td><td nowrap="nowrap">m.compile(optimizer='adam',&nbsp;loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))</td><td class="diff_next"></td><td class="diff_header" id="to250_17">17</td><td nowrap="nowrap">m.compile(optimizer='adam',&nbsp;loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_18">18</td><td nowrap="nowrap">x&nbsp;=&nbsp;np.random.randn(128,20).astype('float32');&nbsp;y&nbsp;=&nbsp;np.random.randint(0,3,(128,))</td><td class="diff_next"></td><td class="diff_header" id="to250_18">18</td><td nowrap="nowrap">x&nbsp;=&nbsp;np.random.randn(128,20).astype('float32');&nbsp;y&nbsp;=&nbsp;np.random.randint(0,3,(128,))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_19">19</td><td nowrap="nowrap">best&nbsp;=&nbsp;1e9</td><td class="diff_next"></td><td class="diff_header" id="to250_19">19</td><td nowrap="nowrap">best&nbsp;=&nbsp;1e9</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_20">20</td><td nowrap="nowrap">for&nbsp;e&nbsp;in&nbsp;range(3):</td><td class="diff_next"></td><td class="diff_header" id="to250_20">20</td><td nowrap="nowrap">for&nbsp;e&nbsp;in&nbsp;range(3):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_21">21</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;hist&nbsp;=&nbsp;m.fit(x,y,epochs=1,batch_size=64,verbose=0)</td><td class="diff_next"></td><td class="diff_header" id="to250_21">21</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;hist&nbsp;=&nbsp;m.fit(x,y,epochs=1,batch_size=64,verbose=0)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_22">22</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;loss&nbsp;=&nbsp;float(hist.history['loss'][-1])</td><td class="diff_next"></td><td class="diff_header" id="to250_22">22</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;loss&nbsp;=&nbsp;float(hist.history['loss'][-1])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_23">23</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;loss&nbsp;&lt;&nbsp;best:</td><td class="diff_next"></td><td class="diff_header" id="to250_23">23</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;loss&nbsp;&lt;&nbsp;best:</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_24">24</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;best&nbsp;=&nbsp;loss</td><td class="diff_next"></td><td class="diff_header" id="to250_24">24</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;best&nbsp;=&nbsp;loss</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_25">25</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fd,&nbsp;tmp&nbsp;=&nbsp;tempfile.mkstemp(dir='ckpt',&nbsp;prefix='tmp_',&nbsp;suffix='.weights.h5');&nbsp;os.close(fd)</td><td class="diff_next"></td><td class="diff_header" id="to250_25">25</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fd,&nbsp;tmp&nbsp;=&nbsp;tempfile.mkstemp(dir='ckpt',&nbsp;prefix='tmp_',&nbsp;suffix='.weights.h5');&nbsp;os.close(fd)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_26">26</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m.save_weights(tmp);&nbsp;shutil.move(tmp,&nbsp;'ckpt/best.weights.h5')</td><td class="diff_next"></td><td class="diff_header" id="to250_26">26</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m.save_weights(tmp);&nbsp;shutil.move(tmp,&nbsp;'ckpt/best.weights.h5')</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from250_27">27</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to250_27">27</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

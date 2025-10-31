@@ -1,0 +1,13 @@
+--- BASE/neg_t11_12_zscore.py
++++ gpt4omini/neg_t11_12_zscore.py
+@@ -1,7 +1,6 @@
+-# 12) Z-score (senza librerie)
+ x = [1.0, 2.0, 3.0, 4.0]
+-m = sum(x)/len(x)
+-var = sum((v - m)*(v - m) for v in x)/len(x)
++m = sum(x) / len(x)
++var = sum((v - m) ** 2 for v in x) / len(x)
+ std = var ** 0.5
+-z = [(v - m)/(std or 1.0) for v in x]
++z = [(v - m) / std for v in x]
+ print(z)

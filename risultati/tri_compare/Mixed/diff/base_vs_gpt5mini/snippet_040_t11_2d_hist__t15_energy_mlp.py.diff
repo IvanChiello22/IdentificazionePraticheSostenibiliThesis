@@ -1,0 +1,91 @@
+--- BASE/snippet_040_t11_2d_hist__t15_energy_mlp.py
++++ gpt5mini/snippet_040_t11_2d_hist__t15_energy_mlp.py
+@@ -9,16 +9,77 @@
+ # T15 — Energy‑aware pruning for MLP neurons (cost ~ fan_in + activation size)
+ import torch, torch.nn as nn, torch.nn.functional as F
+ class MLP(nn.Module):
+-    def __init__(self,d=128,h=256): super().__init__(); self.d=d; self.fc1=nn.Linear(d,h); self.fc2=nn.Linear(h,d)
+-    def forward(self,x): return self.fc2(F.gelu(self.fc1(x)))
+-def prune_hidden_energy(fc1: nn.Linear, keep_ratio, batch_tokens=2048):
++    def __init__(self,d=128,h=256): 
++        super().__init__()
++        self.d=d
++        self.fc1=nn.Linear(d,h)
++        self.act=nn.GELU()
++        self.fc2=nn.Linear(h,d)
++    def forward(self,x): 
++        return self.fc2(self.act(self.fc1(x)))
++
++def prune_hidden_energy(module: nn.Module, keep_ratio, batch_tokens=2048):
++    """
++    Prune the most energy intensive Linear layer among module's direct children.
++    If pruning a layer that feeds into a following Linear (e.g., fc1 -> fc2),
++    adjust the following layer's input weights accordingly to preserve forward compatibility.
++    """
+     with torch.no_grad():
+-        imp = fc1.weight.detach().abs().mean(dim=1)  # neuron importance
+-        energy = fc1.in_features + batch_tokens  # proxy
+-        score = imp/(energy+1e-9); k=max(1,int(keep_ratio*fc1.out_features))
+-        keep = torch.topk(score,k).indices
+-        fc1.weight = nn.Parameter(fc1.weight[keep].clone())
+-        if fc1.bias is not None: fc1.bias = nn.Parameter(fc1.bias[keep].clone())
+-        fc1.out_features = k
+-m = MLP(); prune_hidden_energy(m.fc1, 0.5, 4096)
++        # Gather direct child linear layers in definition order
++        linear_layers = [(name, mod) for name, mod in module.named_children() if isinstance(mod, nn.Linear)]
++        if not linear_layers:
++            # If a single Linear was passed instead of a module, treat it directly
++            if isinstance(module, nn.Linear):
++                linear_layers = [("linear", module)]
++            else:
++                return  # nothing to prune
++
++        # Compute energy proxy for each layer and select the most energy intensive one
++        energies = []
++        scores = []
++        imps = []
++        for name, lin in linear_layers:
++            imp = lin.weight.detach().abs().mean(dim=1)  # importance per neuron (out_features)
++            energy = float(lin.in_features) + float(batch_tokens)  # simple proxy
++            score = imp / (energy + 1e-9)
++            energies.append(energy)
++            scores.append(score)
++            imps.append(imp)
++        # choose index of max energy layer
++        idx = int(torch.tensor(energies).argmax().item())
++        name, lin = linear_layers[idx]
++        score = scores[idx]
++        k = max(1, int(keep_ratio * lin.out_features))
++        keep = torch.topk(score, k).indices
++
++        device = lin.weight.device
++        dtype = lin.weight.dtype
++
++        # Build a new Linear for the pruned layer and copy selected weights/bias
++        in_f = lin.in_features
++        out_f = lin.out_features
++        new_lin = nn.Linear(in_f, k, bias=(lin.bias is not None)).to(device=device, dtype=dtype)
++        new_lin.weight.data.copy_(lin.weight[keep].clone())
++        if lin.bias is not None:
++            new_lin.bias.data.copy_(lin.bias[keep].clone())
++
++        # Replace layer in module
++        setattr(module, name, new_lin)
++
++        # If there's a next linear layer that consumes this layer's outputs, adjust its in_features
++        # Find next linear in the child list
++        if idx + 1 < len(linear_layers):
++            next_name, next_lin = linear_layers[idx + 1]
++            # next_lin.weight shape: (out_features_next, in_features_next)
++            new_next = nn.Linear(k, next_lin.out_features, bias=(next_lin.bias is not None)).to(device=device, dtype=dtype)
++            # Copy the columns corresponding to kept neurons
++            new_next.weight.data.copy_(next_lin.weight[:, keep].clone())
++            if next_lin.bias is not None:
++                new_next.bias.data.copy_(next_lin.bias.clone())
++            setattr(module, next_name, new_next)
++
++    # Save a checkpoint of the module's state to avoid knowledge loss
++    torch.save(module.state_dict(), "checkpoint.pth")
++
++m = MLP(); prune_hidden_energy(m, 0.5, 4096)
+ x = torch.randn(8, m.d); print(m(x).shape, m.fc1.out_features)

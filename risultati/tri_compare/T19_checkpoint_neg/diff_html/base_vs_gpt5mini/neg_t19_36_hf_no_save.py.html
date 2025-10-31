@@ -1,0 +1,71 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to106__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t19_36_hf_no_save.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t19_36_hf_no_save.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to106__0"><a href="#difflib_chg_to106__0">f</a></td><td class="diff_header" id="from106_1">1</td><td nowrap="nowrap">#&nbsp;36)&nbsp;Hugging&nbsp;Face&nbsp;Trainer&nbsp;—&nbsp;T19&nbsp;NEGATIVO:&nbsp;save_strategy='no'&nbsp;(nessun&nbsp;checkpoint)</td><td class="diff_next"><a href="#difflib_chg_to106__0">f</a></td><td class="diff_header" id="to106_1">1</td><td nowrap="nowrap">#&nbsp;36)&nbsp;Hugging&nbsp;Face&nbsp;Trainer&nbsp;—&nbsp;T19&nbsp;NEGATIVO:&nbsp;save_strategy='no'&nbsp;(nessun&nbsp;checkpoint)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from106_2">2</td><td nowrap="nowrap">from&nbsp;datasets&nbsp;import&nbsp;Dataset</td><td class="diff_next"></td><td class="diff_header" id="to106_2">2</td><td nowrap="nowrap">from&nbsp;datasets&nbsp;import&nbsp;Dataset</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from106_3">3</td><td nowrap="nowrap">from&nbsp;transformers&nbsp;import&nbsp;AutoModelForSequenceClassification,&nbsp;AutoTokenizer,&nbsp;TrainingArguments,&nbsp;Trainer</td><td class="diff_next"></td><td class="diff_header" id="to106_3">3</td><td nowrap="nowrap">from&nbsp;transformers&nbsp;import&nbsp;AutoModelForSequenceClassification,&nbsp;AutoTokenizer,&nbsp;TrainingArguments,&nbsp;Trainer</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to106__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to106__1">n</a></td><td class="diff_header" id="to106_4">4</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;torch</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to106_5">5</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;torch.nn.utils.prune&nbsp;as&nbsp;prune</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to106__1"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to106_6">6</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from106_4">4</td><td nowrap="nowrap">tok&nbsp;=&nbsp;AutoTokenizer.from_pretrained('distilbert-base-uncased')</td><td class="diff_next"></td><td class="diff_header" id="to106_7">7</td><td nowrap="nowrap">tok&nbsp;=&nbsp;AutoTokenizer.from_pretrained('distilbert-base-uncased')</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from106_5">5</td><td nowrap="nowrap">texts&nbsp;=&nbsp;["sample"]*64;&nbsp;labels&nbsp;=&nbsp;[0,1]*32</td><td class="diff_next"></td><td class="diff_header" id="to106_8">8</td><td nowrap="nowrap">texts&nbsp;=&nbsp;["sample"]*64;&nbsp;labels&nbsp;=&nbsp;[0,1]*32</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from106_6">6</td><td nowrap="nowrap">ds&nbsp;=&nbsp;Dataset.from_dict({"text":texts,"label":labels}).map(lambda&nbsp;x:&nbsp;tok(x["text"],&nbsp;truncation=True),&nbsp;batched=True)</td><td class="diff_next"></td><td class="diff_header" id="to106_9">9</td><td nowrap="nowrap">ds&nbsp;=&nbsp;Dataset.from_dict({"text":texts,"label":labels}).map(lambda&nbsp;x:&nbsp;tok(x["text"],&nbsp;truncation=True),&nbsp;batched=True)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from106_7">7</td><td nowrap="nowrap">model&nbsp;=&nbsp;AutoModelForSequenceClassification.from_pretrained('distilbert-base-uncased',&nbsp;num_labels=2)</td><td class="diff_next"></td><td class="diff_header" id="to106_10">10</td><td nowrap="nowrap">model&nbsp;=&nbsp;AutoModelForSequenceClassification.from_pretrained('distilbert-base-uncased',&nbsp;num_labels=2)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to106__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to106__top">t</a></td><td class="diff_header" id="to106_11">11</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to106_12">12</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Energy-aware&nbsp;pruning&nbsp;(heuristic):&nbsp;prune&nbsp;the&nbsp;largest&nbsp;Linear&nbsp;layer&nbsp;by&nbsp;parameter&nbsp;count</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to106_13">13</td><td nowrap="nowrap"><span class="diff_add">linear_modules&nbsp;=&nbsp;[(name,&nbsp;module)&nbsp;for&nbsp;name,&nbsp;module&nbsp;in&nbsp;model.named_modules()&nbsp;if&nbsp;isinstance(module,&nbsp;torch.nn.Linear)]</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to106_14">14</td><td nowrap="nowrap"><span class="diff_add">if&nbsp;linear_modules:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to106_15">15</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;_,&nbsp;largest_linear&nbsp;=&nbsp;max(linear_modules,&nbsp;key=lambda&nbsp;nm:&nbsp;nm[1].weight.numel())</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to106_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;prune.l1_unstructured(largest_linear,&nbsp;name='weight',&nbsp;amount=0.2)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to106_17">17</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from106_8">8</td><td nowrap="nowrap">args&nbsp;=&nbsp;TrainingArguments(output_dir='out',&nbsp;per_device_train_batch_size=8,&nbsp;num_train_epochs=1,&nbsp;save_strategy='<span class="diff_chg">n</span>o',&nbsp;loggin</td><td class="diff_next"></td><td class="diff_header" id="to106_18">18</td><td nowrap="nowrap">args&nbsp;=&nbsp;TrainingArguments(output_dir='out',&nbsp;per_device_train_batch_size=8,&nbsp;num_train_epochs=1,&nbsp;save_strategy='<span class="diff_chg">ep</span>o<span class="diff_add">ch</span>',<span class="diff_add">&nbsp;sav</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap">g_steps=1000)</td><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap"><span class="diff_add">e_total_limit=2,</span>&nbsp;logging_steps=1000)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from106_9">9</td><td nowrap="nowrap">trainer&nbsp;=&nbsp;Trainer(model=model,&nbsp;args=args,&nbsp;train_dataset=ds)</td><td class="diff_next"></td><td class="diff_header" id="to106_19">19</td><td nowrap="nowrap">trainer&nbsp;=&nbsp;Trainer(model=model,&nbsp;args=args,&nbsp;train_dataset=ds)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from106_10">10</td><td nowrap="nowrap">trainer.train()</td><td class="diff_next"></td><td class="diff_header" id="to106_20">20</td><td nowrap="nowrap">trainer.train()</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from106_11">11</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to106_21">21</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

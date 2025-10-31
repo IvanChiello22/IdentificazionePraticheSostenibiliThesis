@@ -1,0 +1,67 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to133__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/t11_45_snippet.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/t11_45_snippet.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to133__0"><a href="#difflib_chg_to133__0">f</a></td><td class="diff_header" id="from133_1">1</td><td nowrap="nowrap">#&nbsp;T11&nbsp;POS&nbsp;—&nbsp;snippet&nbsp;45</td><td class="diff_next"><a href="#difflib_chg_to133__0">f</a></td><td class="diff_header" id="to133_1">1</td><td nowrap="nowrap">#&nbsp;T11&nbsp;POS&nbsp;—&nbsp;snippet&nbsp;45</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_2">2</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"></td><td class="diff_header" id="to133_2">2</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_3">3</td><td nowrap="nowrap">B,T,D,H=2,64,128,8</td><td class="diff_next"></td><td class="diff_header" id="to133_3">3</td><td nowrap="nowrap">B,T,D,H=2,64,128,8</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_4">4</td><td nowrap="nowrap">d=D//H</td><td class="diff_next"></td><td class="diff_header" id="to133_4">4</td><td nowrap="nowrap">d=D//H</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_5">5</td><td nowrap="nowrap">Q=np.random.randn(B,H,T,d);K=np.random.randn(B,H,T,d);V=np.random.randn(B,H,T,d)</td><td class="diff_next"></td><td class="diff_header" id="to133_5">5</td><td nowrap="nowrap">Q=np.random.randn(B,H,T,d);K=np.random.randn(B,H,T,d);V=np.random.randn(B,H,T,d)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to133__top">t</a></td><td class="diff_header" id="from133_6">6</td><td nowrap="nowrap"><span class="diff_sub">S=np.einsum('bhtd,bhsd-&gt;bhts',Q,K)/np.sqrt(d)</span></td><td class="diff_next"><a href="#difflib_chg_to133__top">t</a></td><td class="diff_header" id="to133_6">6</td><td nowrap="nowrap"><span class="diff_add">def&nbsp;stable_softmax(x,&nbsp;axis=-1):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_7">7</td><td nowrap="nowrap"><span class="diff_sub">P=np.exp(S-S.max(axis=-1,keepdims=True));P/=P.sum(axis=-1,keepdims=True)</span></td><td class="diff_next"></td><td class="diff_header" id="to133_7">7</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;x_max&nbsp;=&nbsp;x.max(axis=axis,&nbsp;keepdims=True)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_8">8</td><td nowrap="nowrap"><span class="diff_sub">O=np.einsum('bhts,bhsd-&gt;bhtd',P,V)</span></td><td class="diff_next"></td><td class="diff_header" id="to133_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;e&nbsp;=&nbsp;np.exp(x&nbsp;-&nbsp;x_max)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to133_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;e&nbsp;/&nbsp;e.sum(axis=axis,&nbsp;keepdims=True)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to133_10">10</td><td nowrap="nowrap"><span class="diff_add">scale&nbsp;=&nbsp;1.0/np.sqrt(d)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to133_11">11</td><td nowrap="nowrap"><span class="diff_add">Q_flat&nbsp;=&nbsp;Q.reshape(-1,&nbsp;T,&nbsp;d)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to133_12">12</td><td nowrap="nowrap"><span class="diff_add">K_flat&nbsp;=&nbsp;K.reshape(-1,&nbsp;T,&nbsp;d)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to133_13">13</td><td nowrap="nowrap"><span class="diff_add">V_flat&nbsp;=&nbsp;V.reshape(-1,&nbsp;T,&nbsp;d)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to133_14">14</td><td nowrap="nowrap"><span class="diff_add">S_flat&nbsp;=&nbsp;np.matmul(Q_flat,&nbsp;K_flat.transpose(0,2,1))&nbsp;*&nbsp;scale</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to133_15">15</td><td nowrap="nowrap"><span class="diff_add">P_flat&nbsp;=&nbsp;stable_softmax(S_flat,&nbsp;axis=-1)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to133_16">16</td><td nowrap="nowrap"><span class="diff_add">O_flat&nbsp;=&nbsp;np.matmul(P_flat,&nbsp;V_flat)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to133_17">17</td><td nowrap="nowrap"><span class="diff_add">O&nbsp;=&nbsp;O_flat.reshape(B,&nbsp;H,&nbsp;T,&nbsp;d)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from133_9">9</td><td nowrap="nowrap">print(O.shape)</td><td class="diff_next"></td><td class="diff_header" id="to133_18">18</td><td nowrap="nowrap">print(O.shape)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

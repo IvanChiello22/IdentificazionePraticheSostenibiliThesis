@@ -1,0 +1,44 @@
+--- BASE/t19_energyaware_25.py
++++ gpt4omini/t19_energyaware_25.py
+@@ -1,15 +1,31 @@
+-# T19 POS (energy/efficiency-aware checkpointing) — snippet 25
+-# T19 POS — TensorFlow tf.train.Checkpoint + CheckpointManager (max_to_keep=3)
+-import tensorflow as tf, os
+-w = tf.Variable(tf.random.normal([10,2])); b = tf.Variable(tf.zeros([2]))
+-opt = tf.keras.optimizers.Adam(1e-3); os.makedirs('ckpt_tf', exist_ok=True)
++import tensorflow as tf
++import os
++
++# Initialize variables
++w = tf.Variable(tf.random.normal([10, 2]))
++b = tf.Variable(tf.zeros([2]))
++opt = tf.keras.optimizers.Adam(1e-3)
++
++# Create checkpoint directory
++os.makedirs('ckpt_tf', exist_ok=True)
++
++# Set up checkpoint and manager
+ ckpt = tf.train.Checkpoint(step=tf.Variable(1), w=w, b=b, opt=opt)
+ manager = tf.train.CheckpointManager(ckpt, './ckpt_tf', max_to_keep=3)
+-for e in range(1,7):
+-    x = tf.random.normal([64,10]); y = tf.random.uniform([64], maxval=2, dtype=tf.int32)
++
++# Training loop with checkpointing
++for e in range(1, 7):
++    x = tf.random.normal([64, 10])
++    y = tf.random.uniform([64], maxval=2, dtype=tf.int32)
++    
+     with tf.GradientTape() as tape:
+-        logits = tf.matmul(x,w) + b
++        logits = tf.matmul(x, w) + b
+         loss = tf.reduce_mean(tf.keras.losses.sparse_categorical_crossentropy(y, logits, from_logits=True))
+-    grads = tape.gradient(loss, [w,b]); opt.apply_gradients(zip(grads,[w,b]))
+-    ckpt.step.assign(e); manager.save()
++    
++    grads = tape.gradient(loss, [w, b])
++    opt.apply_gradients(zip(grads, [w, b]))
++    
++    ckpt.step.assign(e)
++    manager.save()
++
+ print('done')

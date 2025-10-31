@@ -1,0 +1,20 @@
+# 44) LightGBM — T19 NEGATIVO: fit senza salvataggio
+import lightgbm as lgb, numpy as np
+X = np.random.randn(200,10); y = np.random.randint(0,2,(200,))
+d = lgb.Dataset(X, label=y)
+
+def _checkpoint_callback(save_path='lgb_checkpoint.txt', period=5):
+    def _callback(env):
+        try:
+            iteration = getattr(env, 'iteration', None)
+            if iteration is None:
+                return
+            if period > 0 and (iteration % period == 0):
+                env.model.save_model(save_path)
+        except Exception:
+            pass
+    _callback.before_iteration = False
+    return _callback
+
+bst = lgb.train({'objective':'binary'}, d, num_boost_round=10, callbacks=[_checkpoint_callback('lgb_checkpoint.txt', period=5)])
+print('done')

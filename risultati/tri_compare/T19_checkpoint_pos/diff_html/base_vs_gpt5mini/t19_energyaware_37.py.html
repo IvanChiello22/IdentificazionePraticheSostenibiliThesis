@@ -1,0 +1,81 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to109__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/t19_energyaware_37.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/t19_energyaware_37.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to109__1"><a href="#difflib_chg_to109__1">n</a></td><td class="diff_header" id="from109_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;T19&nbsp;POS&nbsp;(energy/efficiency-aware&nbsp;checkpointing)&nbsp;—&nbsp;snippet&nbsp;37</span></td><td class="diff_next"><a href="#difflib_chg_to109__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to109__2"></td><td class="diff_header" id="from109_2">2</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;T19&nbsp;POS&nbsp;—&nbsp;PyTorch:&nbsp;checkpoint&nbsp;compresso&nbsp;(zip)&nbsp;per&nbsp;ridurre&nbsp;I/O</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from109_3">3</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn,&nbsp;os,&nbsp;io,&nbsp;zipfile</td><td class="diff_next"></td><td class="diff_header" id="to109_1">1</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn,&nbsp;os,&nbsp;io,&nbsp;zipfile</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to109__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to109__2">n</a></td><td class="diff_header" id="to109_2">2</td><td nowrap="nowrap"><span class="diff_add">from&nbsp;torch.nn.utils&nbsp;import&nbsp;prune</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_3">3</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from109_4">4</td><td nowrap="nowrap">net&nbsp;=&nbsp;nn.Sequential(nn.Linear(12,24),&nbsp;nn.ReLU(),&nbsp;nn.Linear(24,2))</td><td class="diff_next"></td><td class="diff_header" id="to109_4">4</td><td nowrap="nowrap">net&nbsp;=&nbsp;nn.Sequential(nn.Linear(12,24),&nbsp;nn.ReLU(),&nbsp;nn.Linear(24,2))</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to109__3">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to109__3">n</a></td><td class="diff_header" id="to109_5">5</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_6">6</td><td nowrap="nowrap"><span class="diff_add">def&nbsp;energy_aware_prune(model,&nbsp;amount=0.0):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_7">7</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;amount&nbsp;&lt;=&nbsp;0.0:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;largest_module&nbsp;=&nbsp;None</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_10">10</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;max_params&nbsp;=&nbsp;0</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_11">11</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;_,&nbsp;module&nbsp;in&nbsp;model.named_modules():</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_12">12</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;isinstance(module,&nbsp;(nn.Linear,&nbsp;nn.Conv1d,&nbsp;nn.Conv2d,&nbsp;nn.Conv3d)):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_13">13</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;params&nbsp;=&nbsp;sum(p.numel()&nbsp;for&nbsp;p&nbsp;in&nbsp;module.parameters())</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_14">14</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;params&nbsp;&gt;&nbsp;max_params:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_15">15</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;max_params&nbsp;=&nbsp;params</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;largest_module&nbsp;=&nbsp;module</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_17">17</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;largest_module&nbsp;is&nbsp;None:</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to109__3"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_18">18</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_19">19</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;prune.l1_unstructured(largest_module,&nbsp;name='weight',&nbsp;amount=amount)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_20">20</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;prune.remove(largest_module,&nbsp;'weight')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_21">21</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from109_5">5</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td><td class="diff_next"></td><td class="diff_header" id="to109_22">22</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to109__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to109__top">t</a></td><td class="diff_header" id="to109_23">23</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;default&nbsp;amount=0.0&nbsp;preserves&nbsp;original&nbsp;behavior;&nbsp;set&nbsp;&gt;0&nbsp;to&nbsp;apply&nbsp;pruning</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_24">24</td><td nowrap="nowrap"><span class="diff_add">energy_aware_prune(net,&nbsp;amount=0.0)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to109_25">25</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from109_6">6</td><td nowrap="nowrap">buf&nbsp;=&nbsp;io.BytesIO()</td><td class="diff_next"></td><td class="diff_header" id="to109_26">26</td><td nowrap="nowrap">buf&nbsp;=&nbsp;io.BytesIO()</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from109_7">7</td><td nowrap="nowrap">torch.save({'model':&nbsp;net.state_dict()},&nbsp;buf);&nbsp;buf.seek(0)</td><td class="diff_next"></td><td class="diff_header" id="to109_27">27</td><td nowrap="nowrap">torch.save({'model':&nbsp;net.state_dict()},&nbsp;buf);&nbsp;buf.seek(0)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from109_8">8</td><td nowrap="nowrap">with&nbsp;zipfile.ZipFile('ckpt/model_ckpt.zip',&nbsp;'w',&nbsp;zipfile.ZIP_DEFLATED)&nbsp;as&nbsp;zf:</td><td class="diff_next"></td><td class="diff_header" id="to109_28">28</td><td nowrap="nowrap">with&nbsp;zipfile.ZipFile('ckpt/model_ckpt.zip',&nbsp;'w',&nbsp;zipfile.ZIP_DEFLATED)&nbsp;as&nbsp;zf:</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from109_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;zf.writestr('state.pt',&nbsp;buf.read())</td><td class="diff_next"></td><td class="diff_header" id="to109_29">29</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;zf.writestr('state.pt',&nbsp;buf.read())</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from109_10">10</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to109_30">30</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

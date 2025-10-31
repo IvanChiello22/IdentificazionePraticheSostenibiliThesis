@@ -1,0 +1,63 @@
+--- gpt4omini/snippet_073_t11_vectorized_ranking__t19_checksum.py
++++ gpt5mini/snippet_073_t11_vectorized_ranking__t19_checksum.py
+@@ -1,19 +1,13 @@
++# Snippet 73: mixed set
++# T11 — NumPy: vectorized group ranking using argsort twice
+ import numpy as np
+-import torch
+-import torch.nn as nn
+-import io
+-import hashlib
+-import os
+-import json
+-
+-# Snippet 73: mixed set
+ g = np.random.randint(0, 500, 20000)
+ v = np.random.randn(20000)
+ idx = np.lexsort((v, g))           # sort by group then value
+ g_sorted = g[idx]
+ ranks = np.empty_like(v, dtype=int)
+ # positions of new groups
+-edges = np.flatnonzero(np.r_[True, g_sorted[1:] != g_sorted[:-1]])
++edges = np.flatnonzero(np.r_[True, g_sorted[1:]!=g_sorted[:-1]])
+ order = np.argsort(idx)
+ # within-group rank: use arange with repeat lengths
+ counts = np.diff(np.r_[edges, len(g_sorted)])
+@@ -22,16 +16,25 @@
+ print(ranks[:10])
+ 
+ # T19 — Deduplicate checkpoints by SHA256 (skip identical content)
+-model = nn.Sequential(nn.Linear(12, 12), nn.ReLU(), nn.Linear(12, 2))
+-os.makedirs('ckpt', exist_ok=True)
+-buffer = io.BytesIO()
+-torch.save(model.state_dict(), buffer)
+-data = buffer.getvalue()
+-hash_value = hashlib.sha256(data).hexdigest()
+-index = {'sha256': hash_value, 'file': f'ckpt/{hash_value}.pt'}
++import torch, torch.nn as nn, io, hashlib, os, json
++import torch.nn.utils.prune as prune
++m = nn.Sequential(nn.Linear(12,12), nn.ReLU(), nn.Linear(12,2)); os.makedirs('ckpt', exist_ok=True)
++
++def prune_most_energy_intensive_layer(model, amount=0.2):
++    # select modules with weight (e.g., Linear) and pick the one with most parameters
++    candidates = [(name, mod) for name, mod in model.named_modules() if hasattr(mod, 'weight') and isinstance(mod, nn.Linear)]
++    if not candidates:
++        return
++    _, module = max(candidates, key=lambda item: item[1].weight.numel())
++    prune.l1_unstructured(module, name='weight', amount=amount)
++    prune.remove(module, 'weight')
++
++prune_most_energy_intensive_layer(m, amount=0.2)
++
++buf = io.BytesIO(); torch.save(m.state_dict(), buf); data = buf.getvalue()
++h = hashlib.sha256(data).hexdigest()
++index = {'sha256': h, 'file': f'ckpt/{h}.pt'}
+ if not os.path.exists(index['file']):
+-    with open(index['file'], 'wb') as f:
+-        f.write(data)
+-with open('ckpt/index.json', 'w') as f:
+-    json.dump(index, f)
+-print('done', hash_value[:8])
++    with open(index['file'], 'wb') as f: f.write(data)
++with open('ckpt/index.json','w') as f: json.dump(index, f)
++print('done', h[:8])

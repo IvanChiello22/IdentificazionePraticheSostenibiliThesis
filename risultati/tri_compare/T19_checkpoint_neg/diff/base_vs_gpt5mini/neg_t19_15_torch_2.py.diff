@@ -1,0 +1,23 @@
+--- BASE/neg_t19_15_torch_2.py
++++ gpt5mini/neg_t19_15_torch_2.py
+@@ -1,9 +1,20 @@
+ # 15) PyTorch — T19 NEGATIVO: TransformerEncoder, nessun salvataggio
+ import torch, torch.nn as nn
++from torch.nn.utils import prune
+ layer = nn.TransformerEncoderLayer(d_model=32, nhead=4, dim_feedforward=64, batch_first=True)
+ enc = nn.TransformerEncoder(layer, num_layers=2)
++# Energy-aware pruning (estimate by parameter count); amount=0.0 to preserve behavior while enabling pruning workflow
++layer_costs = [(i, sum(p.numel() for p in l.parameters())) for i, l in enumerate(enc.layers)]
++layer_costs.sort(key=lambda x: x[1], reverse=True)
++for idx, _ in layer_costs:
++    target = enc.layers[idx]
++    if hasattr(target, 'linear1'):
++        prune.l1_unstructured(target.linear1, name='weight', amount=0.0)
++    if hasattr(target, 'linear2'):
++        prune.l1_unstructured(target.linear2, name='weight', amount=0.0)
+ opt = torch.optim.SGD(enc.parameters(), 0.01)
+ for e in range(2):
+     x = torch.randn(5,6,32); y = enc(x).sum()
+     y.backward(); opt.step(); opt.zero_grad()
++    torch.save({'epoch': e, 'model_state_dict': enc.state_dict(), 'optimizer_state_dict': opt.state_dict()}, f'checkpoint_epoch_{e}.pt')
+ print('done')

@@ -1,0 +1,82 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to14__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/t11_05_snippet.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/t11_05_snippet.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to14__1"><a href="#difflib_chg_to14__0">f</a></td><td class="diff_header" id="from14_1">1</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"><a href="#difflib_chg_to14__0">f</a></td><td class="diff_header" id="to14_1">1</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to14__1">n</a></td><td class="diff_header" id="from14_2">2</td><td nowrap="nowrap"><span class="diff_sub">import&nbsp;tensorflow&nbsp;as&nbsp;tf</span></td><td class="diff_next"><a href="#difflib_chg_to14__1">n</a></td><td class="diff_header" id="to14_2">2</td><td nowrap="nowrap"><span class="diff_add">B,T,D,H=2,64,128,8</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to14_3">3</td><td nowrap="nowrap"><span class="diff_add">d=D//H</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to14_4">4</td><td nowrap="nowrap"><span class="diff_add">Q=np.random.randn(B,H,T,d);K=np.random.randn(B,H,T,d);V=np.random.randn(B,H,T,d)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_3">3</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to14_5">5</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to14__2">n</a></td><td class="diff_header" id="from14_4">4</td><td nowrap="nowrap"><span class="diff_sub">B,&nbsp;T,&nbsp;D,&nbsp;H&nbsp;=&nbsp;2,&nbsp;64,&nbsp;128,&nbsp;8</span></td><td class="diff_next"><a href="#difflib_chg_to14__2">n</a></td><td class="diff_header" id="to14_6">6</td><td nowrap="nowrap"><span class="diff_add">def&nbsp;_softmax(x,&nbsp;axis=-1):</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to14__2"></td><td class="diff_header" id="from14_5">5</td><td nowrap="nowrap"><span class="diff_sub">d&nbsp;=&nbsp;D&nbsp;//&nbsp;H</span></td><td class="diff_next"></td><td class="diff_header" id="to14_7">7</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;x_max&nbsp;=&nbsp;np.max(x,&nbsp;axis=axis,&nbsp;keepdims=True)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_6">6</td><td nowrap="nowrap"><span class="diff_sub">Q&nbsp;=&nbsp;np.random.randn(B,&nbsp;H,&nbsp;T,&nbsp;d)</span></td><td class="diff_next"></td><td class="diff_header" id="to14_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;e&nbsp;=&nbsp;np.exp(x&nbsp;-&nbsp;x_max)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_7">7</td><td nowrap="nowrap"><span class="diff_sub">K&nbsp;=&nbsp;np.random.randn(B,&nbsp;H,&nbsp;T,&nbsp;d)</span></td><td class="diff_next"></td><td class="diff_header" id="to14_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;e&nbsp;/&nbsp;e.sum(axis=axis,&nbsp;keepdims=True)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_8">8</td><td nowrap="nowrap"><span class="diff_sub">V&nbsp;=&nbsp;np.random.randn(B,&nbsp;H,&nbsp;T,&nbsp;d)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_9">9</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to14_10">10</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to14__3"><a href="#difflib_chg_to14__3">n</a></td><td class="diff_header" id="from14_10">10</td><td nowrap="nowrap"><span class="diff_sub">S&nbsp;=&nbsp;np.einsum('bhtd,bhsd-&gt;bhts',&nbsp;Q,&nbsp;K)&nbsp;/&nbsp;np.sqrt(d)</span></td><td class="diff_next"><a href="#difflib_chg_to14__3">n</a></td><td class="diff_header" id="to14_11">11</td><td nowrap="nowrap"><span class="diff_add">BH&nbsp;=&nbsp;B&nbsp;*&nbsp;H</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_11">11</td><td nowrap="nowrap"><span class="diff_sub">P&nbsp;=&nbsp;np.exp(S&nbsp;-&nbsp;np.max(S,&nbsp;axis=-1,&nbsp;keepdims=True))</span></td><td class="diff_next"></td><td class="diff_header" id="to14_12">12</td><td nowrap="nowrap"><span class="diff_add">Qb&nbsp;=&nbsp;Q.reshape(BH,&nbsp;T,&nbsp;d)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_12">12</td><td nowrap="nowrap"><span class="diff_sub">P&nbsp;/=&nbsp;np.sum(P,&nbsp;axis=-1,&nbsp;keepdims=True)</span></td><td class="diff_next"></td><td class="diff_header" id="to14_13">13</td><td nowrap="nowrap"><span class="diff_add">Kb&nbsp;=&nbsp;K.reshape(BH,&nbsp;T,&nbsp;d)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to14_14">14</td><td nowrap="nowrap"><span class="diff_add">Vb&nbsp;=&nbsp;V.reshape(BH,&nbsp;T,&nbsp;d)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_13">13</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to14_15">15</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to14__4">n</a></td><td class="diff_header" id="from14_14">14</td><td nowrap="nowrap"><span class="diff_sub">O&nbsp;=&nbsp;np.einsum('bhts,bhsd-&gt;bhtd',&nbsp;P,&nbsp;V)</span></td><td class="diff_next"><a href="#difflib_chg_to14__4">n</a></td><td class="diff_header" id="to14_16">16</td><td nowrap="nowrap"><span class="diff_add">S&nbsp;=&nbsp;np.matmul(Qb,&nbsp;Kb.transpose(0,2,1))&nbsp;/&nbsp;np.sqrt(d)</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to14__4"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to14_17">17</td><td nowrap="nowrap"><span class="diff_add">S&nbsp;=&nbsp;S.reshape(B,&nbsp;H,&nbsp;T,&nbsp;T)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to14_18">18</td><td nowrap="nowrap"><span class="diff_add">P&nbsp;=&nbsp;_softmax(S,&nbsp;axis=-1)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to14_19">19</td><td nowrap="nowrap"><span class="diff_add">P_b&nbsp;=&nbsp;P.reshape(BH,&nbsp;T,&nbsp;T)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to14_20">20</td><td nowrap="nowrap"><span class="diff_add">O&nbsp;=&nbsp;np.matmul(P_b,&nbsp;Vb).reshape(B,&nbsp;H,&nbsp;T,&nbsp;d)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_15">15</td><td nowrap="nowrap">print(O.shape)</td><td class="diff_next"></td><td class="diff_header" id="to14_21">21</td><td nowrap="nowrap">print(O.shape)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to14__top">t</a></td><td class="diff_header" id="from14_16">16</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"><a href="#difflib_chg_to14__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_17">17</td><td nowrap="nowrap"><span class="diff_sub">checkpoint_path&nbsp;=&nbsp;"training_1/cp.ckpt"</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_18">18</td><td nowrap="nowrap"><span class="diff_sub">checkpoint_dir&nbsp;=&nbsp;os.path.dirname(checkpoint_path)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_19">19</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_20">20</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;Create&nbsp;a&nbsp;callback&nbsp;that&nbsp;saves&nbsp;the&nbsp;model's&nbsp;weights</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_21">21</td><td nowrap="nowrap"><span class="diff_sub">cp_callback&nbsp;=&nbsp;tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_22">22</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;save_weights_only=True,</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_23">23</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verbose=1)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_24">24</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_25">25</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;Assuming&nbsp;a&nbsp;model&nbsp;is&nbsp;defined&nbsp;and&nbsp;compiled</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from14_26">26</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;model.fit(train_data,&nbsp;train_labels,&nbsp;epochs=10,&nbsp;callbacks=[cp_callback])</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

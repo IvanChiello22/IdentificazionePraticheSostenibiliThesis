@@ -1,0 +1,36 @@
+import torch, torch.nn as nn, pytorch_lightning as pl
+import torch.nn.utils.prune as prune
+from pytorch_lightning.callbacks import ModelCheckpoint
+
+class M(pl.LightningModule):
+    def __init__(self): 
+        super().__init__(); self.net = nn.Sequential(nn.Linear(8,16), nn.ReLU(), nn.Linear(16,2))
+    def forward(self,x): return self.net(x)
+    def training_step(self,batch,batch_idx):
+        x,y = batch; return nn.CrossEntropyLoss()(self(x), y)
+    def configure_optimizers(self): return torch.optim.Adam(self.parameters(), 1e-2)
+    def apply_energy_aware_pruning(self, amount=0.2):
+        # prune the most parameter-heavy Linear layer (energy-aware heuristic)
+        target = None
+        max_params = 0
+        for _, module in self.named_modules():
+            if isinstance(module, nn.Linear):
+                params = module.weight.numel()
+                if params > max_params:
+                    max_params = params
+                    target = module
+        if target is not None and amount > 0:
+            prune.l1_unstructured(target, name='weight', amount=amount)
+
+class DS(torch.utils.data.Dataset):
+    def __len__(self): return 128
+    def __getitem__(self,i): return torch.randn(8), torch.randint(0,2,(1,)).item()
+
+checkpoint_cb = ModelCheckpoint(dirpath='checkpoints', save_top_k=1, save_last=True)
+trainer = pl.Trainer(max_epochs=2, logger=False, enable_checkpointing=True, enable_model_summary=False, callbacks=[checkpoint_cb])
+
+model = M()
+model.apply_energy_aware_pruning(amount=0.2)
+
+trainer.fit(model, torch.utils.data.DataLoader(DS(), batch_size=32))
+print('done')

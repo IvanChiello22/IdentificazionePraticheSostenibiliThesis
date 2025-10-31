@@ -1,0 +1,46 @@
+# 38) Autoencoder conv — T15 NEGATIVO: nessun pruning
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+import numpy as np
+
+inp = keras.Input((28,28,1))
+x = layers.Conv2D(8,3,padding='same',activation='relu')(inp)
+z = layers.Conv2D(16,3,padding='same',activation='relu')(x)
+u = layers.UpSampling2D()(z)
+out = layers.Conv2D(1,3,padding='same')(u)
+model = keras.Model(inp,out)
+print(model.count_params())
+
+# Checkpoint callback for training (uses official Keras API). No effect unless passed to model.fit.
+checkpoint_cb = keras.callbacks.ModelCheckpoint('model_checkpoint.h5', save_weights_only=True)
+
+# Energy-aware pruning utilities (not applied automatically to preserve behavior).
+def _most_param_conv_layer(m):
+    conv_layers = [ly for ly in m.layers if isinstance(ly, layers.Conv2D)]
+    if not conv_layers:
+        return None
+    return max(conv_layers, key=lambda ly: ly.count_params())
+
+def prune_conv_filters_by_l1(model, target_layer=None, prune_fraction=0.2):
+    """
+    Prune (zero out) a fraction of output filters with smallest L1 norm in the target Conv2D layer.
+    The function uses only public TF/Keras APIs and NumPy for array manipulation.
+    It modifies the layer weights in-place. Not invoked by default to preserve original semantics.
+    """
+    if target_layer is None:
+        target_layer = _most_param_conv_layer(model)
+    if target_layer is None or not hasattr(target_layer, 'kernel'):
+        return
+    kernel_var = target_layer.kernel  # shape: (kh, kw, in_ch, out_ch)
+    kernel_val = kernel_var.numpy()
+    # L1 norm per output filter
+    filter_norms = np.sum(np.abs(kernel_val), axis=(0,1,2))
+    num_filters = filter_norms.shape[0]
+    k = int(np.floor(prune_fraction * num_filters))
+    if k <= 0:
+        return
+    prune_idx = np.argsort(filter_norms)[:k]
+    new_kernel = kernel_val.copy()
+    new_kernel[..., prune_idx] = 0
+    kernel_var.assign(new_kernel)

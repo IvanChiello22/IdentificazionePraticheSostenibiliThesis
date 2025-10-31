@@ -1,0 +1,82 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to82__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t15_28_gcn_like_torch.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t15_28_gcn_like_torch.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to82__0"><a href="#difflib_chg_to82__0">f</a></td><td class="diff_header" id="from82_1">1</td><td nowrap="nowrap">#&nbsp;28)&nbsp;GCN-like&nbsp;—&nbsp;T15&nbsp;NEGATIVO:&nbsp;nessun&nbsp;pruning&nbsp;di&nbsp;nodi</td><td class="diff_next"><a href="#difflib_chg_to82__0">f</a></td><td class="diff_header" id="to82_1">1</td><td nowrap="nowrap">#&nbsp;28)&nbsp;GCN-like&nbsp;—&nbsp;T15&nbsp;NEGATIVO:&nbsp;nessun&nbsp;pruning&nbsp;di&nbsp;nodi</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from82_2">2</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn</td><td class="diff_next"></td><td class="diff_header" id="to82_2">2</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from82_3">3</td><td nowrap="nowrap">A&nbsp;=&nbsp;torch.tensor([[1,1,0],[1,1,1],[0,1,1]],&nbsp;dtype=torch.float32)</td><td class="diff_next"></td><td class="diff_header" id="to82_3">3</td><td nowrap="nowrap">A&nbsp;=&nbsp;torch.tensor([[1,1,0],[1,1,1],[0,1,1]],&nbsp;dtype=torch.float32)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from82_4">4</td><td nowrap="nowrap">X&nbsp;=&nbsp;torch.randn(3,&nbsp;16)</td><td class="diff_next"></td><td class="diff_header" id="to82_4">4</td><td nowrap="nowrap">X&nbsp;=&nbsp;torch.randn(3,&nbsp;16)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from82_5">5</td><td nowrap="nowrap">W&nbsp;=&nbsp;nn.Parameter(torch.randn(16,&nbsp;8))</td><td class="diff_next"></td><td class="diff_header" id="to82_5">5</td><td nowrap="nowrap">W&nbsp;=&nbsp;nn.Parameter(torch.randn(16,&nbsp;8))</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to82__top">t</a></td><td class="diff_header" id="from82_6">6</td><td nowrap="nowrap"><span class="diff_sub">Z&nbsp;=&nbsp;A&nbsp;@&nbsp;X&nbsp;@&nbsp;W</span></td><td class="diff_next"><a href="#difflib_chg_to82__top">t</a></td><td class="diff_header" id="to82_6">6</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_7">7</td><td nowrap="nowrap"><span class="diff_add">def&nbsp;prune_parameter_magnitude(param:&nbsp;nn.Parameter,&nbsp;amount:&nbsp;float&nbsp;=&nbsp;0.0)&nbsp;-&gt;&nbsp;nn.Parameter:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;amount&nbsp;&lt;=&nbsp;0.0:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;param</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_10">10</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;tensor&nbsp;=&nbsp;param.data.clone()</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_11">11</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;num_to_prune&nbsp;=&nbsp;int(tensor.numel()&nbsp;*&nbsp;amount)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_12">12</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;num_to_prune&nbsp;==&nbsp;0:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_13">13</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;param</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_14">14</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;flat_abs&nbsp;=&nbsp;tensor.abs().view(-1)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_15">15</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;threshold&nbsp;=&nbsp;torch.topk(flat_abs,&nbsp;num_to_prune,&nbsp;largest=False)[0].max()</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;=&nbsp;tensor.abs()&nbsp;&gt;&nbsp;threshold</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_17">17</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;pruned_tensor&nbsp;=&nbsp;tensor&nbsp;*&nbsp;mask</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_18">18</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;nn.Parameter(pruned_tensor)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_19">19</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_20">20</td><td nowrap="nowrap"><span class="diff_add">def&nbsp;checkpoint_parameter(param:&nbsp;nn.Parameter,&nbsp;path:&nbsp;str&nbsp;=&nbsp;None)&nbsp;-&gt;&nbsp;None:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_21">21</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;path:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_22">22</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;torch.save(param.detach(),&nbsp;path)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_23">23</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_24">24</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Sustainable&nbsp;tactics&nbsp;configuration&nbsp;(no-op&nbsp;by&nbsp;default&nbsp;to&nbsp;preserve&nbsp;original&nbsp;behavior)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_25">25</td><td nowrap="nowrap"><span class="diff_add">_prune_amount&nbsp;=&nbsp;0.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;fraction&nbsp;of&nbsp;weights&nbsp;to&nbsp;prune&nbsp;(0.0&nbsp;=&nbsp;no&nbsp;pruning)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_26">26</td><td nowrap="nowrap"><span class="diff_add">_checkpoint_path&nbsp;=&nbsp;None&nbsp;#&nbsp;set&nbsp;to&nbsp;a&nbsp;filepath&nbsp;to&nbsp;enable&nbsp;checkpointing,&nbsp;e.g.,&nbsp;'w_checkpoint.pt'</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_27">27</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_28">28</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Apply&nbsp;checkpointing&nbsp;and&nbsp;pruning&nbsp;minimally</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_29">29</td><td nowrap="nowrap"><span class="diff_add">checkpoint_parameter(W,&nbsp;_checkpoint_path)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_30">30</td><td nowrap="nowrap"><span class="diff_add">W_effective&nbsp;=&nbsp;prune_parameter_magnitude(W,&nbsp;_prune_amount)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_31">31</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to82_32">32</td><td nowrap="nowrap"><span class="diff_add">Z&nbsp;=&nbsp;A&nbsp;@&nbsp;X&nbsp;@&nbsp;W_effective</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from82_7">7</td><td nowrap="nowrap">print(Z.shape)</td><td class="diff_next"></td><td class="diff_header" id="to82_33">33</td><td nowrap="nowrap">print(Z.shape)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

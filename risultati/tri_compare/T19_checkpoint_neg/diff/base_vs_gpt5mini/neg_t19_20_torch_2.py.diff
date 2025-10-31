@@ -1,0 +1,37 @@
+--- BASE/neg_t19_20_torch_2.py
++++ gpt5mini/neg_t19_20_torch_2.py
+@@ -1,9 +1,34 @@
+ # 20) PyTorch — T19 NEGATIVO: MHA, solo forward/backward
+ import torch, torch.nn as nn, torch.nn.functional as F
++import torch.nn.utils.prune as prune
+ mha = nn.MultiheadAttention(embed_dim=32, num_heads=4, batch_first=True)
+ opt = torch.optim.Adam(mha.parameters(), 1e-3)
++
++def energy_aware_prune(module, amount=0.0):
++    if amount <= 0.0:
++        return
++    largest_name = None
++    largest_param = None
++    for name, param in module.named_parameters():
++        if largest_param is None or param.numel() > largest_param.numel():
++            largest_name = name
++            largest_param = param
++    if largest_name is None:
++        return
++    parts = largest_name.split('.')
++    submod = module
++    for p in parts[:-1]:
++        submod = getattr(submod, p)
++    attr = parts[-1]
++    prune.l1_unstructured(submod, name=attr, amount=amount)
++
++energy_aware_prune(mha, amount=0.0)
++
++torch.save({'epoch': -1, 'model_state_dict': mha.state_dict(), 'optimizer_state_dict': opt.state_dict()}, 'mha_checkpoint.pth')
++
+ for e in range(2):
+     x = torch.randn(3,6,32)
+     y,_ = mha(x,x,x); loss = y.pow(2).mean()
+     opt.zero_grad(); loss.backward(); opt.step()
++    torch.save({'epoch': e, 'model_state_dict': mha.state_dict(), 'optimizer_state_dict': opt.state_dict()}, 'mha_checkpoint.pth')
+ print('done')

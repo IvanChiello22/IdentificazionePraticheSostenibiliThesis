@@ -1,0 +1,42 @@
+--- BASE/snippet_076_t11_stride_avgpool__t15_energy_conv_global_hooks__t19_atomic.py
++++ gpt5mini/snippet_076_t11_stride_avgpool__t15_energy_conv_global_hooks__t19_atomic.py
+@@ -5,7 +5,8 @@
+ k = 5
+ shape = (x.shape[0]-k+1, x.shape[1]-k+1, k, k)
+ strides = (x.strides[0], x.strides[1], x.strides[0], x.strides[1])
+-windows = np.lib.stride_tricks.as_strided(x, shape=shape, strides=strides)
++# use the built-in sliding_window_view for safe, readable sliding windows
++windows = np.lib.stride_tricks.sliding_window_view(x, (k, k))
+ avg = windows.mean(axis=(2,3))
+ print(avg.shape, float(avg.std()))
+ 
+@@ -23,14 +24,25 @@
+ net = Net(); net.c1.register_forward_hook(hook('c1')); net.c2.register_forward_hook(hook('c2')); net.c3.register_forward_hook(hook('c3'))
+ x = torch.randn(4,3,64,64); _ = net(x)
+ energy = {k: v for k,v in stats.items()}
++# map module objects to their collected energy stats for correct lookup
++energy_map = {}
++for name, module in net.named_modules():
++    if name in energy:
++        energy_map[module] = energy[name]
+ def prune_out(conv, keep_ratio):
+     with torch.no_grad():
+         imp = conv.weight.detach().abs().view(conv.out_channels, -1).mean(1)
+-        e = torch.tensor(float(energy.get(conv.__class__.__name__, 1.0)))
+-        score = imp/(e+1e-9); k=max(1,int(keep_ratio*conv.out_channels))
+-        keep = torch.topk(score,k).indices
++        e = energy_map.get(conv, 1.0)
++        score = imp/(e+1e-9)
++        k = max(1, int(keep_ratio*conv.out_channels))
++        keep = torch.topk(score, k).indices
+         conv.weight = nn.Parameter(conv.weight[keep].clone()); conv.out_channels = k
+-prune_out(net.c2, 0.7); print(net.c2.out_channels)
++def prune_layers_by_energy(layers, keep_ratio):
++    # prune layers starting from the most energy-intensive
++    layers_sorted = sorted(layers, key=lambda m: energy_map.get(m, 0), reverse=True)
++    for layer in layers_sorted:
++        prune_out(layer, keep_ratio)
++prune_layers_by_energy([net.c2], 0.7); print(net.c2.out_channels)
+ 
+ # T19 — Atomic checkpoint writes (write to tmp then rename), avoid partial files
+ import torch, torch.nn as nn, os, tempfile, shutil

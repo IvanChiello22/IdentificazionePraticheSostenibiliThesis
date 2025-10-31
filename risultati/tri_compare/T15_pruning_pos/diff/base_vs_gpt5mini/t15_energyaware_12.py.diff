@@ -1,0 +1,9 @@
+--- BASE/t15_energyaware_12.py
++++ gpt5mini/t15_energyaware_12.py
+@@ -39,4 +39,6 @@
+ slog = student(x)
+ loss_kd = F.mse_loss(F.log_softmax(slog,dim=-1), F.log_softmax(tlog,dim=-1))
+ loss_kd.backward()  # solo dimostrativo
++# Checkpoint per evitare perdita di conoscenza in caso di terminazione prematura
++torch.save({'student_state_dict': student.state_dict(), 'kd_loss': float(loss_kd)}, 'student_kd_checkpoint.pth')
+ print(student(x).shape, 'KD_loss=', float(loss_kd))

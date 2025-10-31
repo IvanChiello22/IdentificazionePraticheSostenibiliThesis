@@ -1,0 +1,25 @@
+--- BASE/snippet_024_t11_cosine_batched__t19_async_threadpool.py
++++ gpt5mini/snippet_024_t11_cosine_batched__t19_async_threadpool.py
+@@ -11,9 +11,22 @@
+ # T19 — Threaded async save using concurrent.futures
+ import torch, torch.nn as nn, os
+ from concurrent.futures import ThreadPoolExecutor
++import torch.nn.utils.prune as prune
+ os.makedirs('ckpt', exist_ok=True)
+ m = nn.Sequential(nn.Linear(16,16), nn.ReLU(), nn.Linear(16,2))
+ def save(path): torch.save({'state': m.state_dict()}, path)
++
++# Energy-aware pruning: prune layers starting from the most parameter-heavy (proxy for energy)
++linear_layers = [(module, sum(p.numel() for p in module.parameters() if p.requires_grad))
++                 for module in m.modules() if isinstance(module, nn.Linear)]
++linear_layers.sort(key=lambda x: x[1], reverse=True)
++for idx, (layer, _) in enumerate(linear_layers):
++    amount = 0.2 if idx == 0 else 0.1  # prune more aggressively the heaviest layer
++    prune.l1_unstructured(layer, name='weight', amount=amount)
++
++# Save a checkpoint to avoid knowledge loss in case of premature termination
++torch.save({'state': m.state_dict()}, 'ckpt/checkpoint.pt')
++
+ with ThreadPoolExecutor(max_workers=2) as ex:
+     futs = [ex.submit(save, f'ckpt/shard_{i}.pt') for i in range(3)]
+     _ = [f.result() for f in futs]

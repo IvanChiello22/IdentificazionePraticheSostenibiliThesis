@@ -1,0 +1,81 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to125__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/neg_t19_42_misc.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t19_42_misc.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to125__1"><a href="#difflib_chg_to125__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to125__1">n</a></td><td class="diff_header" id="to125_1">1</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;42)&nbsp;JAX/Flax&nbsp;—&nbsp;T19&nbsp;NEGATIVO:&nbsp;update&nbsp;loop&nbsp;senza&nbsp;checkpoint</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to125__2"></td><td class="diff_header" id="from125_1">1</td><td nowrap="nowrap">import&nbsp;jax,&nbsp;jax.numpy&nbsp;as&nbsp;jnp</td><td class="diff_next"></td><td class="diff_header" id="to125_2">2</td><td nowrap="nowrap">import&nbsp;jax,&nbsp;jax.numpy&nbsp;as&nbsp;jnp</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to125__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to125__2">n</a></td><td class="diff_header" id="to125_3">3</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;numpy&nbsp;as&nbsp;np</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_2">2</td><td nowrap="nowrap">key&nbsp;=&nbsp;jax.random.PRNGKey(0)</td><td class="diff_next"></td><td class="diff_header" id="to125_4">4</td><td nowrap="nowrap">key&nbsp;=&nbsp;jax.random.PRNGKey(0)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_3">3</td><td nowrap="nowrap">w&nbsp;=&nbsp;jax.random.normal(key,&nbsp;(10,2));&nbsp;b&nbsp;=&nbsp;jnp.zeros((2,))</td><td class="diff_next"></td><td class="diff_header" id="to125_5">5</td><td nowrap="nowrap">w&nbsp;=&nbsp;jax.random.normal(key,&nbsp;(10,2));&nbsp;b&nbsp;=&nbsp;jnp.zeros((2,))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_4">4</td><td nowrap="nowrap">def&nbsp;step(w,b,x,y,lr=1e-2):</td><td class="diff_next"></td><td class="diff_header" id="to125_6">6</td><td nowrap="nowrap">def&nbsp;step(w,b,x,y,lr=1e-2):</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to125__3">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to125__3">n</a></td><td class="diff_header" id="to125_7">7</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;loss_fn(w,b,x,y):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_5">5</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;logits&nbsp;=&nbsp;x&nbsp;@&nbsp;w&nbsp;+&nbsp;b</td><td class="diff_next"></td><td class="diff_header" id="to125_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;logits&nbsp;=&nbsp;x&nbsp;@&nbsp;w&nbsp;+&nbsp;b</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to125__3"></td><td class="diff_header" id="from125_6">6</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;probs&nbsp;=&nbsp;jax.nn.softmax(logits)</td><td class="diff_next"></td><td class="diff_header" id="to125_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;probs&nbsp;=&nbsp;jax.nn.softmax(logits)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_7">7</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;<span class="diff_chg">loss&nbsp;=</span>&nbsp;-jnp.mean(jnp.log(probs[jnp.arange(y.size),&nbsp;y]))</td><td class="diff_next"></td><td class="diff_header" id="to125_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;<span class="diff_chg">&nbsp;&nbsp;&nbsp;&nbsp;return</span>&nbsp;-jnp.mean(jnp.log(probs[jnp.arange(y.size),&nbsp;y]))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_8">8</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;grad_w&nbsp;=&nbsp;(x.T&nbsp;@&nbsp;(probs&nbsp;-&nbsp;jax.nn.one_hot(y,2)))&nbsp;/&nbsp;x.shape[0]</span></td><td class="diff_next"></td><td class="diff_header" id="to125_11">11</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;grad_w,&nbsp;grad_b&nbsp;=&nbsp;jax.grad(loss_fn,&nbsp;argnums=(0,1))(w,b,x,y)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_9">9</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;grad_b&nbsp;=&nbsp;jnp.mean(probs&nbsp;-&nbsp;jax.nn.one_hot(y,2),&nbsp;axis=0)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to125__4"></td><td class="diff_header" id="from125_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;w&nbsp;-&nbsp;lr*grad_w,&nbsp;b&nbsp;-&nbsp;lr*grad_b</td><td class="diff_next"></td><td class="diff_header" id="to125_12">12</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;w&nbsp;-&nbsp;lr*grad_w,&nbsp;b&nbsp;-&nbsp;lr*grad_b</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to125__4">n</a></td><td class="diff_header" id="from125_11">11</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"><a href="#difflib_chg_to125__4">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_12">12</td><td nowrap="nowrap">for&nbsp;e&nbsp;in&nbsp;range(3):</td><td class="diff_next"></td><td class="diff_header" id="to125_13">13</td><td nowrap="nowrap">for&nbsp;e&nbsp;in&nbsp;range(3):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_13">13</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;jax.random.normal(key,&nbsp;(32,10));&nbsp;y&nbsp;=&nbsp;jax.random.randint(key,&nbsp;(32,),&nbsp;0,&nbsp;2)</td><td class="diff_next"></td><td class="diff_header" id="to125_14">14</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;jax.random.normal(key,&nbsp;(32,10));&nbsp;y&nbsp;=&nbsp;jax.random.randint(key,&nbsp;(32,),&nbsp;0,&nbsp;2)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_14">14</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;w,b&nbsp;=&nbsp;step(w,b,x,y)</td><td class="diff_next"></td><td class="diff_header" id="to125_15">15</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;w,b&nbsp;=&nbsp;step(w,b,x,y)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to125__top">t</a></td><td class="diff_header" id="from125_15">15</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"><a href="#difflib_chg_to125__top">t</a></td><td class="diff_header" id="to125_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;ck_w,&nbsp;ck_b&nbsp;=&nbsp;jax.device_get((w,b))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_16">16</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;Checkpointing</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_17">17</td><td nowrap="nowrap"><span class="diff_sub">import&nbsp;jax.numpy&nbsp;as&nbsp;jnp</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_18">18</td><td nowrap="nowrap"><span class="diff_sub">from&nbsp;jax&nbsp;import&nbsp;jit,&nbsp;grad,&nbsp;random,&nbsp;vmap,&nbsp;value_and_grad</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_19">19</td><td nowrap="nowrap"><span class="diff_sub">import&nbsp;os</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_20">20</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_21">21</td><td nowrap="nowrap"><span class="diff_sub">def&nbsp;save_checkpoint(w,&nbsp;b,&nbsp;epoch):</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_22">22</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;<span class="diff_sub">j</span>np.savez(f'checkpoint_epoch_{e<span class="diff_sub">poch</span>}.npz',&nbsp;w=w,&nbsp;b=b)</td><td class="diff_next"></td><td class="diff_header" id="to125_17">17</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;np.savez(f'checkpoint_epoch_{e}.npz',&nbsp;w=<span class="diff_add">ck_</span>w,&nbsp;b=<span class="diff_add">ck_</span>b)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_23">23</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_24">24</td><td nowrap="nowrap"><span class="diff_sub">for&nbsp;e&nbsp;in&nbsp;range(3):</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_25">25</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;jax.random.normal(key,&nbsp;(32,10));&nbsp;y&nbsp;=&nbsp;jax.random.randint(key,&nbsp;(32,),&nbsp;0,&nbsp;2)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_26">26</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;w,b&nbsp;=&nbsp;step(w,b,x,y)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_27">27</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;save_checkpoint(w,&nbsp;b,&nbsp;e)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_28">28</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from125_29">29</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to125_18">18</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

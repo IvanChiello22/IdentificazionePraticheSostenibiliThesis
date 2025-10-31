@@ -1,0 +1,67 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to30__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t19_11_torch_2.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/neg_t19_11_torch_2.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to30__1"><a href="#difflib_chg_to30__1">n</a></td><td class="diff_header" id="from30_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;11)&nbsp;PyTorch&nbsp;—&nbsp;T19&nbsp;NEGATIVO:&nbsp;training&nbsp;senza&nbsp;salvataggi/checkpoint</span></td><td class="diff_next"><a href="#difflib_chg_to30__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from30_2">2</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn,&nbsp;torch.optim&nbsp;as&nbsp;optim</td><td class="diff_next"></td><td class="diff_header" id="to30_1">1</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn,&nbsp;torch.optim&nbsp;as&nbsp;optim</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from30_3">3</td><td nowrap="nowrap">torch.manual_seed(0)</td><td class="diff_next"></td><td class="diff_header" id="to30_2">2</td><td nowrap="nowrap">torch.manual_seed(0)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from30_4">4</td><td nowrap="nowrap">model&nbsp;=&nbsp;nn.Sequential(nn.Linear(8,16),&nbsp;nn.ReLU(),&nbsp;nn.Linear(16,2))</td><td class="diff_next"></td><td class="diff_header" id="to30_3">3</td><td nowrap="nowrap">model&nbsp;=&nbsp;nn.Sequential(nn.Linear(8,16),&nbsp;nn.ReLU(),&nbsp;nn.Linear(16,2))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from30_5">5</td><td nowrap="nowrap">opt&nbsp;=&nbsp;optim.SGD(model.parameters(),&nbsp;lr=0.1)</td><td class="diff_next"></td><td class="diff_header" id="to30_4">4</td><td nowrap="nowrap">opt&nbsp;=&nbsp;optim.SGD(model.parameters(),&nbsp;lr=0.1)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to30__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to30__2">n</a></td><td class="diff_header" id="to30_5">5</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to30_6">6</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Aggiunta&nbsp;di&nbsp;checkpoint&nbsp;per&nbsp;il&nbsp;salvataggio&nbsp;del&nbsp;modello</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to30_7">7</td><td nowrap="nowrap"><span class="diff_add">checkpoint_path&nbsp;=&nbsp;'model_checkpoint.pth'</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to30__2"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to30_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from30_6">6</td><td nowrap="nowrap">for&nbsp;epoch&nbsp;in&nbsp;range(3):</td><td class="diff_next"></td><td class="diff_header" id="to30_9">9</td><td nowrap="nowrap">for&nbsp;epoch&nbsp;in&nbsp;range(3):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from30_7">7</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;torch.randn(64,8);&nbsp;y&nbsp;=&nbsp;torch.randint(0,2,(64,))</td><td class="diff_next"></td><td class="diff_header" id="to30_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;torch.randn(64,8);&nbsp;y&nbsp;=&nbsp;torch.randint(0,2,(64,))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from30_8">8</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;loss&nbsp;=&nbsp;nn.CrossEntropyLoss()(model(x),&nbsp;y)</td><td class="diff_next"></td><td class="diff_header" id="to30_11">11</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;loss&nbsp;=&nbsp;nn.CrossEntropyLoss()(model(x),&nbsp;y)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from30_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;opt.zero_grad();&nbsp;loss.backward();&nbsp;opt.step()</td><td class="diff_next"></td><td class="diff_header" id="to30_12">12</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;opt.zero_grad();&nbsp;loss.backward();&nbsp;opt.step()</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to30__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to30__top">t</a></td><td class="diff_header" id="to30_13">13</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to30_14">14</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Salvataggio&nbsp;del&nbsp;checkpoint</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to30_15">15</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;torch.save(model.state_dict(),&nbsp;checkpoint_path)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to30_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from30_10">10</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to30_17">17</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

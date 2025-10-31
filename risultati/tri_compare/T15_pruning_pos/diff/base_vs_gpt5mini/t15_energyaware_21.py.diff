@@ -1,0 +1,55 @@
+--- BASE/t15_energyaware_21.py
++++ gpt5mini/t15_energyaware_21.py
+@@ -1,5 +1,3 @@
+-# T15 POS — Energy-aware pruning (PyTorch): attention heads pruning in MHA con criterio FLOPs per head
+-# Stima costo per head ~ T*T*d_k (QK)+ T*T (softmax) + T*d_v (AV); rimuove head a minore score (importance/energy).
+ import torch, torch.nn as nn, torch.nn.functional as F
+ 
+ class MHA(nn.Module):
+@@ -28,25 +26,28 @@
+ def prune_heads_energy(module: MHA, keep_ratio=0.5, T=64):
+     with torch.no_grad():
+         H = module.nhead; dk = module.dk
+-        energy = torch.tensor([energy_per_head(T, dk)]*H, dtype=torch.float32)
++        device = next(module.parameters()).device
++        energy = torch.full((H,), float(energy_per_head(T, dk)), dtype=torch.float32, device=device)
+         # importance proxy: L1 dei pesi per head nella proiezione output (o in qkv)
+         W_out = module.o.weight.detach()  # [D, D]
+-        per_head = W_out.view(module.nhead, dk, -1).abs().mean(dim=(1,2))
++        per_head = W_out.view(module.nhead, dk, -1).abs().mean(dim=(1,2)).to(device)
+         score = per_head / (energy + 1e-9)
+         k = max(1, int(keep_ratio*H))
+         keep = torch.topk(score, k).indices.tolist()
++        # checkpoint: salva stato prima di modificare i parametri per evitare perdita di conoscenza
++        torch.save(module.state_dict(), 'mha_prune_checkpoint.pt')
+         # Rimappa parametri riducendo teste (semplificato: mask sui blocchi in out + qkv)
+         def mask_qkv(linear, keep, dk, H):
+-            W = linear.weight.data  # [3D, D]
++            W = linear.weight.data
+             D = dk*H
+-            # Mantieni blocchi per head su out-dim
+             idx_keep = []
+             for part in range(3):
+                 base = part*D
+                 for h in keep:
+                     idx_keep.extend(range(base + h*dk, base + (h+1)*dk))
+-            linear.weight = nn.Parameter(W[idx_keep, :].clone())
+-            linear.out_features = len(idx_keep)
++            new_W = W[idx_keep, :].clone()
++            linear.weight = nn.Parameter(new_W)
++            linear.out_features = new_W.size(0)
+             if linear.bias is not None:
+                 b = linear.bias.data
+                 linear.bias = nn.Parameter(b[idx_keep].clone())
+@@ -55,7 +56,10 @@
+         W = module.o.weight.data  # [D, D]
+         Dold = W.size(1); Dnew = dk*len(keep)
+         module.o.weight = nn.Parameter(W[:, :Dnew].clone())
+-        if module.o.bias is not None: module.o.bias = nn.Parameter(module.o.bias.data.clone())
++        module.o.in_features = Dnew
++        module.o.out_features = W.size(0)
++        if module.o.bias is not None:
++            module.o.bias = nn.Parameter(module.o.bias.data.clone())
+         module.nhead = len(keep)
+ 
+ mha = MHA(64, 4)

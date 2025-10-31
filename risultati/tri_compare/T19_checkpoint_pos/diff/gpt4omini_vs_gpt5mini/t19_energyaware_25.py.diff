@@ -1,0 +1,70 @@
+--- gpt4omini/t19_energyaware_25.py
++++ gpt5mini/t19_energyaware_25.py
+@@ -1,31 +1,42 @@
+-import tensorflow as tf
+-import os
+-
+-# Initialize variables
+-w = tf.Variable(tf.random.normal([10, 2]))
+-b = tf.Variable(tf.zeros([2]))
+-opt = tf.keras.optimizers.Adam(1e-3)
+-
+-# Create checkpoint directory
+-os.makedirs('ckpt_tf', exist_ok=True)
+-
+-# Set up checkpoint and manager
++import tensorflow as tf, os
++w = tf.Variable(tf.random.normal([10,2])); b = tf.Variable(tf.zeros([2]))
++opt = tf.keras.optimizers.Adam(1e-3); os.makedirs('ckpt_tf', exist_ok=True)
+ ckpt = tf.train.Checkpoint(step=tf.Variable(1), w=w, b=b, opt=opt)
+ manager = tf.train.CheckpointManager(ckpt, './ckpt_tf', max_to_keep=3)
+ 
+-# Training loop with checkpointing
+-for e in range(1, 7):
+-    x = tf.random.normal([64, 10])
+-    y = tf.random.uniform([64], maxval=2, dtype=tf.int32)
+-    
++PRUNE_RATIO = 0.0  # set to 0.0 to preserve exact original behavior; increase to enable pruning
++
++def estimate_layer_energy(var):
++    shape = var.shape
++    if len(shape) >= 2:
++        return int(shape[0]) * int(shape[1])
++    return int(tf.size(var).numpy())
++
++def prune_variable(var, ratio):
++    if ratio <= 0.0:
++        return
++    w_val = var.read_value()
++    flat_abs = tf.reshape(tf.abs(w_val), [-1])
++    total = tf.size(flat_abs)
++    k = tf.cast(tf.cast(total, tf.float32) * (1.0 - ratio), tf.int32)
++    k = tf.maximum(k, 1)
++    sorted_vals = tf.sort(flat_abs)
++    threshold = sorted_vals[k - 1]
++    mask = tf.cast(tf.abs(w_val) >= threshold, w_val.dtype)
++    var.assign(w_val * mask)
++
++# Energy-aware pruning would start from most energy intensive layers.
++# Here we keep PRUNE_RATIO=0.0 to preserve original semantics; change PRUNE_RATIO to enable pruning.
++layers_by_energy = sorted([('w', w), ('b', b)], key=lambda itm: estimate_layer_energy(itm[1]), reverse=True)
++
++for e in range(1,7):
++    x = tf.random.normal([64,10]); y = tf.random.uniform([64], maxval=2, dtype=tf.int32)
+     with tf.GradientTape() as tape:
+-        logits = tf.matmul(x, w) + b
++        logits = tf.matmul(x,w) + b
+         loss = tf.reduce_mean(tf.keras.losses.sparse_categorical_crossentropy(y, logits, from_logits=True))
+-    
+-    grads = tape.gradient(loss, [w, b])
+-    opt.apply_gradients(zip(grads, [w, b]))
+-    
+-    ckpt.step.assign(e)
+-    manager.save()
+-
++    grads = tape.gradient(loss, [w,b]); opt.apply_gradients(zip(grads,[w,b]))
++    # Apply pruning starting from most energy intensive layer (no-op if PRUNE_RATIO == 0.0)
++    for _, var in layers_by_energy:
++        prune_variable(var, PRUNE_RATIO)
++    ckpt.step.assign(e); manager.save()
+ print('done')

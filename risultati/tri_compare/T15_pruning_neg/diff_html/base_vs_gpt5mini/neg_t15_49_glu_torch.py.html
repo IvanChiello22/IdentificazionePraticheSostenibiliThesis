@@ -1,0 +1,60 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to145__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t15_49_glu_torch.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t15_49_glu_torch.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to145__0"><a href="#difflib_chg_to145__1">n</a></td><td class="diff_header" id="from145_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;49)&nbsp;Gated&nbsp;Linear&nbsp;Unit&nbsp;(GLU)-like&nbsp;—&nbsp;T15&nbsp;NEGATIVO:&nbsp;parametri&nbsp;completi</span></td><td class="diff_next"><a href="#difflib_chg_to145__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to145__1"></td><td class="diff_header" id="from145_2">2</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn</td><td class="diff_next"></td><td class="diff_header" id="to145_1">1</td><td nowrap="nowrap">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from145_3">3</td><td nowrap="nowrap">class&nbsp;GLU(nn.Module):</td><td class="diff_next"></td><td class="diff_header" id="to145_2">2</td><td nowrap="nowrap">class&nbsp;GLU(nn.Module):</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to145__2"></td><td class="diff_header" id="from145_4">4</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;__init__(self,&nbsp;d):</td><td class="diff_next"></td><td class="diff_header" id="to145_3">3</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;__init__(self,&nbsp;d):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from145_5">5</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super().__init__()</td><td class="diff_next"></td><td class="diff_header" id="to145_4">4</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super().__init__()</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from145_6">6</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.W&nbsp;=&nbsp;nn.Linear(d,&nbsp;2*d)</td><td class="diff_next"></td><td class="diff_header" id="to145_5">5</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.W&nbsp;=&nbsp;nn.Linear(d,&nbsp;2*d)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to145__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to145__2">n</a></td><td class="diff_header" id="to145_6">6</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.glu&nbsp;=&nbsp;nn.GLU(dim=-1)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from145_7">7</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;forward(self,&nbsp;x):</td><td class="diff_next"></td><td class="diff_header" id="to145_7">7</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;forward(self,&nbsp;x):</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to145__top">t</a></td><td class="diff_header" id="from145_8">8</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a,&nbsp;b&nbsp;=&nbsp;self.W(x).chunk(2,&nbsp;dim=-1)</span></td><td class="diff_next"><a href="#difflib_chg_to145__top">t</a></td><td class="diff_header" id="to145_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;self.glu(self.W(x))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from145_9">9</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;a&nbsp;*&nbsp;torch.sigmoid(b)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from145_10">10</td><td nowrap="nowrap">x&nbsp;=&nbsp;torch.randn(3,10,32);&nbsp;print(GLU(32)(x).shape)</td><td class="diff_next"></td><td class="diff_header" id="to145_9">9</td><td nowrap="nowrap">x&nbsp;=&nbsp;torch.randn(3,10,32);&nbsp;print(GLU(32)(x).shape)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+# 13) LSTM Keras — T15 NEGATIVO: layer completi, nessun pruning
+import tensorflow as tf, numpy as np
+from tensorflow import keras; from tensorflow.keras import layers
+
+def _prune_lstm_layer_magnitude(layer, prune_fraction=0.1):
+    # Prune smallest-magnitude weights in kernel and recurrent_kernel of an LSTM layer.
+    weights = layer.get_weights()
+    if len(weights) < 2:
+        return  # nothing to prune
+    kernel = weights[0]
+    recurrent = weights[1]
+    # Compute thresholds and apply pruning (set small values to zero)
+    for arr in (kernel, recurrent):
+        if arr.size == 0:
+            continue
+        thresh = np.percentile(np.abs(arr.reshape(-1)), prune_fraction * 100)
+        arr[np.abs(arr) < thresh] = 0.0
+    new_weights = [kernel, recurrent]
+    if len(weights) > 2:
+        new_weights.append(weights[2])  # bias
+    layer.set_weights(new_weights)
+
+model = keras.Sequential([layers.Input(shape=(12,10)), layers.LSTM(20), layers.Dense(2)])
+
+# Energy-aware pruning: prune LSTM first (most energy-intensive layer)
+try:
+    lstm_layer = next(l for l in model.layers if isinstance(l, layers.LSTM))
+    _prune_lstm_layer_magnitude(lstm_layer, prune_fraction=0.1)
+except StopIteration:
+    pass
+
+model.compile(optimizer='adam', loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True))
+
+# Checkpointing to avoid knowledge loss during training
+ckpt = tf.train.Checkpoint(optimizer=model.optimizer, model=model)
+manager = tf.train.CheckpointManager(ckpt, directory='./checkpoints', max_to_keep=3)
+# save initial state
+manager.save()
+
+x = np.random.randn(4,12,10).astype('float32'); y = np.random.randint(0,2,(4,))
+model.train_on_batch(x,y)
+# save after training step
+manager.save()
+
+print("done")

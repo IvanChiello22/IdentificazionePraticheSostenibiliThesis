@@ -1,0 +1,28 @@
+--- BASE/snippet_061_t11_vectorized_ranking__t19_checksum.py
++++ gpt5mini/snippet_061_t11_vectorized_ranking__t19_checksum.py
+@@ -17,10 +17,24 @@
+ 
+ # T19 — Deduplicate checkpoints by SHA256 (skip identical content)
+ import torch, torch.nn as nn, io, hashlib, os, json
++from torch.nn.utils import prune
+ m = nn.Sequential(nn.Linear(12,12), nn.ReLU(), nn.Linear(12,2)); os.makedirs('ckpt', exist_ok=True)
++# Energy-aware pruning: prune the most parameter-heavy Linear layer first (L1 unstructured)
++max_params = 0
++target_module = None
++for _, module in m.named_modules():
++    if isinstance(module, nn.Linear) and hasattr(module, 'weight'):
++        p = module.weight.numel()
++        if p > max_params:
++            max_params = p
++            target_module = module
++if target_module is not None and max_params > 0:
++    prune.l1_unstructured(target_module, name='weight', amount=0.3)
++    prune.remove(target_module, 'weight')
++
+ buf = io.BytesIO(); torch.save(m.state_dict(), buf); data = buf.getvalue()
+ h = hashlib.sha256(data).hexdigest()
+-index = {'sha256': h, 'file': f'ckpt/{h}.pt'}
++index = {'sha256': h, 'file': f'ckpt/{h}.pt', 'pruned': bool(target_module is not None)}
+ if not os.path.exists(index['file']):
+     with open(index['file'], 'wb') as f: f.write(data)
+ with open('ckpt/index.json','w') as f: json.dump(index, f)

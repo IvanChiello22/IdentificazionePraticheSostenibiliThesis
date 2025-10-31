@@ -1,0 +1,39 @@
+import torch, torch.nn as nn, pytorch_lightning as pl
+from pytorch_lightning.callbacks import ModelCheckpoint
+class M(pl.LightningModule):
+    def __init__(self):
+        super().__init__()
+        self.net = nn.Sequential(nn.Linear(8,16), nn.ReLU(), nn.Linear(16,2))
+        self.criterion = nn.CrossEntropyLoss()
+        # Default: no pruning applied. Can be set externally (e.g., m.prune_amount = 0.2) before training.
+        self.prune_amount = 0.0
+
+    def forward(self, x):
+        return self.net(x)
+
+    def training_step(self, batch, batch_idx):
+        x, y = batch
+        loss = self.criterion(self(x), y)
+        return loss
+
+    def configure_optimizers(self):
+        return torch.optim.Adam(self.parameters(), 1e-2)
+
+    def apply_energy_aware_pruning(self, amount):
+        # Find linear layers and prune the one with the largest parameter count (most energy intensive)
+        linear_layers = [m for m in self.net if isinstance(m, nn.Linear)]
+        if not linear_layers:
+            return
+        most_params_layer = max(linear_layers, key=lambda l: sum(p.numel() for p in l.parameters()))
+        torch.nn.utils.prune.l1_unstructured(most_params_layer, name='weight', amount=amount)
+
+    def on_train_start(self):
+        if getattr(self, 'prune_amount', 0) and self.prune_amount > 0:
+            self.apply_energy_aware_pruning(self.prune_amount)
+
+class DS(torch.utils.data.Dataset):
+    def __len__(self): return 256
+    def __getitem__(self,i): return torch.randn(8), torch.randint(0,2,(1,)).item()
+ckpt = ModelCheckpoint(dirpath='ckpt_pl', save_top_k=1, monitor='train_loss', mode='min', filename='best')
+pl.Trainer(max_epochs=3, callbacks=[ckpt], logger=False, enable_model_summary=False).fit(M(), torch.utils.data.DataLoader(DS(), batch_size=32))
+print('done')

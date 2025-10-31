@@ -1,0 +1,13 @@
+--- BASE/neg_t11_02_mean.py
++++ gpt4omini/neg_t11_02_mean.py
+@@ -1,9 +1,2 @@
+-# 2) Media di lista (loop)
+-data = [3, 5, 8, 10]
+-s = 0.0
+-n = 0
+-for x in data:
+-    s += x
+-    n += 1
+-mean = s / n if n else 0.0
++mean = sum(data) / len(data) if data else 0.0
+ print(mean)

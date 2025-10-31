@@ -1,0 +1,19 @@
+--- BASE/neg_t19_11_torch_2.py
++++ gpt5mini/neg_t19_11_torch_2.py
+@@ -1,10 +1,13 @@
+-# 11) PyTorch — T19 NEGATIVO: training senza salvataggi/checkpoint
+-import torch, torch.nn as nn, torch.optim as optim
++import torch, torch.nn as nn, torch.optim as optim, torch.nn.utils.prune as prune
+ torch.manual_seed(0)
+ model = nn.Sequential(nn.Linear(8,16), nn.ReLU(), nn.Linear(16,2))
++prune.l1_unstructured(model[0], name='weight', amount=0.2)
+ opt = optim.SGD(model.parameters(), lr=0.1)
++loss_fn = nn.CrossEntropyLoss()
+ for epoch in range(3):
+     x = torch.randn(64,8); y = torch.randint(0,2,(64,))
+-    loss = nn.CrossEntropyLoss()(model(x), y)
++    logits = model(x)
++    loss = loss_fn(logits, y)
+     opt.zero_grad(); loss.backward(); opt.step()
++    torch.save({'epoch': epoch, 'model_state_dict': model.state_dict(), 'optimizer_state_dict': opt.state_dict()}, f'checkpoint_{epoch}.pt')
+ print('done')

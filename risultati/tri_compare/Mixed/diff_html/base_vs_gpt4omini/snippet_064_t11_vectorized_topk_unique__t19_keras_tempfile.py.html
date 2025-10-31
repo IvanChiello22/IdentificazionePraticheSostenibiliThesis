@@ -1,0 +1,92 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to189__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/snippet_064_t11_vectorized_topk_unique__t19_keras_tempfile.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/snippet_064_t11_vectorized_topk_unique__t19_keras_tempfile.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to189__0"><a href="#difflib_chg_to189__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to189__1">n</a></td><td class="diff_header" id="to189_1">1</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;numpy&nbsp;as&nbsp;np</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to189_2">2</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;tensorflow&nbsp;as&nbsp;tf</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to189_3">3</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;os</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to189_4">4</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;tempfile</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to189__1"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to189_5">5</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;shutil</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to189_6">6</td><td nowrap="nowrap"><span class="diff_add">from&nbsp;tensorflow&nbsp;import&nbsp;keras</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to189_7">7</td><td nowrap="nowrap"><span class="diff_add">from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to189_8">8</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_1">1</td><td nowrap="nowrap">#&nbsp;Snippet&nbsp;64:&nbsp;mixed&nbsp;set</td><td class="diff_next"></td><td class="diff_header" id="to189_9">9</td><td nowrap="nowrap">#&nbsp;Snippet&nbsp;64:&nbsp;mixed&nbsp;set</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to189__2">n</a></td><td class="diff_header" id="from189_2">2</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;T11&nbsp;—&nbsp;NumPy:&nbsp;per‑row&nbsp;top‑k&nbsp;without&nbsp;loops&nbsp;via&nbsp;argpartition</span></td><td class="diff_next"><a href="#difflib_chg_to189__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_3">3</td><td nowrap="nowrap"><span class="diff_sub">import&nbsp;numpy&nbsp;as&nbsp;np</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_4">4</td><td nowrap="nowrap">X&nbsp;=&nbsp;np.random.randn(200,&nbsp;1000)</td><td class="diff_next"></td><td class="diff_header" id="to189_10">10</td><td nowrap="nowrap">X&nbsp;=&nbsp;np.random.randn(200,&nbsp;1000)</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to189__2"></td><td class="diff_header" id="from189_5">5</td><td nowrap="nowrap">k&nbsp;=&nbsp;7</td><td class="diff_next"></td><td class="diff_header" id="to189_11">11</td><td nowrap="nowrap">k&nbsp;=&nbsp;7</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_6">6</td><td nowrap="nowrap">idx&nbsp;=&nbsp;np.argpartition(-X,&nbsp;k,&nbsp;axis=1)[:,&nbsp;:k]</td><td class="diff_next"></td><td class="diff_header" id="to189_12">12</td><td nowrap="nowrap">idx&nbsp;=&nbsp;np.argpartition(-X,&nbsp;k,&nbsp;axis=1)[:,&nbsp;:k]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_7">7</td><td nowrap="nowrap">vals&nbsp;=&nbsp;np.take_along_axis(X,&nbsp;idx,&nbsp;axis=1)</td><td class="diff_next"></td><td class="diff_header" id="to189_13">13</td><td nowrap="nowrap">vals&nbsp;=&nbsp;np.take_along_axis(X,&nbsp;idx,&nbsp;axis=1)</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to189__3"></td><td class="diff_header" id="from189_8">8</td><td nowrap="nowrap">sorted_idx&nbsp;=&nbsp;np.argsort(-vals,&nbsp;axis=1)</td><td class="diff_next"></td><td class="diff_header" id="to189_14">14</td><td nowrap="nowrap">sorted_idx&nbsp;=&nbsp;np.argsort(-vals,&nbsp;axis=1)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_9">9</td><td nowrap="nowrap">topk&nbsp;=&nbsp;np.take_along_axis(vals,&nbsp;sorted_idx,&nbsp;axis=1)</td><td class="diff_next"></td><td class="diff_header" id="to189_15">15</td><td nowrap="nowrap">topk&nbsp;=&nbsp;np.take_along_axis(vals,&nbsp;sorted_idx,&nbsp;axis=1)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to189__3">n</a></td><td class="diff_header" id="from189_10">10</td><td nowrap="nowrap">print(topk.shape,&nbsp;round(topk.mean(),4))</td><td class="diff_next"><a href="#difflib_chg_to189__3">n</a></td><td class="diff_header" id="to189_16">16</td><td nowrap="nowrap">print(topk.shape,&nbsp;round(topk.mean(),<span class="diff_add">&nbsp;</span>4))</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to189__4"></td><td class="diff_header" id="from189_11">11</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to189_17">17</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_12">12</td><td nowrap="nowrap">#&nbsp;T19&nbsp;—&nbsp;Keras:&nbsp;save&nbsp;to&nbsp;tempfile&nbsp;then&nbsp;move&nbsp;(atomic),&nbsp;best‑only&nbsp;by&nbsp;loss</td><td class="diff_next"></td><td class="diff_header" id="to189_18">18</td><td nowrap="nowrap">#&nbsp;T19&nbsp;—&nbsp;Keras:&nbsp;save&nbsp;to&nbsp;tempfile&nbsp;then&nbsp;move&nbsp;(atomic),&nbsp;best‑only&nbsp;by&nbsp;loss</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to189__4">n</a></td><td class="diff_header" id="from189_13">13</td><td nowrap="nowrap"><span class="diff_sub">import&nbsp;tensorflow&nbsp;as&nbsp;tf,&nbsp;numpy&nbsp;as&nbsp;np,&nbsp;os,&nbsp;tempfile,&nbsp;shutil</span></td><td class="diff_next"><a href="#difflib_chg_to189__4">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_14">14</td><td nowrap="nowrap"><span class="diff_sub">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_15">15</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td><td class="diff_next"></td><td class="diff_header" id="to189_19">19</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to189__top">t</a></td><td class="diff_header" id="from189_16">16</td><td nowrap="nowrap"><span class="diff_sub">m&nbsp;=&nbsp;keras.Sequential([layers.Dense(64,&nbsp;activation='relu',&nbsp;input_shape=(20,)),&nbsp;layers.Dense(3)])</span></td><td class="diff_next"><a href="#difflib_chg_to189__top">t</a></td><td class="diff_header" id="to189_20">20</td><td nowrap="nowrap"><span class="diff_add">model&nbsp;=&nbsp;keras.Sequential([</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to189_21">21</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;layers.Dense(64,&nbsp;activation='relu',&nbsp;input_shape=(20,)),</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to189_22">22</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;layers.Dense(3)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to189_23">23</td><td nowrap="nowrap"><span class="diff_add">])</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_17">17</td><td nowrap="nowrap">m.compile(optimizer='adam',&nbsp;loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))</td><td class="diff_next"></td><td class="diff_header" id="to189_24">24</td><td nowrap="nowrap">m<span class="diff_add">odel</span>.compile(optimizer='adam',&nbsp;loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_18">18</td><td nowrap="nowrap"><span class="diff_sub">x&nbsp;=&nbsp;np.random.randn(128,20).astype('float32');&nbsp;y&nbsp;=&nbsp;np.random.randint(0,3,(128,))</span></td><td class="diff_next"></td><td class="diff_header" id="to189_25">25</td><td nowrap="nowrap"><span class="diff_add">x&nbsp;=&nbsp;np.random.randn(128,&nbsp;20).astype('float32')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_19">19</td><td nowrap="nowrap"><span class="diff_sub">best&nbsp;=&nbsp;1e9</span></td><td class="diff_next"></td><td class="diff_header" id="to189_26">26</td><td nowrap="nowrap"><span class="diff_add">y&nbsp;=&nbsp;np.random.randint(0,&nbsp;3,&nbsp;(128,))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to189_27">27</td><td nowrap="nowrap"><span class="diff_add">best_loss&nbsp;=&nbsp;float('inf')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to189_28">28</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_20">20</td><td nowrap="nowrap">for&nbsp;e&nbsp;in&nbsp;range(3):</td><td class="diff_next"></td><td class="diff_header" id="to189_29">29</td><td nowrap="nowrap">for&nbsp;e<span class="diff_add">poch</span>&nbsp;in&nbsp;range(3):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_21">21</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;hist&nbsp;=&nbsp;m.fit(x,y,epochs=1,batch_size=64,verbose=0)</td><td class="diff_next"></td><td class="diff_header" id="to189_30">30</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;hist<span class="diff_add">ory</span>&nbsp;=&nbsp;m<span class="diff_add">odel</span>.fit(x,<span class="diff_add">&nbsp;</span>y,<span class="diff_add">&nbsp;</span>epochs=1,<span class="diff_add">&nbsp;</span>batch_size=64,<span class="diff_add">&nbsp;</span>verbose=0)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_22">22</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;loss&nbsp;=&nbsp;float(hist.history['loss'][-1])</td><td class="diff_next"></td><td class="diff_header" id="to189_31">31</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;loss&nbsp;=&nbsp;float(hist<span class="diff_add">ory</span>.history['loss'][-1])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_23">23</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;loss&nbsp;&lt;&nbsp;best:</td><td class="diff_next"></td><td class="diff_header" id="to189_32">32</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;loss&nbsp;&lt;&nbsp;best<span class="diff_add">_loss</span>:</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_24">24</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;best&nbsp;=&nbsp;loss</span></td><td class="diff_next"></td><td class="diff_header" id="to189_33">33</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;best_loss&nbsp;=&nbsp;loss</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_25">25</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fd,&nbsp;tmp&nbsp;=&nbsp;tempfile.mkstemp(dir='ckpt',&nbsp;prefix='tmp_',&nbsp;suffix='.weights.h5')<span class="diff_sub">;&nbsp;os.close(fd)</span></td><td class="diff_next"></td><td class="diff_header" id="to189_34">34</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fd,&nbsp;t<span class="diff_add">e</span>mp<span class="diff_add">_file</span>&nbsp;=&nbsp;tempfile.mkstemp(dir='ckpt',&nbsp;prefix='tmp_',&nbsp;suffix='.weights.h5')</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to189_35">35</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;os.close(fd)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to189_36">36</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;model.save_weights(temp_file)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_26">26</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="diff_sub">&nbsp;m.save_weights(tmp);</span>&nbsp;shutil.move(tmp,&nbsp;'ckpt/best.weights.h5')</td><td class="diff_next"></td><td class="diff_header" id="to189_37">37</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shutil.move(t<span class="diff_add">e</span>mp<span class="diff_add">_file</span>,&nbsp;'ckpt/best.weights.h5')</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to189_38">38</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from189_27">27</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to189_39">39</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

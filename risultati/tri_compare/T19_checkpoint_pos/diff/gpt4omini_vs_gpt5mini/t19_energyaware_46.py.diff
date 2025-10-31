@@ -1,0 +1,72 @@
+--- gpt4omini/t19_energyaware_46.py
++++ gpt5mini/t19_energyaware_46.py
+@@ -1,31 +1,42 @@
+-import torch
+-import torch.nn as nn
+-import torch.optim as optim
+-import os
++import torch, torch.nn as nn, torch.optim as optim, os
++import torch.nn.utils.prune as prune
+ 
+-def load_checkpoint(model, optimizer, filepath):
+-    if os.path.exists(filepath):
+-        checkpoint = torch.load(filepath, map_location='cpu')
+-        model.load_state_dict(checkpoint['model'])
+-        optimizer.load_state_dict(checkpoint['opt'])
+-        return checkpoint['e'] + 1
+-    return 1
++PRUNE_RATE = 0.0  # set >0.0 to enable energy-aware pruning (fraction or integer)
+ 
+-def save_checkpoint(epoch, model, optimizer, filepath):
+-    torch.save({'e': epoch, 'model': model.state_dict(), 'opt': optimizer.state_dict()}, filepath)
++def energy_aware_prune(model, amount):
++    if not amount:
++        return
++    # find linear layer with largest weight parameter count (proxy for energy intensity)
++    candidate = None
++    max_params = 0
++    for _, m in model.named_modules():
++        if isinstance(m, nn.Linear) and hasattr(m, 'weight'):
++            params = m.weight.numel()
++            if params > max_params:
++                max_params = params
++                candidate = m
++    if candidate is not None:
++        prune.l1_unstructured(candidate, name='weight', amount=amount)
+ 
+-def train_model(num_epochs, model, optimizer, checkpoint_filepath):
+-    start_epoch = load_checkpoint(model, optimizer, checkpoint_filepath)
+-    for epoch in range(start_epoch, start_epoch + num_epochs):
+-        x = torch.randn(16, 3)
+-        y = torch.randint(0, 2, (16,))
+-        loss = nn.CrossEntropyLoss()(model(x), y)
+-        optimizer.zero_grad()
+-        loss.backward()
+-        optimizer.step()
+-        save_checkpoint(epoch, model, optimizer, checkpoint_filepath)
+-    print('done')
++net = nn.Sequential(nn.Linear(3,8), nn.ReLU(), nn.Linear(8,2))
++opt = optim.SGD(net.parameters(), 0.01)
++start = 1
++ckpt_path = 'ckpt_last.pt'
++if os.path.exists(ckpt_path):
++    st = torch.load(ckpt_path, map_location='cpu')
++    net.load_state_dict(st['model'])
++    opt.load_state_dict(st['opt'])
++    start = st['e'] + 1
+ 
+-net = nn.Sequential(nn.Linear(3, 8), nn.ReLU(), nn.Linear(8, 2))
+-opt = optim.SGD(net.parameters(), 0.01)
+-train_model(5, net, opt, 'ckpt_last.pt')
++# apply energy-aware pruning (if enabled) before/resuming training
++energy_aware_prune(net, PRUNE_RATE)
++
++for e in range(start, start+5):
++    x = torch.randn(16,3)
++    y = torch.randint(0,2,(16,))
++    loss = nn.CrossEntropyLoss()(net(x), y)
++    opt.zero_grad()
++    loss.backward()
++    opt.step()
++    torch.save({'e': e, 'model': net.state_dict(), 'opt': opt.state_dict()}, ckpt_path)
++print('done')

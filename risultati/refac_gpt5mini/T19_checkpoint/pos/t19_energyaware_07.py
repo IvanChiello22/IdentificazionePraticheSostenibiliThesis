@@ -1,0 +1,72 @@
+import tensorflow as tf, numpy as np, os
+from tensorflow import keras; from tensorflow.keras import layers
+os.makedirs('ckpt', exist_ok=True)
+m = keras.Sequential([layers.Dense(64, activation='relu', input_shape=(20,)), layers.Dense(3)])
+m.compile(optimizer='adam', loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))
+cb = keras.callbacks.ModelCheckpoint('ckpt/best.weights.h5', monitor='loss', save_best_only=True, save_weights_only=True, mode='min')
+
+class EnergyAwarePruning(keras.callbacks.Callback):
+    def __init__(self, target_sparsity=0.01, prune_fraction_per_epoch=0.01):
+        super().__init__()
+        self.target_sparsity = float(target_sparsity)
+        self.prune_step = float(prune_fraction_per_epoch)
+        self.prunable_layers = []
+
+    def _layer_costs(self):
+        costs = []
+        for i, layer in enumerate(self.model.layers):
+            try:
+                weights = layer.get_weights()
+            except Exception:
+                continue
+            if not weights:
+                continue
+            kernel = weights[0]
+            if kernel.ndim != 2:
+                continue
+            in_dim, out_dim = kernel.shape
+            cost = int(in_dim) * int(out_dim)
+            costs.append((cost, i, layer))
+        return sorted(costs, key=lambda x: x[0], reverse=True)
+
+    def on_train_begin(self, logs=None):
+        costs = self._layer_costs()
+        # prune starting from most energy intensive layers
+        self.prunable_layers = [entry[2] for entry in costs]
+
+    def _apply_pruning_to_layer(self, layer, additional_sparsity):
+        weights = layer.get_weights()
+        if not weights:
+            return
+        kernel = weights[0]
+        flat = np.abs(kernel).ravel()
+        total = flat.size
+        current_zero = int(np.sum(flat == 0))
+        current_sparsity = current_zero / total
+        desired_sparsity = min(self.target_sparsity, current_sparsity + additional_sparsity)
+        if desired_sparsity <= current_sparsity:
+            return
+        # number of weights to keep
+        k = int(np.ceil((1.0 - desired_sparsity) * total))
+        if k <= 0:
+            mask = np.zeros_like(flat, dtype=bool)
+        elif k >= total:
+            mask = np.ones_like(flat, dtype=bool)
+        else:
+            thresh = np.partition(flat, -k)[-k]
+            mask = flat >= thresh
+        mask = mask.reshape(kernel.shape)
+        new_kernel = kernel * mask
+        weights[0] = new_kernel
+        layer.set_weights(weights)
+
+    def on_epoch_end(self, epoch, logs=None):
+        if not self.prunable_layers:
+            return
+        # prune only the most expensive layer first (energy-aware)
+        first_layer = self.prunable_layers[0]
+        self._apply_pruning_to_layer(first_layer, self.prune_step)
+
+prune_cb = EnergyAwarePruning(target_sparsity=0.01, prune_fraction_per_epoch=0.01)
+x = np.random.randn(256,20).astype('float32'); y = np.random.randint(0,3,(256,))
+m.fit(x,y,epochs=3,batch_size=64,callbacks=[cb, prune_cb],verbose=0); print('done')

@@ -1,0 +1,4 @@
+y_true = [1.0, 2.0, 3.0]
+y_pred = [0.8, 2.5, 2.9]
+mse = sum((a - b) ** 2 for a, b in zip(y_true, y_pred)) / len(y_true)
+print(mse)

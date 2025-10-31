@@ -1,0 +1,17 @@
+import torch, torch.nn as nn
+
+class UpsamplingNet(nn.Module):
+    def __init__(self):
+        super(UpsamplingNet, self).__init__()
+        self.model = nn.Sequential(
+            nn.ConvTranspose2d(16, 8, 4, stride=2, padding=1),
+            nn.ReLU(),
+            nn.ConvTranspose2d(8, 4, 4, stride=2, padding=1)
+        )
+
+    def forward(self, x):
+        return self.model(x)
+
+net = UpsamplingNet()
+x = torch.randn(1, 16, 8, 8)
+print(net(x).shape)

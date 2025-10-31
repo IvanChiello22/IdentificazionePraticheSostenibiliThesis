@@ -1,0 +1,50 @@
+--- gpt4omini/neg_t15_17_unet_tf.py
++++ gpt5mini/neg_t15_17_unet_tf.py
+@@ -1,22 +1,28 @@
+ import tensorflow as tf
+-from tensorflow import keras
+-from tensorflow.keras import layers
++from tensorflow import keras; from tensorflow.keras import layers
++inp = keras.Input(shape=(64,64,1))
++c1 = layers.Conv2D(8,3,padding='same',activation='relu')(inp)
++c2 = layers.Conv2D(16,3,padding='same',activation='relu')(c1)
++u  = layers.UpSampling2D()(c2)
++c3 = layers.Conv2D(8,3,padding='same',activation='relu')(u)
++out = layers.Conv2D(1,1)(c3)
++model = keras.Model(inp,out); print(model.count_params())
+ 
+-inp = keras.Input(shape=(64, 64, 1))
+-c1 = layers.Conv2D(8, 3, padding='same', activation='relu')(inp)
+-c2 = layers.Conv2D(16, 3, padding='same', activation='relu')(c1)
+-u = layers.UpSampling2D()(c2)
+-c3 = layers.Conv2D(8, 3, padding='same', activation='relu')(u)
+-out = layers.Conv2D(1, 1)(c3)
++conv_layers = [l for l in model.layers if isinstance(l, layers.Conv2D)]
++if conv_layers:
++    target = max(conv_layers, key=lambda l: l.count_params())
++    weights = target.get_weights()
++    if weights:
++        kernel = weights[0]  # shape (kh,kw,in_ch,out_ch)
++        out_ch = kernel.shape[-1]
++        prune_fraction = 0.25
++        num_prune = max(1, int(out_ch * prune_fraction)) if out_ch > 0 else 0
++        if num_prune > 0:
++            norms = abs(kernel).sum(axis=(0,1,2))
++            prune_idx = norms.argsort()[:num_prune]
++            kernel[..., prune_idx] = 0
++            weights[0] = kernel
++            target.set_weights(weights)
++            print(f"Pruned {num_prune} filters from layer {target.name}")
+ 
+-model = keras.Model(inp, out)
+-
+-# Implementing energy aware pruning (example placeholder)
+-# This is a conceptual placeholder; actual pruning logic would depend on the specific requirements and implementation.
+-def prune_model(model):
+-    # Placeholder for pruning logic
+-    pass
+-
+-prune_model(model)
+-
+-print(model.count_params())
++checkpoint_cb = keras.callbacks.ModelCheckpoint(filepath='model_ckpt.h5', save_best_only=True)

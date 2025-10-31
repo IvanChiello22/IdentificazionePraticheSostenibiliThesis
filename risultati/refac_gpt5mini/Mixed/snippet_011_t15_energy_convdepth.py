@@ -1,0 +1,28 @@
+# Snippet 11: t15_energy_convdepth
+# T15 — Energy‑aware pruning for depthwise‑separable conv (prioritize high‑energy stages)
+import torch, torch.nn as nn, torch.nn.functional as F
+class DSConv(nn.Module):
+    def __init__(self, cin, cout, k=3): super().__init__(); self.dw=nn.Conv2d(cin,cin,k,groups=cin,padding=k//2); self.pw=nn.Conv2d(cin,cout,1)
+    def forward(self,x): return self.pw(F.relu(self.dw(x)))
+def energy_dw(cin, H, W, k): return 2*H*W*cin*k*k  # depthwise
+def energy_pw(cin, cout, H, W): return 2*H*W*cin*cout  # pointwise dominates
+def prune_pw_out_energy(pw: nn.Conv2d, keep_ratio, H, W):
+    with torch.no_grad():
+        # checkpoint current weights/bias to avoid loss on premature termination
+        ckpt = {
+            'weight': pw.weight.detach().cpu(),
+            'bias': pw.bias.detach().cpu() if pw.bias is not None else None,
+            'in_channels': pw.in_channels,
+            'out_channels': pw.out_channels
+        }
+        torch.save(ckpt, f"pw_checkpoint_{id(pw)}.pt")
+        e = energy_pw(pw.in_channels, pw.out_channels, H, W)
+        imp = pw.weight.detach().abs().view(pw.out_channels, -1).mean(1)
+        score = imp/(e+1e-9); k = max(1, int(keep_ratio*pw.out_channels))
+        keep = torch.topk(score, k).indices
+        pw.weight = nn.Parameter(pw.weight[keep].clone())
+        if pw.bias is not None: pw.bias = nn.Parameter(pw.bias[keep].clone())
+        pw.out_channels = k
+net = DSConv(24, 64)
+prune_pw_out_energy(net.pw, 0.6, 56, 56)
+x = torch.randn(1,24,56,56); y = net(x); print(y.shape, net.pw.out_channels)

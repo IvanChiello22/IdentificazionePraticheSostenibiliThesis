@@ -1,0 +1,59 @@
+--- gpt4omini/t19_energyaware_18.py
++++ gpt5mini/t19_energyaware_18.py
+@@ -1,31 +1,36 @@
+-import torch
+-import torch.nn as nn
+-import torch.optim as optim
+-import os
+-
++import torch, torch.nn as nn, torch.optim as optim, os
++import torch.nn.utils.prune as prune
+ torch.manual_seed(0)
+-net = nn.Sequential(nn.Linear(8, 16), nn.ReLU(), nn.Linear(16, 2))
++net = nn.Sequential(nn.Linear(8,16), nn.ReLU(), nn.Linear(16,2))
+ opt = optim.SGD(net.parameters(), 0.1)
+-best_loss = float('inf')
+-patience, wait = 2, 0
++best = 1e9; patience, wait = 2, 0
+ os.makedirs('ckpt', exist_ok=True)
+ 
++# Energy-aware pruning setup: identify the most parameter-heavy Linear layer.
++# Default prune_amount is 0.0 to preserve original behavior unless adjusted.
++prune_amount = 0.0
++largest_linear = None
++largest_params = 0
++for m in net.modules():
++    if isinstance(m, nn.Linear):
++        cnt = sum(p.numel() for p in m.parameters())
++        if cnt > largest_params:
++            largest_params = cnt
++            largest_linear = m
++
+ for epoch in range(1, 13):
+-    x = torch.randn(64, 8)
+-    y = torch.randint(0, 2, (64,))
++    x = torch.randn(64,8); y = torch.randint(0,2,(64,))
+     loss = nn.CrossEntropyLoss()(net(x), y)
+-    opt.zero_grad()
+-    loss.backward()
+-    opt.step()
+-    
+-    if loss.item() + 1e-6 < best_loss:
+-        best_loss = loss.item()
+-        wait = 0
+-        torch.save({'e': epoch, 'loss': best_loss, 'model': net.state_dict()}, 'ckpt/best.pt')
++    opt.zero_grad(); loss.backward(); opt.step()
++    if loss.item() + 1e-6 < best:
++        best = loss.item(); wait = 0
++        torch.save({'e': epoch, 'loss': best, 'model': net.state_dict(), 'opt': opt.state_dict()}, 'ckpt/best.pt')
+     else:
+         wait += 1
+         if wait >= patience:
+-            torch.save({'e': epoch, 'loss': loss.item(), 'model': net.state_dict()}, f'ckpt/plateau_e{epoch:02d}.pt')
++            # checkpoint on plateau; also apply energy-aware pruning to the largest layer if enabled
++            if largest_linear is not None and prune_amount > 0.0:
++                prune.l1_unstructured(largest_linear, name='weight', amount=prune_amount)
++            torch.save({'e': epoch, 'loss': loss.item(), 'model': net.state_dict(), 'opt': opt.state_dict()}, f'ckpt/plateau_e{epoch:02d}.pt')
+             wait = 0
+-
+ print('done')

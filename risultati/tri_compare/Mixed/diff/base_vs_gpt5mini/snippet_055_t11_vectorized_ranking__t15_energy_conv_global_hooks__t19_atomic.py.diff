@@ -1,0 +1,19 @@
+--- BASE/snippet_055_t11_vectorized_ranking__t15_energy_conv_global_hooks__t19_atomic.py
++++ gpt5mini/snippet_055_t11_vectorized_ranking__t15_energy_conv_global_hooks__t19_atomic.py
+@@ -29,10 +29,15 @@
+ net = Net(); net.c1.register_forward_hook(hook('c1')); net.c2.register_forward_hook(hook('c2')); net.c3.register_forward_hook(hook('c3'))
+ x = torch.randn(4,3,64,64); _ = net(x)
+ energy = {k: v for k,v in stats.items()}
++# map module objects to their attribute names for correct energy lookup
++module_name_map = {m: name for name, m in net.named_modules() if isinstance(m, nn.Conv2d)}
+ def prune_out(conv, keep_ratio):
+     with torch.no_grad():
+         imp = conv.weight.detach().abs().view(conv.out_channels, -1).mean(1)
+-        e = torch.tensor(float(energy.get(conv.__class__.__name__, 1.0)))
++        # lookup energy by module name (as recorded by hooks)
++        name = module_name_map.get(conv, None)
++        e_val = float(energy.get(name, 1.0))
++        e = torch.tensor(e_val, device=imp.device)
+         score = imp/(e+1e-9); k=max(1,int(keep_ratio*conv.out_channels))
+         keep = torch.topk(score,k).indices
+         conv.weight = nn.Parameter(conv.weight[keep].clone()); conv.out_channels = k

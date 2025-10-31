@@ -1,0 +1,49 @@
+# 16) Mini-ResNet Keras — T15 NEGATIVO: nessun canale eliminato
+import tensorflow as tf, numpy as np
+from tensorflow import keras; from tensorflow.keras import layers
+inp = keras.Input(shape=(32,32,3))
+x = layers.Conv2D(16,3,padding='same',activation='relu')(inp)
+r = layers.Conv2D(16,3,padding='same')(x)
+x = layers.Add()([x,r]); x = layers.Activation('relu')(x)
+x = layers.GlobalAveragePooling2D()(x)
+out = layers.Dense(10)(x)
+model = keras.Model(inp,out); print(model.output_shape)
+
+def identify_most_energy_intensive_conv(model):
+    heaviest = None
+    max_score = -1
+    for layer in model.layers:
+        if isinstance(layer, layers.Conv2D):
+            weights = layer.get_weights()
+            if not weights:
+                continue
+            kernel = weights[0]
+            if kernel is None:
+                continue
+            k_h, k_w, in_ch, out_ch = kernel.shape
+            score = k_h * k_w * in_ch * out_ch
+            if score > max_score:
+                max_score = score
+                heaviest = layer.name
+    return heaviest
+
+def prune_layer_weights_by_fraction(model, layer_name, fraction):
+    if not (0.0 < fraction < 1.0):
+        return
+    try:
+        layer = model.get_layer(layer_name)
+    except ValueError:
+        return
+    weights = layer.get_weights()
+    if not weights:
+        return
+    kernel = weights[0]
+    flat = np.abs(kernel).flatten()
+    if flat.size == 0:
+        return
+    threshold = np.percentile(flat, fraction * 100.0)
+    kernel[np.abs(kernel) < threshold] = 0
+    weights[0] = kernel
+    layer.set_weights(weights)
+
+checkpoint_cb = keras.callbacks.ModelCheckpoint('checkpoint.ckpt', save_weights_only=True, save_best_only=False, verbose=1)

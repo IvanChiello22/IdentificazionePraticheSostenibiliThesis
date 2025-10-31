@@ -1,0 +1,26 @@
+# Snippet 36: t11_cosine_batched + t15_energy_mlp
+# T11 — NumPy: cosine similarity, fully vectorized (no sklearn)
+import numpy as np
+A = np.random.randn(500, 128)
+B = np.random.randn(600, 128)
+A /= np.linalg.norm(A, axis=1, keepdims=True) + 1e-9
+B /= np.linalg.norm(B, axis=1, keepdims=True) + 1e-9
+S = A @ B.T
+print(S.shape, round(S.max(),4))
+
+# T15 — Energy‑aware pruning for MLP neurons (cost ~ fan_in + activation size)
+import torch, torch.nn as nn, torch.nn.functional as F
+class MLP(nn.Module):
+    def __init__(self,d=128,h=256): super().__init__(); self.d=d; self.fc1=nn.Linear(d,h); self.fc2=nn.Linear(h,d)
+    def forward(self,x): return self.fc2(F.gelu(self.fc1(x)))
+def prune_hidden_energy(fc1: nn.Linear, keep_ratio, batch_tokens=2048):
+    with torch.no_grad():
+        imp = fc1.weight.detach().abs().mean(dim=1)  # neuron importance
+        energy = fc1.in_features + batch_tokens  # proxy
+        score = imp/(energy+1e-9); k=max(1,int(keep_ratio*fc1.out_features))
+        keep = torch.topk(score,k).indices
+        fc1.weight = nn.Parameter(fc1.weight[keep].clone())
+        if fc1.bias is not None: fc1.bias = nn.Parameter(fc1.bias[keep].clone())
+        fc1.out_features = k
+m = MLP(); prune_hidden_energy(m.fc1, 0.5, 4096)
+x = torch.randn(8, m.d); print(m(x).shape, m.fc1.out_features)

@@ -1,0 +1,62 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to72__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t11_25_cosine_similarity.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/neg_t11_25_cosine_similarity.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to72__1"><a href="#difflib_chg_to72__1">n</a></td><td class="diff_header" id="from72_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;25)&nbsp;Cosine&nbsp;similarity&nbsp;(normalizzata&nbsp;a&nbsp;mano)</span></td><td class="diff_next"><a href="#difflib_chg_to72__1">n</a></td><td class="diff_header" id="to72_1">1</td><td nowrap="nowrap"><span class="diff_add">from&nbsp;math&nbsp;import&nbsp;sqrt</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to72_2">2</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from72_2">2</td><td nowrap="nowrap">a&nbsp;=&nbsp;[1.0,&nbsp;2.0,&nbsp;3.0]</td><td class="diff_next"></td><td class="diff_header" id="to72_3">3</td><td nowrap="nowrap">a&nbsp;=&nbsp;[1.0,&nbsp;2.0,&nbsp;3.0]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from72_3">3</td><td nowrap="nowrap">b&nbsp;=&nbsp;[2.0,&nbsp;0.0,&nbsp;1.0]</td><td class="diff_next"></td><td class="diff_header" id="to72_4">4</td><td nowrap="nowrap">b&nbsp;=&nbsp;[2.0,&nbsp;0.0,&nbsp;1.0]</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to72__top">t</a></td><td class="diff_header" id="from72_4">4</td><td nowrap="nowrap"><span class="diff_sub">dot&nbsp;=&nbsp;0.0</span></td><td class="diff_next"><a href="#difflib_chg_to72__top">t</a></td><td class="diff_header" id="to72_5">5</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from72_5">5</td><td nowrap="nowrap"><span class="diff_sub">na&nbsp;=&nbsp;0.0</span></td><td class="diff_next"></td><td class="diff_header" id="to72_6">6</td><td nowrap="nowrap"><span class="diff_add">dot&nbsp;=&nbsp;sum(x&nbsp;*&nbsp;y&nbsp;for&nbsp;x,&nbsp;y&nbsp;in&nbsp;zip(a,&nbsp;b))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from72_6">6</td><td nowrap="nowrap"><span class="diff_sub">nb&nbsp;=&nbsp;0.0</span></td><td class="diff_next"></td><td class="diff_header" id="to72_7">7</td><td nowrap="nowrap"><span class="diff_add">na&nbsp;=&nbsp;sum(x&nbsp;*&nbsp;x&nbsp;for&nbsp;x&nbsp;in&nbsp;a)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from72_7">7</td><td nowrap="nowrap"><span class="diff_sub">for&nbsp;i&nbsp;in&nbsp;range(len(a)):</span></td><td class="diff_next"></td><td class="diff_header" id="to72_8">8</td><td nowrap="nowrap"><span class="diff_add">nb&nbsp;=&nbsp;sum(y&nbsp;*&nbsp;y&nbsp;for&nbsp;y&nbsp;in&nbsp;b)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from72_8">8</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;dot&nbsp;+=&nbsp;a[i]*b[i]</span></td><td class="diff_next"></td><td class="diff_header" id="to72_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from72_9">9</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;na&nbsp;+=&nbsp;a[i]*a[i]</span></td><td class="diff_next"></td><td class="diff_header" id="to72_10">10</td><td nowrap="nowrap"><span class="diff_add">sim&nbsp;=&nbsp;dot&nbsp;/&nbsp;(sqrt(na)&nbsp;*&nbsp;sqrt(nb)&nbsp;if&nbsp;na&nbsp;and&nbsp;nb&nbsp;else&nbsp;1.0)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from72_10">10</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;nb&nbsp;+=&nbsp;b[i]*b[i]</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from72_11">11</td><td nowrap="nowrap"><span class="diff_sub">sim&nbsp;=&nbsp;dot&nbsp;/&nbsp;(((na**0.5)&nbsp;or&nbsp;1.0)&nbsp;*&nbsp;((nb**0.5)&nbsp;or&nbsp;1.0))</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from72_12">12</td><td nowrap="nowrap">print(sim)</td><td class="diff_next"></td><td class="diff_header" id="to72_11">11</td><td nowrap="nowrap">print(sim)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

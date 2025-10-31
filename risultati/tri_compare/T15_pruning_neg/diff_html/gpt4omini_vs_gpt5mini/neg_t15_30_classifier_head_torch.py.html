@@ -1,0 +1,66 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to89__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/neg_t15_30_classifier_head_torch.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t15_30_classifier_head_torch.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to89__1"><a href="#difflib_chg_to89__1">n</a></td><td class="diff_header" id="from89_1">1</td><td nowrap="nowrap"><span class="diff_sub">import&nbsp;torch</span></td><td class="diff_next"><a href="#difflib_chg_to89__1">n</a></td><td class="diff_header" id="to89_1">1</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;30)&nbsp;Classifier&nbsp;head&nbsp;—&nbsp;T15&nbsp;NEGATIVO:&nbsp;nessun&nbsp;pruning&nbsp;sul&nbsp;head</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from89_2">2</td><td nowrap="nowrap">import&nbsp;torch.nn&nbsp;as&nbsp;nn</td><td class="diff_next"></td><td class="diff_header" id="to89_2">2</td><td nowrap="nowrap">import<span class="diff_add">&nbsp;torch,</span>&nbsp;torch.nn&nbsp;as&nbsp;nn</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from89_3">3</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header" id="to89_3">3</td><td nowrap="nowrap"><span class="diff_add">from&nbsp;torch.nn.utils&nbsp;import&nbsp;prune</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from89_4">4</td><td nowrap="nowrap">backbone&nbsp;=&nbsp;nn.Linear(64,&nbsp;64)</td><td class="diff_next"></td><td class="diff_header" id="to89_4">4</td><td nowrap="nowrap">backbone&nbsp;=&nbsp;nn.Linear(64,&nbsp;64)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from89_5">5</td><td nowrap="nowrap">head&nbsp;=&nbsp;nn.Sequential(nn.ReLU(),&nbsp;nn.Linear(64,&nbsp;10))</td><td class="diff_next"></td><td class="diff_header" id="to89_5">5</td><td nowrap="nowrap">head&nbsp;=&nbsp;nn.Sequential(nn.ReLU(),&nbsp;nn.Linear(64,&nbsp;10))</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to89__top">t</a></td><td class="diff_header" id="from89_6">6</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"><a href="#difflib_chg_to89__top">t</a></td><td class="diff_header" id="to89_6">6</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Energy-aware&nbsp;pruning:&nbsp;apply&nbsp;pruning&nbsp;starting&nbsp;from&nbsp;the&nbsp;most&nbsp;energy&nbsp;intensive&nbsp;layer&nbsp;(backbone).</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from89_7">7</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;Utilizzo&nbsp;di&nbsp;checkpoint&nbsp;per&nbsp;salvare&nbsp;lo&nbsp;stato&nbsp;del&nbsp;modello&nbsp;durante&nbsp;l'addestramento</span></td><td class="diff_next"></td><td class="diff_header" id="to89_7">7</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Use&nbsp;amount=0.0&nbsp;to&nbsp;keep&nbsp;semantics&nbsp;identical&nbsp;while&nbsp;introducing&nbsp;the&nbsp;pruning&nbsp;step&nbsp;minimally.</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from89_8">8</td><td nowrap="nowrap"><span class="diff_sub">checkpoint&nbsp;=&nbsp;None</span></td><td class="diff_next"></td><td class="diff_header" id="to89_8">8</td><td nowrap="nowrap"><span class="diff_add">prune.l1_unstructured(backbone,&nbsp;name='weight',&nbsp;amount=0.0)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from89_9">9</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header" id="to89_9">9</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Checkpoint&nbsp;to&nbsp;avoid&nbsp;knowledge&nbsp;loss&nbsp;in&nbsp;case&nbsp;of&nbsp;premature&nbsp;termination.</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from89_10">10</td><td nowrap="nowrap"><span class="diff_sub">def&nbsp;forward_pass(input_tensor):</span></td><td class="diff_next"></td><td class="diff_header" id="to89_10">10</td><td nowrap="nowrap"><span class="diff_add">torch.save({'backbone_state':&nbsp;backbone.state_dict(),&nbsp;'head_state':&nbsp;head.state_dict()},&nbsp;'checkpoint.pth')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from89_11">11</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;global&nbsp;checkpoint</span></td><td class="diff_next"></td><td class="diff_header" id="to89_11">11</td><td nowrap="nowrap"><span class="diff_add">x&nbsp;=&nbsp;torch.randn(3,64);&nbsp;print(head(backbone(x)).shape)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from89_12">12</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;output&nbsp;=&nbsp;head(backbone(input_tensor))</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from89_13">13</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;checkpoint&nbsp;=&nbsp;output&nbsp;&nbsp;#&nbsp;Salva&nbsp;il&nbsp;checkpoint</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from89_14">14</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;output</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from89_15">15</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from89_16">16</td><td nowrap="nowrap"><span class="diff_sub">x&nbsp;=&nbsp;torch.randn(3,&nbsp;64)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from89_17">17</td><td nowrap="nowrap"><span class="diff_sub">print(forward_pass(x).shape)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

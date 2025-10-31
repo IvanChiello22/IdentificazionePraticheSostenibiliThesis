@@ -1,0 +1,62 @@
+# Snippet 59: triple mix
+# T11 — NumPy: per‑row top‑k without loops via argpartition
+import numpy as np
+X = np.random.randn(200, 1000)
+k = 7
+idx = np.argpartition(-X, k, axis=1)[:, :k]
+vals = np.take_along_axis(X, idx, axis=1)
+sorted_idx = np.argsort(-vals, axis=1)
+topk = np.take_along_axis(vals, sorted_idx, axis=1)
+print(topk.shape, round(topk.mean(),4))
+
+# T15 — Energy‑aware global conv pruning using forward‑hook activation stats
+import torch, torch.nn as nn, torch.nn.functional as F
+stats = {}
+def hook(name):
+    def fn(_, __, out):
+        B,C,H,W = out.shape
+        stats[name] = stats.get(name, 0) + (H*W*C)
+    return fn
+class Net(nn.Module):
+    def __init__(self): super().__init__(); self.c1=nn.Conv2d(3,20,3,padding=1); self.c2=nn.Conv2d(20,40,3,padding=1); self.c3=nn.Conv2d(40,80,3,padding=1)
+    def forward(self,x): return self.c3(F.relu(self.c2(F.relu(self.c1(x)))))
+net = Net(); net.c1.register_forward_hook(hook('c1')); net.c2.register_forward_hook(hook('c2')); net.c3.register_forward_hook(hook('c3'))
+x = torch.randn(4,3,64,64); _ = net(x)
+energy = {k: v for k,v in stats.items()}
+def prune_out(conv, keep_ratio):
+    with torch.no_grad():
+        imp = conv.weight.detach().abs().view(conv.out_channels, -1).mean(1)
+        layer_name = None
+        for n, m in net.named_children():
+            if m is conv:
+                layer_name = n
+                break
+        e_val = energy.get(layer_name, energy.get(conv.__class__.__name__, 1.0))
+        e = torch.tensor(float(e_val))
+        score = imp/(e+1e-9)
+        k = max(1, int(keep_ratio*conv.out_channels))
+        keep = torch.topk(score, k).indices
+        conv.weight = nn.Parameter(conv.weight[keep].clone())
+        conv.out_channels = k
+
+# Prune starting from the most energy‑intensive Conv2d layer
+conv_layers = [(n,m) for n,m in net.named_children() if isinstance(m, nn.Conv2d)]
+if conv_layers:
+    conv_layers.sort(key=lambda nm: energy.get(nm[0], 0), reverse=True)
+    target_name, target_conv = conv_layers[0]
+    prune_out(target_conv, 0.7)
+    print(target_conv.out_channels)
+else:
+    print('no conv layers')
+
+# T19 — Atomic checkpoint writes (write to tmp then rename), avoid partial files
+import torch, torch.nn as nn, os, tempfile, shutil
+m = nn.Sequential(nn.Linear(20,40), nn.ReLU(), nn.Linear(40,3)); os.makedirs('ckpt', exist_ok=True)
+state = {'model': m.state_dict(), 'meta': {'epoch': 1}}
+fd, tmp = tempfile.mkstemp(dir='ckpt', prefix='tmp_', suffix='.pt'); os.close(fd)
+try:
+    torch.save(state, tmp)
+    shutil.move(tmp, 'ckpt/model.pt')
+finally:
+    if os.path.exists(tmp): os.remove(tmp)
+print('done')

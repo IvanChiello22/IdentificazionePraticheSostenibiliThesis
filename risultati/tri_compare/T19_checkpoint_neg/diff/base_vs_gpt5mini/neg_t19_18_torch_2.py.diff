@@ -1,0 +1,39 @@
+--- BASE/neg_t19_18_torch_2.py
++++ gpt5mini/neg_t19_18_torch_2.py
+@@ -1,10 +1,33 @@
+-# 18) PyTorch — T19 NEGATIVO: autoencoder, nessun checkpointing
++import os
+ import torch, torch.nn as nn
++from torch.nn.utils import prune
++
+ enc = nn.Sequential(nn.Linear(32,16), nn.ReLU(), nn.Linear(16,8))
+ dec = nn.Sequential(nn.Linear(8,16), nn.ReLU(), nn.Linear(16,32))
+-opt = torch.optim.Adam(list(enc.parameters())+list(dec.parameters()), 1e-3)
++
++# Energy-aware pruning: prune a small fraction from the most parameter-heavy linear layers
++linear_modules = [m for m in list(enc) + list(dec) if isinstance(m, nn.Linear)]
++linear_modules_sorted = sorted(linear_modules, key=lambda m: m.weight.numel(), reverse=True)
++for module in linear_modules_sorted[:2]:
++    prune.l1_unstructured(module, name='weight', amount=0.05)
++
++opt = torch.optim.Adam(list(enc.parameters()) + list(dec.parameters()), 1e-3)
+ mse = nn.MSELoss()
+-for e in range(3):
++
++checkpoint_path = 'checkpoint.pth'
++start_epoch = 0
++if os.path.exists(checkpoint_path):
++    ckpt = torch.load(checkpoint_path)
++    enc.load_state_dict(ckpt['enc'])
++    dec.load_state_dict(ckpt['dec'])
++    if 'opt' in ckpt:
++        opt.load_state_dict(ckpt['opt'])
++    start_epoch = ckpt.get('epoch', 0)
++
++num_epochs = 3
++for e in range(start_epoch, num_epochs):
+     x = torch.randn(64,32); z = enc(x); xh = dec(z); loss = mse(xh,x)
+     opt.zero_grad(); loss.backward(); opt.step()
++    # Checkpoint to avoid knowledge loss on premature termination
++    torch.save({'enc': enc.state_dict(), 'dec': dec.state_dict(), 'opt': opt.state_dict(), 'epoch': e+1}, checkpoint_path)
+ print('done')

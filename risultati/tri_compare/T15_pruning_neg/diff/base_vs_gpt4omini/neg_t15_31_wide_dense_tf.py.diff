@@ -1,0 +1,19 @@
+--- BASE/neg_t15_31_wide_dense_tf.py
++++ gpt4omini/neg_t15_31_wide_dense_tf.py
+@@ -1,5 +1,12 @@
+-# 31) Dense molto ampio — T15 NEGATIVO: nessuna potatura
+ import tensorflow as tf
+-from tensorflow import keras; from tensorflow.keras import layers
+-inp = keras.Input((256,)); x = layers.Dense(256, activation='relu')(inp); x = layers.Dense(128, activation='relu')(x); out = layers.Dense(10)(x)
+-model = keras.Model(inp,out); print(model.count_params())
++from tensorflow import keras
++from tensorflow.keras import layers
++
++inp = keras.Input((256,))
++x = layers.Dense(256, activation='relu')(inp)
++x = layers.Dense(128, activation='relu')(x)
++out = layers.Dense(10)(x)
++
++model = keras.Model(inp, out)
++model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
++model.summary()

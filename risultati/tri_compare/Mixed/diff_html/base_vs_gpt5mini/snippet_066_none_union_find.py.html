@@ -1,0 +1,78 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to196__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/snippet_066_none_union_find.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/snippet_066_none_union_find.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to196__0"><a href="#difflib_chg_to196__0">f</a></td><td class="diff_header" id="from196_1">1</td><td nowrap="nowrap">#&nbsp;Snippet&nbsp;66:&nbsp;mixed&nbsp;set</td><td class="diff_next"><a href="#difflib_chg_to196__0">f</a></td><td class="diff_header" id="to196_1">1</td><td nowrap="nowrap">#&nbsp;Snippet&nbsp;66:&nbsp;mixed&nbsp;set</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from196_2">2</td><td nowrap="nowrap">#&nbsp;NONE&nbsp;—&nbsp;Union‑Find&nbsp;with&nbsp;path&nbsp;compression,&nbsp;pure&nbsp;Python</td><td class="diff_next"></td><td class="diff_header" id="to196_2">2</td><td nowrap="nowrap">#&nbsp;NONE&nbsp;—&nbsp;Union‑Find&nbsp;with&nbsp;path&nbsp;compression,&nbsp;pure&nbsp;Python</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from196_3">3</td><td nowrap="nowrap">class&nbsp;DSU:</td><td class="diff_next"></td><td class="diff_header" id="to196_3">3</td><td nowrap="nowrap">class&nbsp;DSU:</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to196__1">n</a></td><td class="diff_header" id="from196_4">4</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;__init__(self,n):&nbsp;self.p=list(range(n));&nbsp;self.r=[0]*n</span></td><td class="diff_next"><a href="#difflib_chg_to196__1">n</a></td><td class="diff_header" id="to196_4">4</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;__init__(self,n):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to196_5">5</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.p&nbsp;=&nbsp;list(range(n))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to196_6">6</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.r&nbsp;=&nbsp;[0]&nbsp;*&nbsp;n</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to196_7">7</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to196__1"></td><td class="diff_header" id="from196_5">5</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;find(self,x):</td><td class="diff_next"></td><td class="diff_header" id="to196_8">8</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;find(self,<span class="diff_add">&nbsp;</span>x):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from196_6">6</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;self.p[x]!=x:</td><td class="diff_next"></td><td class="diff_header" id="to196_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;self.p[x]<span class="diff_add">&nbsp;</span>!=<span class="diff_add">&nbsp;</span>x:</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from196_7">7</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.p[x]=self.p[self.p[x]]<span class="diff_sub">;&nbsp;x=self.p[x]</span></td><td class="diff_next"></td><td class="diff_header" id="to196_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.p[x]<span class="diff_add">&nbsp;</span>=<span class="diff_add">&nbsp;</span>self.p[self.p[x]]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to196_11">11</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;self.p[x]</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from196_8">8</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;x</td><td class="diff_next"></td><td class="diff_header" id="to196_12">12</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;x</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to196__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to196__2">n</a></td><td class="diff_header" id="to196_13">13</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from196_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;union(self,a,b):</td><td class="diff_next"></td><td class="diff_header" id="to196_14">14</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;union(self,<span class="diff_add">&nbsp;</span>a,<span class="diff_add">&nbsp;</span>b):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from196_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ra,rb=self.find(a),self.find(b)</td><td class="diff_next"></td><td class="diff_header" id="to196_15">15</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ra,<span class="diff_add">&nbsp;</span>rb<span class="diff_add">&nbsp;</span>=<span class="diff_add">&nbsp;</span>self.find(a),<span class="diff_add">&nbsp;</span>self.find(b)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to196_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;ra&nbsp;==&nbsp;rb:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from196_11">11</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="diff_chg">if&nbsp;ra==rb:</span>&nbsp;return&nbsp;False</td><td class="diff_next"></td><td class="diff_header" id="to196_17">17</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="diff_chg">&nbsp;&nbsp;&nbsp;</span>&nbsp;return&nbsp;False</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from196_12">12</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;self.r[ra]&lt;self.r[rb]:<span class="diff_sub">&nbsp;ra,rb=rb,ra</span></td><td class="diff_next"></td><td class="diff_header" id="to196_18">18</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;self.r[ra]<span class="diff_add">&nbsp;</span>&lt;<span class="diff_add">&nbsp;</span>self.r[rb]:</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to196__2"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to196_19">19</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ra,&nbsp;rb&nbsp;=&nbsp;rb,&nbsp;ra</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from196_13">13</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.p[rb]=ra</td><td class="diff_next"></td><td class="diff_header" id="to196_20">20</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.p[rb]<span class="diff_add">&nbsp;</span>=<span class="diff_add">&nbsp;</span>ra</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from196_14">14</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;self.r[ra]==self.r[rb]:<span class="diff_sub">&nbsp;self.r[ra]+=1</span></td><td class="diff_next"></td><td class="diff_header" id="to196_21">21</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;self.r[ra]<span class="diff_add">&nbsp;</span>==<span class="diff_add">&nbsp;</span>self.r[rb]:</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to196_22">22</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.r[ra]&nbsp;+=&nbsp;1</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from196_15">15</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;True</td><td class="diff_next"></td><td class="diff_header" id="to196_23">23</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;True</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to196__top">t</a></td><td class="diff_header" id="from196_16">16</td><td nowrap="nowrap"><span class="diff_sub">ds=DSU(1000);&nbsp;[ds.union(i,(i*3+1)%1000)&nbsp;for&nbsp;i&nbsp;in&nbsp;range(1000)]</span></td><td class="diff_next"><a href="#difflib_chg_to196__top">t</a></td><td class="diff_header" id="to196_24">24</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to196_25">25</td><td nowrap="nowrap"><span class="diff_add">if&nbsp;__name__&nbsp;==&nbsp;'__main__':</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to196_26">26</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;ds&nbsp;=&nbsp;DSU(1000)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to196_27">27</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;i&nbsp;in&nbsp;range(1000):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to196_28">28</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ds.union(i,&nbsp;(i*3&nbsp;+&nbsp;1)&nbsp;%&nbsp;1000)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from196_17">17</td><td nowrap="nowrap">print(sum(ds.find(i)==ds.find(0)&nbsp;for&nbsp;i&nbsp;in&nbsp;range(1000)))</td><td class="diff_next"></td><td class="diff_header" id="to196_29">29</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;</span>print(sum(ds.find(i)<span class="diff_add">&nbsp;</span>==<span class="diff_add">&nbsp;</span>ds.find(0)&nbsp;for&nbsp;i&nbsp;in&nbsp;range(1000)))</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+--- BASE/neg_t19_47_extra.py
++++ gpt4omini/neg_t19_47_extra.py
+@@ -1,7 +1,15 @@
+-# 47) scikit-learn — T19 NEGATIVO: RandomForest senza export
+ from sklearn.ensemble import RandomForestClassifier
+ from sklearn.datasets import make_classification
+-X,y = make_classification(n_samples=300, n_features=12, random_state=0)
++from sklearn.model_selection import train_test_split
++import joblib
++
++X, y = make_classification(n_samples=300, n_features=12, random_state=0)
++X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
++
+ clf = RandomForestClassifier(n_estimators=50, random_state=0)
+-clf.fit(X,y)
++clf.fit(X_train, y_train)
++
++# Save the model as a checkpoint
++joblib.dump(clf, 'random_forest_model.pkl')
++
+ print('done')

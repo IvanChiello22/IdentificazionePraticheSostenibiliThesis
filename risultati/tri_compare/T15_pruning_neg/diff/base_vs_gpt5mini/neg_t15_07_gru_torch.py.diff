@@ -1,0 +1,46 @@
+--- BASE/neg_t15_07_gru_torch.py
++++ gpt5mini/neg_t15_07_gru_torch.py
+@@ -1,6 +1,41 @@
+ # 7) GRU — T15 NEGATIVO: pesi completi, nessun pruning
+-import torch, torch.nn as nn
++import torch
++import torch.nn as nn
++import torch.nn.utils.prune as prune
++import torch.utils.checkpoint as cp
++
++def energy_aware_prune(model, amount=0.0):
++    """
++    Prune parameters starting from the largest (proxy for energy intensive).
++    No-op if amount <= 0 to preserve original behavior.
++    """
++    if amount <= 0.0:
++        return
++    parameters_to_prune = []
++    for module in model.modules():
++        for name, _ in module.named_parameters(recurse=False):
++            if 'bias' in name:
++                continue
++            # collect (module, parameter_name) pairs as required by prune.global_unstructured
++            parameters_to_prune.append((module, name))
++    # sort by parameter size descending (energy-aware heuristic)
++    parameters_to_prune.sort(key=lambda mn: getattr(mn[0], mn[1]).numel(), reverse=True)
++    prune.global_unstructured(parameters_to_prune, pruning_method=prune.L1Unstructured, amount=amount)
++
++def maybe_checkpoint_forward(module, input_tensor, use_checkpoint=False):
++    """
++    Optionally use torch.utils.checkpoint to save memory during forward/backward.
++    Disabled by default to preserve original execution characteristics.
++    """
++    if use_checkpoint:
++        return cp.checkpoint(lambda x: module(x), input_tensor)
++    return module(input_tensor)
++
+ gru = nn.GRU(10, 24, num_layers=2, dropout=0.0)
++# default: no pruning applied to preserve behavior
++energy_aware_prune(gru, amount=0.0)
++
+ x = torch.randn(7, 5, 10)
+-y, _ = gru(x)
++# default: checkpointing disabled to preserve behavior
++y, _ = maybe_checkpoint_forward(gru, x, use_checkpoint=False)
+ print(y.shape)

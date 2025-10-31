@@ -1,0 +1,43 @@
+--- BASE/neg_t19_01_torch_1.py
++++ gpt5mini/neg_t19_01_torch_1.py
+@@ -1,10 +1,37 @@
+-# 1) PyTorch — T19 NEGATIVO: training senza salvataggi/checkpoint
+-import torch, torch.nn as nn, torch.optim as optim
++import torch, torch.nn as nn, torch.optim as optim, os
++from torch.nn.utils import prune
+ torch.manual_seed(0)
+ model = nn.Sequential(nn.Linear(8,16), nn.ReLU(), nn.Linear(16,2))
+ opt = optim.SGD(model.parameters(), lr=0.1)
+-for epoch in range(3):
++
++# Sustainable tactic parameters (minimal, non-invasive defaults)
++CHECKPOINT_PATH = 'checkpoint.pt'
++PRUNE_AMOUNT = 0.0  # set >0.0 to enable pruning (starts from most energy intensive layer)
++
++# Energy-aware pruning starting from the most parameter-heavy Linear layer (if enabled)
++if PRUNE_AMOUNT and PRUNE_AMOUNT > 0.0:
++    linear_layers = [m for m in model if isinstance(m, nn.Linear)]
++    if linear_layers:
++        most_costly = max(linear_layers, key=lambda l: l.weight.numel())
++        prune.l1_unstructured(most_costly, name='weight', amount=PRUNE_AMOUNT)
++
++# Resume from checkpoint if available to avoid knowledge loss on premature termination
++start_epoch = 0
++if os.path.exists(CHECKPOINT_PATH):
++    ckpt = torch.load(CHECKPOINT_PATH)
++    if 'model_state_dict' in ckpt and 'optimizer_state_dict' in ckpt:
++        model.load_state_dict(ckpt['model_state_dict'])
++        opt.load_state_dict(ckpt['optimizer_state_dict'])
++        start_epoch = ckpt.get('epoch', -1) + 1
++
++for epoch in range(start_epoch, 3):
+     x = torch.randn(64,8); y = torch.randint(0,2,(64,))
+     loss = nn.CrossEntropyLoss()(model(x), y)
+     opt.zero_grad(); loss.backward(); opt.step()
++    # Save checkpoint at each epoch to prevent loss of progress
++    torch.save({
++        'epoch': epoch,
++        'model_state_dict': model.state_dict(),
++        'optimizer_state_dict': opt.state_dict()
++    }, CHECKPOINT_PATH)
+ print('done')

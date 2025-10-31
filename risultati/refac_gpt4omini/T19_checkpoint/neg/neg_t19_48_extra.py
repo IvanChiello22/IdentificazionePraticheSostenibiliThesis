@@ -1,0 +1,15 @@
+from xgboost import XGBClassifier
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+import joblib
+
+X, y = make_classification(n_samples=200, n_features=10, random_state=0)
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=0)
+
+model = XGBClassifier(n_estimators=50, max_depth=3, learning_rate=0.1, verbosity=0)
+model.fit(X_train, y_train)
+
+# Save the model as a checkpoint
+joblib.dump(model, 'xgb_model_checkpoint.pkl')
+
+print('done')

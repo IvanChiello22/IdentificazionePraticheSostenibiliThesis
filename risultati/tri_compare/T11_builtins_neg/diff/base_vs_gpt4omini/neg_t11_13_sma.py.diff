@@ -1,0 +1,15 @@
+--- BASE/neg_t11_13_sma.py
++++ gpt4omini/neg_t11_13_sma.py
+@@ -1,10 +1,4 @@
+-# 13) Media mobile semplice
+-x = [1,2,3,4,5,6]
++x = [1, 2, 3, 4, 5, 6]
+ w = 3
+-res = []
+-for i in range(len(x)-w+1):
+-    s = 0
+-    for j in range(w):
+-        s += x[i+j]
+-    res.append(s/float(w))
++res = [sum(x[i:i+w]) / float(w) for i in range(len(x) - w + 1)]
+ print(res)

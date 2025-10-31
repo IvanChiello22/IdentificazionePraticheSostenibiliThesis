@@ -1,0 +1,59 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to113__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/neg_t11_38_class_weights.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t11_38_class_weights.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to113__0"><a href="#difflib_chg_to113__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to113__top">t</a></td><td class="diff_header" id="to113_1">1</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;38)&nbsp;Bilanciamento&nbsp;pesi&nbsp;di&nbsp;classe&nbsp;(conteggio&nbsp;manuale)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to113_2">2</td><td nowrap="nowrap"><span class="diff_add">from&nbsp;collections&nbsp;import&nbsp;Counter</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to113_3">3</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from113_1">1</td><td nowrap="nowrap">labels&nbsp;=&nbsp;[0,<span class="diff_sub">&nbsp;</span>0,<span class="diff_sub">&nbsp;</span>1,<span class="diff_sub">&nbsp;</span>2,<span class="diff_sub">&nbsp;</span>2,<span class="diff_sub">&nbsp;</span>2,<span class="diff_sub">&nbsp;</span>1,<span class="diff_sub">&nbsp;</span>1,<span class="diff_sub">&nbsp;</span>1,<span class="diff_sub">&nbsp;</span>1]</td><td class="diff_next"></td><td class="diff_header" id="to113_4">4</td><td nowrap="nowrap">labels&nbsp;=&nbsp;[0,0,1,2,2,2,1,1,1,1]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from113_2">2</td><td nowrap="nowrap"><span class="diff_sub">counts&nbsp;=&nbsp;{y:&nbsp;labels.count(y)&nbsp;for&nbsp;y&nbsp;in&nbsp;set(labels)}</span></td><td class="diff_next"></td><td class="diff_header" id="to113_5">5</td><td nowrap="nowrap"><span class="diff_add">counts&nbsp;=&nbsp;dict(Counter(labels))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from113_3">3</td><td nowrap="nowrap"><span class="diff_sub">weights&nbsp;=&nbsp;{c:&nbsp;len(labels)&nbsp;/&nbsp;(cnt&nbsp;*&nbsp;len(counts))&nbsp;for&nbsp;c,&nbsp;cnt&nbsp;in&nbsp;counts.items()}</span></td><td class="diff_next"></td><td class="diff_header" id="to113_6">6</td><td nowrap="nowrap"><span class="diff_add">weights&nbsp;=&nbsp;{}</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to113_7">7</td><td nowrap="nowrap"><span class="diff_add">total&nbsp;=&nbsp;len(labels)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to113_8">8</td><td nowrap="nowrap"><span class="diff_add">for&nbsp;c,&nbsp;cnt&nbsp;in&nbsp;counts.items():</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to113_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;weights[c]&nbsp;=&nbsp;total&nbsp;/&nbsp;(cnt&nbsp;*&nbsp;len(counts))</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from113_4">4</td><td nowrap="nowrap">print(weights)</td><td class="diff_next"></td><td class="diff_header" id="to113_10">10</td><td nowrap="nowrap">print(weights)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

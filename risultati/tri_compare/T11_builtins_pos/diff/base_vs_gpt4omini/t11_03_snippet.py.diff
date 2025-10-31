@@ -1,0 +1,16 @@
+--- BASE/t11_03_snippet.py
++++ gpt4omini/t11_03_snippet.py
+@@ -1,6 +1,10 @@
+-# T11 POS — snippet 3
+ import numpy as np
+ from scipy.signal import convolve2d
+-img=np.random.randn(512,512);sobel_x=np.array([[1,0,-1],[2,0,-2],[1,0,-1]])
+-gx=convolve2d(img,sobel_x,mode='same',boundary='symm')
++
++def apply_sobel_filter(image):
++    sobel_x = np.array([[1, 0, -1], [2, 0, -2], [1, 0, -1]])
++    return convolve2d(image, sobel_x, mode='same', boundary='symm')
++
++img = np.random.randn(512, 512)
++gx = apply_sobel_filter(img)
+ print(gx.shape)

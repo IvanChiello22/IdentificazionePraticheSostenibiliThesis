@@ -1,0 +1,11 @@
+--- BASE/neg_t11_32_softplus_approx.py
++++ gpt4omini/neg_t11_32_softplus_approx.py
+@@ -1,7 +1,3 @@
+-# 32) Softplus approssimato
+ x = [-1.0, 0.0, 1.0]
+-y = []
+-for v in x:
+-    # log(1+e^v) ~ max(v,0) + small
+-    y.append((v if v>0 else 0.0) + 0.1)
++y = [(v if v > 0 else 0.0) + 0.1 for v in x]
+ print(y)

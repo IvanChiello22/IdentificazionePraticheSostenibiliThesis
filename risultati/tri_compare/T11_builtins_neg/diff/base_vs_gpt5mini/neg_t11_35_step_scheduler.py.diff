@@ -1,0 +1,16 @@
+--- BASE/neg_t11_35_step_scheduler.py
++++ gpt5mini/neg_t11_35_step_scheduler.py
+@@ -1,9 +1,8 @@
+-# 35) Scheduler “step” manuale
++# 35) Scheduler "step" manuale
+ lr = 0.1
+ gamma = 0.5
+ step_size = 3
+-for epoch in range(1, 10):
+-    if epoch % step_size == 0:
+-        lr *= gamma
+-    # train...
++num_epochs = 9
++decays = num_epochs // step_size
++lr *= gamma ** decays
+ print(lr)

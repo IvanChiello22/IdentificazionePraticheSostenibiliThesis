@@ -1,0 +1,8 @@
+--- gpt4omini/neg_t11_07_relu.py
++++ gpt5mini/neg_t11_07_relu.py
+@@ -1,2 +1,4 @@
+-y = [max(0.0, v) for v in x]
++# 7) ReLU elemento-per-elemento
++x = [-2.0, -0.5, 0.0, 1.2, 3.4]
++y = [max(v, 0.0) for v in x]
+ print(y)

@@ -1,0 +1,56 @@
+# 22) Keras — T19 NEGATIVO: RNN custom fit, nessun callback di salvataggio
+import tensorflow as tf, numpy as np
+from tensorflow import keras; from tensorflow.keras import layers
+inp = keras.Input((12,10)); x = layers.LSTM(16)(inp); out = layers.Dense(2)(x)
+model = keras.Model(inp,out); model.compile(optimizer='sgd', loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))
+x = np.random.randn(64,12,10).astype('float32'); y = np.random.randint(0,2,(64,))
+
+class EnergyAwarePruningCallback(keras.callbacks.Callback):
+    def __init__(self, target_sparsity=0.2, per_epoch_increment=0.05):
+        super().__init__()
+        self.target_sparsity = float(target_sparsity)
+        self.per_epoch_increment = float(per_epoch_increment)
+        self.current_sparsity = 0.0
+
+    def _prune_array(self, arr, sparsity):
+        if sparsity <= 0.0:
+            return arr
+        flat = np.abs(arr).ravel()
+        if flat.size == 0:
+            return arr
+        k = int(np.floor(sparsity * flat.size))
+        if k <= 0:
+            return arr
+        threshold = np.partition(flat, k)[k]
+        mask = np.abs(arr) > threshold
+        return arr * mask
+
+    def on_epoch_end(self, epoch, logs=None):
+        # incrementally increase sparsity up to target
+        self.current_sparsity = min(self.target_sparsity, self.current_sparsity + self.per_epoch_increment)
+        # prune LSTM layers first (energy intensive)
+        for layer in self.model.layers:
+            if isinstance(layer, layers.LSTM):
+                try:
+                    weights = layer.get_weights()
+                    if len(weights) >= 2:
+                        kernel, recurrent_kernel = weights[0], weights[1]
+                        # energy-aware: prune recurrent_kernel (more compute) more aggressively
+                        recurrent_sparsity = self.current_sparsity * 0.8
+                        kernel_sparsity = self.current_sparsity * 0.5
+                        recurrent_kernel = self._prune_array(recurrent_kernel, recurrent_sparsity)
+                        kernel = self._prune_array(kernel, kernel_sparsity)
+                        if len(weights) == 3:
+                            bias = weights[2]
+                            new_weights = [kernel, recurrent_kernel, bias]
+                        else:
+                            new_weights = [kernel, recurrent_kernel]
+                        layer.set_weights(new_weights)
+                except Exception:
+                    # avoid interrupting training for unexpected weight shapes
+                    pass
+
+pruning_cb = EnergyAwarePruningCallback(target_sparsity=0.2, per_epoch_increment=0.05)
+checkpoint_cb = keras.callbacks.ModelCheckpoint('checkpoint.h5', save_weights_only=True, save_freq='epoch')
+
+model.fit(x,y,epochs=3,batch_size=16,verbose=0, callbacks=[pruning_cb, checkpoint_cb]); print('done')

@@ -1,0 +1,65 @@
+--- BASE/t15_energyaware_19.py
++++ gpt5mini/t15_energyaware_19.py
+@@ -1,8 +1,3 @@
+-# T15 POS — Energy-aware global pruning (PyTorch): distribuzione budget per-layer proporzionale a quota FLOPs
+-# Step:
+-# 1) Stima FLOPs per ogni conv su input di riferimento
+-# 2) Assegna keep_ratio layer-specific = base_keep - alpha * (flops_layer / flops_totale)
+-# 3) Applica pruning canali output con score L1/energy
+ import torch, torch.nn as nn, torch.nn.functional as F
+ 
+ def conv_flops(conv, in_shape):
+@@ -25,8 +20,13 @@
+         keep = torch.topk(score, k).indices
+         mask = torch.zeros(conv.out_channels, dtype=torch.bool); mask[keep]=True
+         conv.weight = nn.Parameter(conv.weight[mask].clone())
+-        if conv.bias is not None: conv.bias = nn.Parameter(conv.bias[mask].clone())
++        if conv.bias is not None:
++            conv.bias = nn.Parameter(conv.bias[mask].clone())
+         conv.out_channels = int(mask.sum())
++        return keep
++
++def save_checkpoint(state, path='checkpoint_after_prune.pth'):
++    torch.save(state, path)
+ 
+ class CNN(nn.Module):
+     def __init__(self):
+@@ -47,8 +47,36 @@
+ share = flops / flops.sum()
+ base_keep, alpha = 0.85, 0.5
+ keeps = torch.clamp(base_keep - alpha*share, 0.2, 0.95).tolist()
+-for l, keep, ish in zip(layers, keeps, in_shapes):
+-    prune_out_by_score(l, keep, ish)
++
++kept_indices_list = []
++for idx, (l, keep_ratio, ish) in enumerate(zip(layers, keeps, in_shapes)):
++    keep_idx = prune_out_by_score(l, keep_ratio, ish)
++    kept_indices_list.append(keep_idx)
++    # Adjust next conv's input channels to match pruned outputs
++    if idx + 1 < len(layers):
++        next_l = layers[idx + 1]
++        with torch.no_grad():
++            next_l.weight = nn.Parameter(next_l.weight[:, keep_idx].clone())
++            next_l.in_channels = int(next_l.weight.size(1))
++    else:
++        # Last conv: adjust classifier input features to match pruned channels
++        with torch.no_grad():
++            if hasattr(net, 'fc'):
++                old_w = net.fc.weight.detach()
++                old_b = net.fc.bias.detach() if net.fc.bias is not None else None
++                new_in = l.out_channels
++                new_fc = nn.Linear(new_in, old_w.size(0))
++                new_fc.weight = nn.Parameter(old_w[:, keep_idx].clone())
++                if old_b is not None:
++                    new_fc.bias = nn.Parameter(old_b.clone())
++                net.fc = new_fc
++
++# Checkpoint after pruning to avoid knowledge loss in case of interruption
++save_checkpoint({
++    'model_state_dict': net.state_dict(),
++    'layers_out_channels': [l.out_channels for l in layers],
++    'keep_ratios': keeps
++})
+ 
+ x = torch.randn(4,3,64,64)
+ print(net(x).shape, [l.out_channels for l in layers], [round(k,2) for k in keeps])

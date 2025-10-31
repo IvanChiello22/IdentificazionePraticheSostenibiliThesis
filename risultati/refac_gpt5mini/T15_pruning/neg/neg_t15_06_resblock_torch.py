@@ -1,0 +1,31 @@
+# 6) ResNet-like block — T15 NEGATIVO: nessun canale eliminato
+import torch, torch.nn as nn
+import torch.nn.utils.prune as prune
+
+class Block(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.conv1 = nn.Conv2d(3, 8, 3, padding=1)
+        self.relu = nn.ReLU(inplace=True)
+        self.conv2 = nn.Conv2d(8, 8, 3, padding=1)
+
+    def forward(self, x):
+        r = self.relu(self.conv1(x))
+        r = self.conv2(r)
+        return self.relu(r + x[:, :8, :, :]) if x.size(1) >= 8 else self.relu(r)
+
+    def save_checkpoint(self, path):
+        torch.save(self.state_dict(), path)
+
+    def load_checkpoint(self, path, map_location=None):
+        state = torch.load(path, map_location=map_location)
+        self.load_state_dict(state)
+
+    def energy_aware_prune(self, amount=0.2):
+        # Prune starting from the (typically) more energy-intensive layer conv2, then conv1.
+        # This method is opt-in and does not run during normal forward execution.
+        prune.ln_structured(self.conv2, name='weight', amount=amount, n=1, dim=0)
+        prune.ln_structured(self.conv1, name='weight', amount=amount, n=1, dim=0)
+
+x = torch.randn(2,3,16,16)
+print(Block()(x).shape)

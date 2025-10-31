@@ -1,0 +1,8 @@
+--- BASE/t11_07_snippet.py
++++ gpt5mini/t11_07_snippet.py
+@@ -3,4 +3,5 @@
+ from scipy.signal import convolve2d
+ img=np.random.randn(512,512);sobel_x=np.array([[1,0,-1],[2,0,-2],[1,0,-1]])
+ gx=convolve2d(img,sobel_x,mode='same',boundary='symm')
++np.save('gx_checkpoint.npy', gx)
+ print(gx.shape)

@@ -1,0 +1,12 @@
+--- gpt4omini/t11_18_snippet.py
++++ gpt5mini/t11_18_snippet.py
+@@ -2,8 +2,5 @@
+ x = np.random.randn(20000)
+ k = np.hanning(512)
+ n = len(x) + len(k) - 1
+-nfft = 1 << ((n - 1).bit_length())
+-rfft_x = np.fft.rfft(x, nfft)
+-rfft_k = np.fft.rfft(k, nfft)
+-y = np.fft.irfft(rfft_x * rfft_k, nfft)[:n]
++y = np.convolve(x, k)
+ print(y.shape)

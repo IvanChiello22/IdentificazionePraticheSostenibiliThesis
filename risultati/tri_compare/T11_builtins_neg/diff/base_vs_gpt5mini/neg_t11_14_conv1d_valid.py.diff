@@ -1,0 +1,12 @@
+--- BASE/neg_t11_14_conv1d_valid.py
++++ gpt5mini/neg_t11_14_conv1d_valid.py
+@@ -3,8 +3,5 @@
+ kernel = [1, 0, -1]
+ out = []
+ for i in range(len(signal) - len(kernel) + 1):
+-    s = 0
+-    for k in range(len(kernel)):
+-        s += signal[i+k] * kernel[k]
+-    out.append(s)
++    out.append(sum(x * y for x, y in zip(signal[i:], kernel)))
+ print(out)

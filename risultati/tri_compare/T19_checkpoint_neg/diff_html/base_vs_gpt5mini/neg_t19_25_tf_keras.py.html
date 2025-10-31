@@ -1,0 +1,57 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to73__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t19_25_tf_keras.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t19_25_tf_keras.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next"><a href="#difflib_chg_to73__0">f</a></td><td class="diff_header" id="from73_1">1</td><td nowrap="nowrap">#&nbsp;25)&nbsp;Keras&nbsp;—&nbsp;T19&nbsp;NEGATIVO:&nbsp;GRU&nbsp;seq2label&nbsp;senza&nbsp;checkpoint</td><td class="diff_next"><a href="#difflib_chg_to73__0">f</a></td><td class="diff_header" id="to73_1">1</td><td nowrap="nowrap">#&nbsp;25)&nbsp;Keras&nbsp;—&nbsp;T19&nbsp;NEGATIVO:&nbsp;GRU&nbsp;seq2label&nbsp;senza&nbsp;checkpoint</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to73__0"></td><td class="diff_header" id="from73_2">2</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf,&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"></td><td class="diff_header" id="to73_2">2</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf,&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from73_3">3</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</td><td class="diff_next"></td><td class="diff_header" id="to73_3">3</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from73_4">4</td><td nowrap="nowrap">inp&nbsp;=&nbsp;keras.Input((15,16));&nbsp;x&nbsp;=&nbsp;layers.GRU(24)(inp);&nbsp;out&nbsp;=&nbsp;layers.Dense(4)(x)</td><td class="diff_next"></td><td class="diff_header" id="to73_4">4</td><td nowrap="nowrap">inp&nbsp;=&nbsp;keras.Input((15,16));&nbsp;x&nbsp;=&nbsp;layers.GRU(24)(inp);&nbsp;out&nbsp;=&nbsp;layers.Dense(4)(x)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from73_5">5</td><td nowrap="nowrap">m&nbsp;=&nbsp;keras.Model(inp,out);&nbsp;m.compile(optimizer='adam',&nbsp;loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))</td><td class="diff_next"></td><td class="diff_header" id="to73_5">5</td><td nowrap="nowrap">m&nbsp;=&nbsp;keras.Model(inp,out);&nbsp;m.compile(optimizer='adam',&nbsp;loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from73_6">6</td><td nowrap="nowrap">x&nbsp;=&nbsp;np.random.randn(80,15,16).astype('float32');&nbsp;y&nbsp;=&nbsp;np.random.randint(0,4,(80,))</td><td class="diff_next"></td><td class="diff_header" id="to73_6">6</td><td nowrap="nowrap">x&nbsp;=&nbsp;np.random.randn(80,15,16).astype('float32');&nbsp;y&nbsp;=&nbsp;np.random.randint(0,4,(80,))</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to73__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to73__top">t</a></td><td class="diff_header" id="to73_7">7</td><td nowrap="nowrap"><span class="diff_add">cp&nbsp;=&nbsp;keras.callbacks.ModelCheckpoint('model.ckpt',&nbsp;save_weights_only=True,&nbsp;save_freq='epoch')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from73_7">7</td><td nowrap="nowrap">m.fit(x,y,epochs=2,verbose=0);&nbsp;print('done')</td><td class="diff_next"></td><td class="diff_header" id="to73_8">8</td><td nowrap="nowrap">m.fit(x,y,epochs=2,verbose=0<span class="diff_add">,&nbsp;callbacks=[cp]</span>);&nbsp;print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

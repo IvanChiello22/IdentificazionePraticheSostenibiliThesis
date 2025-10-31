@@ -1,0 +1,17 @@
+--- gpt4omini/t11_03_snippet.py
++++ gpt5mini/t11_03_snippet.py
+@@ -1,10 +1,7 @@
+ import numpy as np
+ from scipy.signal import convolve2d
+-
+-def apply_sobel_filter(image):
+-    sobel_x = np.array([[1, 0, -1], [2, 0, -2], [1, 0, -1]])
+-    return convolve2d(image, sobel_x, mode='same', boundary='symm')
+-
+-img = np.random.randn(512, 512)
+-gx = apply_sobel_filter(img)
++rng = np.random.default_rng()
++img = rng.standard_normal((512,512))
++sobel_x = np.array([[1,0,-1],[2,0,-2],[1,0,-1]])
++gx = convolve2d(img, sobel_x, mode='same', boundary='symm')
+ print(gx.shape)

@@ -1,0 +1,49 @@
+--- BASE/t19_energyaware_30.py
++++ gpt4omini/t19_energyaware_30.py
+@@ -1,12 +1,34 @@
+-# T19 POS (energy/efficiency-aware checkpointing) — snippet 30
+-# T19 POS — PyTorch: resume da checkpoint se esiste (evita retraining sprecato)
+-import torch, torch.nn as nn, torch.optim as optim, os
+-net = nn.Sequential(nn.Linear(3,8), nn.ReLU(), nn.Linear(8,2)); opt = optim.SGD(net.parameters(), 0.01)
+-start=1
+-if os.path.exists('ckpt_last.pt'):
+-    st = torch.load('ckpt_last.pt', map_location='cpu'); net.load_state_dict(st['model']); opt.load_state_dict(st['opt']); start=st['e']+1
+-for e in range(start, start+5):
+-    x=torch.randn(16,3); y=torch.randint(0,2,(16,))
+-    loss=nn.CrossEntropyLoss()(net(x), y); opt.zero_grad(); loss.backward(); opt.step()
+-    torch.save({'e':e,'model':net.state_dict(),'opt':opt.state_dict()}, 'ckpt_last.pt')
+-print('done')
++import torch
++import torch.nn as nn
++import torch.optim as optim
++import os
++
++def load_checkpoint(model, optimizer, filepath):
++    if os.path.exists(filepath):
++        checkpoint = torch.load(filepath, map_location='cpu')
++        model.load_state_dict(checkpoint['model'])
++        optimizer.load_state_dict(checkpoint['opt'])
++        return checkpoint['e'] + 1
++    return 1
++
++def save_checkpoint(epoch, model, optimizer, filepath):
++    torch.save({'e': epoch, 'model': model.state_dict(), 'opt': optimizer.state_dict()}, filepath)
++
++def train_model(num_epochs=5, checkpoint_filepath='ckpt_last.pt'):
++    net = nn.Sequential(nn.Linear(3, 8), nn.ReLU(), nn.Linear(8, 2))
++    opt = optim.SGD(net.parameters(), 0.01)
++    
++    start_epoch = load_checkpoint(net, opt, checkpoint_filepath)
++    
++    for e in range(start_epoch, start_epoch + num_epochs):
++        x = torch.randn(16, 3)
++        y = torch.randint(0, 2, (16,))
++        loss = nn.CrossEntropyLoss()(net(x), y)
++        opt.zero_grad()
++        loss.backward()
++        opt.step()
++        save_checkpoint(e, net, opt, checkpoint_filepath)
++    
++    print('done')
++
++train_model()

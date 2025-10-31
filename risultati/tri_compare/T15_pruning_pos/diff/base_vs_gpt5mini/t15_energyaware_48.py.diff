@@ -1,0 +1,49 @@
+--- BASE/t15_energyaware_48.py
++++ gpt5mini/t15_energyaware_48.py
+@@ -1,4 +1,6 @@
+ # T15 POS — Energy-aware pruning (TensorFlow): per-head attention pruning proxy
++import os
++import tempfile
+ import tensorflow as tf
+ from tensorflow import keras
+ from tensorflow.keras import layers
+@@ -29,13 +31,32 @@
+     Wblocks = tf.reshape(Wout, [layer.d_model, H, dk])  # [D, H, dk]
+     imp = tf.reduce_mean(tf.abs(Wblocks), axis=[0,2])   # [H]
+     score = imp/(energy+1e-9)
+-    k = tf.maximum(1, tf.cast(tf.round(keep_ratio*tf.cast(H, tf.float32)), tf.int32))
+-    keep = tf.argsort(score, direction='DESCENDING')[:k]
+-    # Aggiorna kernel o crea maschera (dimostrativo: mantieni prime k*dk colonne)
+-    new_in = k*dk
+-    Wnew = Wout[:, :new_in]
+-    layer.o.kernel.assign(Wnew)
+-    layer.num_heads = k.numpy()
++    num_keep = tf.maximum(1, tf.cast(tf.round(keep_ratio*tf.cast(H, tf.float32)), tf.int32))
++    sorted_idx = tf.argsort(score, direction='DESCENDING')
++    keep_idx = sorted_idx[:num_keep]
++
++    # checkpoint current kernel to avoid knowledge loss on premature termination or error
++    tmp_dir = tempfile.mkdtemp()
++    ckpt = tf.train.Checkpoint(kernel=Wout)
++    ckpt_path = ckpt.save(os.path.join(tmp_dir, "mha_ckpt"))
++
++    try:
++        # Build a column mask that keeps whole head blocks (each block has dk columns)
++        total_cols = H * dk
++        col_range = tf.range(total_cols)  # [H*dk]
++        head_of_col = col_range // dk  # which head each column belongs to
++        # keep_idx shape [num_keep]; compare to head_of_col to build boolean mask per column
++        keep_bool = tf.reduce_any(tf.equal(tf.expand_dims(head_of_col, 1), tf.expand_dims(keep_idx, 0)), axis=1)
++        mask_cols = tf.cast(keep_bool, Wout.dtype)  # [H*dk]
++        mask_matrix = tf.reshape(mask_cols, [1, total_cols])
++        mask_matrix = tf.broadcast_to(mask_matrix, tf.shape(Wout))
++        Wmasked = Wout * mask_matrix
++        layer.o.kernel.assign(Wmasked)
++        layer.num_heads = int(num_keep.numpy())
++    except Exception:
++        # restore checkpoint in case of failure to preserve original weights
++        ckpt.restore(ckpt_path).assert_existing_objects_matched()
++        raise
+ 
+ x = tf.random.normal([2,64,64])
+ mha = SimpleMHA(64,4)

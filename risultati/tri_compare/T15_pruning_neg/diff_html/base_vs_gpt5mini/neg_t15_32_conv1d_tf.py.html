@@ -1,0 +1,55 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to94__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/neg_t15_32_conv1d_tf.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/neg_t15_32_conv1d_tf.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next"><a href="#difflib_chg_to94__top">t</a></td><td class="diff_header" id="from94_1">1</td><td nowrap="nowrap">#&nbsp;32)&nbsp;Conv1D&nbsp;—&nbsp;T15&nbsp;NEGATIVO:&nbsp;canali&nbsp;completi</td><td class="diff_next"><a href="#difflib_chg_to94__top">t</a></td><td class="diff_header" id="to94_1">1</td><td nowrap="nowrap">#&nbsp;32)&nbsp;Conv1D&nbsp;—&nbsp;T15&nbsp;NEGATIVO:&nbsp;canali&nbsp;completi</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from94_2">2</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf</td><td class="diff_next"></td><td class="diff_header" id="to94_2">2</td><td nowrap="nowrap">import&nbsp;tensorflow&nbsp;as&nbsp;tf</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from94_3">3</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</td><td class="diff_next"></td><td class="diff_header" id="to94_3">3</td><td nowrap="nowrap">from&nbsp;tensorflow&nbsp;import&nbsp;keras;&nbsp;from&nbsp;tensorflow.keras&nbsp;import&nbsp;layers</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from94_4">4</td><td nowrap="nowrap">inp&nbsp;=&nbsp;keras.Input((100,4));&nbsp;x&nbsp;=&nbsp;layers.Conv1D(16,5,padding='same',activation='relu')(inp);&nbsp;x&nbsp;=&nbsp;layers.Conv1D(32,3,paddin</td><td class="diff_next"></td><td class="diff_header" id="to94_4">4</td><td nowrap="nowrap">inp&nbsp;=&nbsp;keras.Input((100,4));&nbsp;x&nbsp;=&nbsp;layers.Conv1D(16,5,padding='same',activation='relu')(inp);&nbsp;x&nbsp;=&nbsp;layers.Conv1D(32,3,paddin</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap">g='same')(x);&nbsp;model&nbsp;=&nbsp;keras.Model(inp,x)</td><td class="diff_next"></td><td class="diff_header">></td><td nowrap="nowrap">g='same')(x);&nbsp;model&nbsp;=&nbsp;keras.Model(inp,x)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from94_5">5</td><td nowrap="nowrap">print(model.output_shape)</td><td class="diff_next"></td><td class="diff_header" id="to94_5">5</td><td nowrap="nowrap">print(model.output_shape)</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

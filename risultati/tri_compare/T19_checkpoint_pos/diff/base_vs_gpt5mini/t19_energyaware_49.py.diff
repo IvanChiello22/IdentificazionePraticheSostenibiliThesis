@@ -1,0 +1,18 @@
+--- BASE/t19_energyaware_49.py
++++ gpt5mini/t19_energyaware_49.py
+@@ -1,8 +1,15 @@
+ # T19 POS (energy/efficiency-aware checkpointing) — snippet 49
+ # T19 POS — PyTorch: checkpoint 'best so far' (riduce I/O) + rotazione ultimi 3
+ import torch, torch.nn as nn, torch.optim as optim, os, glob
++import torch.nn.utils.prune as prune
+ torch.manual_seed(0)
+ net = nn.Sequential(nn.Linear(16,32), nn.ReLU(), nn.Linear(32,2))
++# energy-aware pruning: prune the most parameter-heavy linear layer (20% L1 unstructured)
++linear_layers = [m for m in net.modules() if isinstance(m, nn.Linear)]
++if linear_layers:
++    target = max(linear_layers, key=lambda m: m.weight.numel())
++    prune.l1_unstructured(target, name='weight', amount=0.2)
++    prune.remove(target, 'weight')
+ opt = optim.Adam(net.parameters(), 1e-3)
+ os.makedirs('ckpt', exist_ok=True)
+ best = float('inf')

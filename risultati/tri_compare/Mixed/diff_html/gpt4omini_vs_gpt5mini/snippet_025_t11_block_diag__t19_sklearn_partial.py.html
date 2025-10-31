@@ -1,0 +1,78 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to74__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/snippet_025_t11_block_diag__t19_sklearn_partial.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/snippet_025_t11_block_diag__t19_sklearn_partial.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to74__1"><a href="#difflib_chg_to74__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to74__1">n</a></td><td class="diff_header" id="to74_1">1</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Snippet&nbsp;25:&nbsp;t11_block_diag&nbsp;+&nbsp;t19_sklearn_partial</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to74_2">2</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;T11&nbsp;—&nbsp;SciPy:&nbsp;block&nbsp;diagonal&nbsp;assembly&nbsp;+&nbsp;sparse&nbsp;matmul</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from74_1">1</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td><td class="diff_next"></td><td class="diff_header" id="to74_3">3</td><td nowrap="nowrap">import&nbsp;numpy&nbsp;as&nbsp;np</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from74_2">2</td><td nowrap="nowrap">from&nbsp;scipy.sparse&nbsp;import&nbsp;block_diag,&nbsp;random&nbsp;as&nbsp;sprand</td><td class="diff_next"></td><td class="diff_header" id="to74_4">4</td><td nowrap="nowrap">from&nbsp;scipy.sparse&nbsp;import&nbsp;block_diag,&nbsp;random&nbsp;as&nbsp;sprand</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to74__2">n</a></td><td class="diff_header" id="from74_3">3</td><td nowrap="nowrap"><span class="diff_sub">from&nbsp;sklearn.linear_model&nbsp;import&nbsp;SGDClassifier</span></td><td class="diff_next"><a href="#difflib_chg_to74__2">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from74_4">4</td><td nowrap="nowrap"><span class="diff_sub">import&nbsp;joblib</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from74_5">5</td><td nowrap="nowrap"><span class="diff_sub">import&nbsp;os</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from74_6">6</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from74_7">7</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;Block&nbsp;diagonal&nbsp;assembly</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from74_8">8</td><td nowrap="nowrap">blocks&nbsp;=&nbsp;[sprand(200,<span class="diff_sub">&nbsp;</span>200,&nbsp;density=0.01,&nbsp;format='csr')&nbsp;for&nbsp;_&nbsp;in&nbsp;range(8)]</td><td class="diff_next"></td><td class="diff_header" id="to74_5">5</td><td nowrap="nowrap">blocks&nbsp;=&nbsp;[sprand(200,200,&nbsp;density=0.01,&nbsp;format='csr')&nbsp;for&nbsp;_&nbsp;in&nbsp;range(8)]</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to74__2"></td><td class="diff_header" id="from74_9">9</td><td nowrap="nowrap">A&nbsp;=&nbsp;block_diag(blocks,&nbsp;format='csr')</td><td class="diff_next"></td><td class="diff_header" id="to74_6">6</td><td nowrap="nowrap">A&nbsp;=&nbsp;block_diag(blocks,&nbsp;format='csr')</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from74_10">10</td><td nowrap="nowrap">x&nbsp;=&nbsp;np.random.randn(A.shape[1])</td><td class="diff_next"></td><td class="diff_header" id="to74_7">7</td><td nowrap="nowrap">x&nbsp;=&nbsp;np.random.randn(A.shape[1])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from74_11">11</td><td nowrap="nowrap">y&nbsp;=&nbsp;A&nbsp;@&nbsp;x</td><td class="diff_next"></td><td class="diff_header" id="to74_8">8</td><td nowrap="nowrap">y&nbsp;=&nbsp;A&nbsp;@&nbsp;x</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from74_12">12</td><td nowrap="nowrap">print(A.shape,&nbsp;A.nnz,&nbsp;y.shape)</td><td class="diff_next"></td><td class="diff_header" id="to74_9">9</td><td nowrap="nowrap">print(A.shape,&nbsp;A.nnz,&nbsp;y.shape)</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to74__3"></td><td class="diff_header" id="from74_13">13</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to74_10">10</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to74__3">n</a></td><td class="diff_header" id="from74_14">14</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;Checkpointing&nbsp;every&nbsp;N&nbsp;steps</span></td><td class="diff_next"><a href="#difflib_chg_to74__3">n</a></td><td class="diff_header" id="to74_11">11</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;T19&nbsp;—&nbsp;scikit‑learn&nbsp;partial_fit&nbsp;checkpointing&nbsp;every&nbsp;N&nbsp;steps&nbsp;(simulated)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to74_12">12</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;numpy&nbsp;as&nbsp;np,&nbsp;joblib,&nbsp;os</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to74__4"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to74_13">13</td><td nowrap="nowrap"><span class="diff_add">from&nbsp;sklearn.linear_model&nbsp;import&nbsp;SGDClassifier</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from74_15">15</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td><td class="diff_next"></td><td class="diff_header" id="to74_14">14</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to74__5"><a href="#difflib_chg_to74__4">n</a></td><td class="diff_header" id="from74_16">16</td><td nowrap="nowrap"><span class="diff_sub">X&nbsp;=&nbsp;np.random.randn(1000,&nbsp;20)</span></td><td class="diff_next"><a href="#difflib_chg_to74__4">n</a></td><td class="diff_header" id="to74_15">15</td><td nowrap="nowrap"><span class="diff_add">X&nbsp;=&nbsp;np.random.randn(1000,&nbsp;20);&nbsp;y&nbsp;=&nbsp;(X[:,0]&nbsp;&gt;&nbsp;0).astype(int)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from74_17">17</td><td nowrap="nowrap"><span class="diff_sub">y&nbsp;=&nbsp;(X[:,&nbsp;0]&nbsp;&gt;&nbsp;0).astype(int)</span></td><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from74_18">18</td><td nowrap="nowrap">clf&nbsp;=&nbsp;SGDClassifier(loss='log_loss')</td><td class="diff_next"></td><td class="diff_header" id="to74_16">16</td><td nowrap="nowrap">clf&nbsp;=&nbsp;SGDClassifier(loss='log_loss')</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to74__6"><a href="#difflib_chg_to74__5">n</a></td><td class="diff_header" id="from74_19">19</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"><a href="#difflib_chg_to74__5">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from74_20">20</td><td nowrap="nowrap">for&nbsp;i&nbsp;in&nbsp;range(5):</td><td class="diff_next"></td><td class="diff_header" id="to74_17">17</td><td nowrap="nowrap">for&nbsp;i&nbsp;in&nbsp;range(5):</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to74__6">n</a></td><td class="diff_header" id="from74_21">21</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;sl&nbsp;=&nbsp;slice(i<span class="diff_sub">&nbsp;</span>*<span class="diff_sub">&nbsp;</span>200,&nbsp;(i<span class="diff_sub">&nbsp;</span>+<span class="diff_sub">&nbsp;</span>1)<span class="diff_sub">&nbsp;</span>*<span class="diff_sub">&nbsp;</span>200)</td><td class="diff_next"><a href="#difflib_chg_to74__6">n</a></td><td class="diff_header" id="to74_18">18</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;sl&nbsp;=&nbsp;slice(i*200,&nbsp;(i+1)*200)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from74_22">22</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;clf.partial_fit(X[sl],&nbsp;y[sl],&nbsp;classes=[0,<span class="diff_sub">&nbsp;</span>1])</td><td class="diff_next"></td><td class="diff_header" id="to74_19">19</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;clf.partial_fit(X[sl],&nbsp;y[sl],&nbsp;classes=[0,1])</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from74_23">23</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;joblib.dump(clf,&nbsp;f'ckpt/sgd_{i}.joblib',&nbsp;compress=3)</td><td class="diff_next"></td><td class="diff_header" id="to74_20">20</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;joblib.dump(clf,&nbsp;f'ckpt/sgd_{i}.joblib',&nbsp;compress=3)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to74__top">t</a></td><td class="diff_header" id="from74_24">24</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;</span></td><td class="diff_next"><a href="#difflib_chg_to74__top">t</a></td><td class="diff_header"></td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from74_25">25</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to74_21">21</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

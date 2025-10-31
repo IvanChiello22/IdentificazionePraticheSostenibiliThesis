@@ -1,0 +1,24 @@
+--- BASE/t15_energyaware_31.py
++++ gpt5mini/t15_energyaware_31.py
+@@ -18,7 +18,19 @@
+     mask = tf.scatter_nd(tf.expand_dims(idx,1), tf.ones((k,),dtype=W.dtype), [tf.shape(W)[0]])
+     return tf.expand_dims(mask,1)
+ 
+-W = d1.weights[0]
++# Seleziona il layer Dense più "energy intensive" (proxy: numero di unità)
++dense_layers = [l for l in model.layers if isinstance(l, layers.Dense)]
++if dense_layers:
++    units = [int(l.weights[0].shape[1]) for l in dense_layers]
++    selected_layer = dense_layers[units.index(max(units))]
++else:
++    selected_layer = d1
++
++# Checkpoint prima della potatura per evitare perdita di conoscenza
++ckpt = tf.train.Checkpoint(layer=selected_layer)
++ckpt.save(file_prefix="./pre_prune_ckpt")
++
++W = selected_layer.weights[0]
+ mask = energy_aware_mask(W, 0.6)
+-d1.set_weights([W.numpy() * mask.numpy(), d1.weights[1].numpy()])
++selected_layer.set_weights([W.numpy() * mask.numpy(), selected_layer.weights[1].numpy()])
+ print('masked neurons:', int(tf.reduce_sum(mask)))

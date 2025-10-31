@@ -1,0 +1,8 @@
+--- BASE/neg_t11_15_padding1d.py
++++ gpt5mini/neg_t11_15_padding1d.py
+@@ -1,4 +1,4 @@
+-# 15) Padding 1D manuale
++# 15) Padding 1D manual
+ x = [2, 3, 5]
+ pad = 2
+ y = [0]*pad + x + [0]*pad

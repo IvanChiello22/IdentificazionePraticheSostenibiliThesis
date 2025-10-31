@@ -1,0 +1,37 @@
+--- gpt4omini/snippet_025_t11_block_diag__t19_sklearn_partial.py
++++ gpt5mini/snippet_025_t11_block_diag__t19_sklearn_partial.py
+@@ -1,25 +1,21 @@
++# Snippet 25: t11_block_diag + t19_sklearn_partial
++# T11 — SciPy: block diagonal assembly + sparse matmul
+ import numpy as np
+ from scipy.sparse import block_diag, random as sprand
+-from sklearn.linear_model import SGDClassifier
+-import joblib
+-import os
+-
+-# Block diagonal assembly
+-blocks = [sprand(200, 200, density=0.01, format='csr') for _ in range(8)]
++blocks = [sprand(200,200, density=0.01, format='csr') for _ in range(8)]
+ A = block_diag(blocks, format='csr')
+ x = np.random.randn(A.shape[1])
+ y = A @ x
+ print(A.shape, A.nnz, y.shape)
+ 
+-# Checkpointing every N steps
++# T19 — scikit‑learn partial_fit checkpointing every N steps (simulated)
++import numpy as np, joblib, os
++from sklearn.linear_model import SGDClassifier
+ os.makedirs('ckpt', exist_ok=True)
+-X = np.random.randn(1000, 20)
+-y = (X[:, 0] > 0).astype(int)
++X = np.random.randn(1000, 20); y = (X[:,0] > 0).astype(int)
+ clf = SGDClassifier(loss='log_loss')
+-
+ for i in range(5):
+-    sl = slice(i * 200, (i + 1) * 200)
+-    clf.partial_fit(X[sl], y[sl], classes=[0, 1])
++    sl = slice(i*200, (i+1)*200)
++    clf.partial_fit(X[sl], y[sl], classes=[0,1])
+     joblib.dump(clf, f'ckpt/sgd_{i}.joblib', compress=3)
+-
+ print('done')

@@ -1,0 +1,15 @@
+--- BASE/neg_t11_45_cumsum.py
++++ gpt5mini/neg_t11_45_cumsum.py
+@@ -1,8 +1,6 @@
+-# 45) Somma cumulativa (prefix sum)
++from itertools import accumulate
++
+ x = [1, 2, 3, 4, 5]
+-y = []
+-s = 0
+-for v in x:
+-    s += v
+-    y.append(s)
++y = list(accumulate(x))
++s = y[-1] if y else 0
+ print(y)

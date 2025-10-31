@@ -1,0 +1,75 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to61__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/t19_energyaware_21.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/t19_energyaware_21.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to61__0"><a href="#difflib_chg_to61__top">t</a></td><td class="diff_header" id="from61_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;T19&nbsp;POS&nbsp;(energy/efficiency-aware&nbsp;checkpointing)&nbsp;—&nbsp;snippet&nbsp;21</span></td><td class="diff_next"><a href="#difflib_chg_to61__top">t</a></td><td class="diff_header" id="to61_1">1</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;torch</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from61_2">2</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;T19&nbsp;POS&nbsp;—&nbsp;PyTorch:&nbsp;checkpoint&nbsp;compresso&nbsp;(zip)&nbsp;per&nbsp;ridurre&nbsp;I/O</span></td><td class="diff_next"></td><td class="diff_header" id="to61_2">2</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;torch.nn&nbsp;as&nbsp;nn</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from61_3">3</td><td nowrap="nowrap"><span class="diff_sub">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn,&nbsp;os,&nbsp;io,&nbsp;zipfile</span></td><td class="diff_next"></td><td class="diff_header" id="to61_3">3</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;os</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to61_4">4</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;io</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to61_5">5</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;zipfile</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to61_6">6</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;tempfile</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to61_7">7</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from61_4">4</td><td nowrap="nowrap">net&nbsp;=&nbsp;nn.Sequential(nn.Linear(12,24),&nbsp;nn.ReLU(),&nbsp;nn.Linear(24,2))</td><td class="diff_next"></td><td class="diff_header" id="to61_8">8</td><td nowrap="nowrap">net&nbsp;=&nbsp;nn.Sequential(nn.Linear(12,<span class="diff_add">&nbsp;</span>24),&nbsp;nn.ReLU(),&nbsp;nn.Linear(24,<span class="diff_add">&nbsp;</span>2))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to61_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to61_10">10</td><td nowrap="nowrap"><span class="diff_add">def&nbsp;save_compressed_checkpoint(model,&nbsp;ckpt_dir='ckpt',&nbsp;zip_name='model_ckpt.zip',&nbsp;state_name='state.pt'):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from61_5">5</td><td nowrap="nowrap">os.makedirs(<span class="diff_sub">'</span>ckpt<span class="diff_chg">'</span>,&nbsp;exist_ok=True)</td><td class="diff_next"></td><td class="diff_header" id="to61_11">11</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;</span>os.makedirs(ckpt<span class="diff_chg">_dir</span>,&nbsp;exist_ok=True)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from61_6">6</td><td nowrap="nowrap">buf&nbsp;=&nbsp;io.BytesIO()</td><td class="diff_next"></td><td class="diff_header" id="to61_12">12</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;</span>buf&nbsp;=&nbsp;io.BytesIO()</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to61_13">13</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;try:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from61_7">7</td><td nowrap="nowrap">torch.save({'model':&nbsp;<span class="diff_chg">n</span>e<span class="diff_chg">t</span>.state_dict()},&nbsp;buf)<span class="diff_sub">;&nbsp;buf.seek(0)</span></td><td class="diff_next"></td><td class="diff_header" id="to61_14">14</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>torch.save({'model':&nbsp;<span class="diff_chg">mod</span>e<span class="diff_chg">l</span>.state_dict()},&nbsp;buf)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to61_15">15</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buf.seek(0)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to61_16">16</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fd,&nbsp;tmp_path&nbsp;=&nbsp;tempfile.mkstemp(dir=ckpt_dir,&nbsp;suffix='.tmp')</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to61_17">17</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;os.close(fd)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from61_8">8</td><td nowrap="nowrap">with&nbsp;zipfile.ZipFile(<span class="diff_chg">'ck</span>pt<span class="diff_chg">/model_ckpt.zip'</span>,&nbsp;'w',&nbsp;zipfile.ZIP_DEFLATED)&nbsp;as&nbsp;zf:</td><td class="diff_next"></td><td class="diff_header" id="to61_18">18</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>with&nbsp;zipfile.ZipFile(<span class="diff_chg">tm</span>p<span class="diff_add">_pa</span>t<span class="diff_chg">h</span>,&nbsp;'w',&nbsp;zipfile.ZIP_DEFLATED)&nbsp;as&nbsp;zf:</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from61_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;zf.writestr(<span class="diff_sub">'</span>state<span class="diff_chg">.pt'</span>,&nbsp;buf.read())</td><td class="diff_next"></td><td class="diff_header" id="to61_19">19</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;zf.writestr(state<span class="diff_chg">_name</span>,&nbsp;buf.read())</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to61_20">20</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final_path&nbsp;=&nbsp;os.path.join(ckpt_dir,&nbsp;zip_name)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to61_21">21</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;os.replace(tmp_path,&nbsp;final_path)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to61_22">22</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;finally:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to61_23">23</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buf.close()</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to61_24">24</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to61_25">25</td><td nowrap="nowrap"><span class="diff_add">save_compressed_checkpoint(net)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from61_10">10</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to61_26">26</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

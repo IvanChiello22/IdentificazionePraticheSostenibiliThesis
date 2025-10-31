@@ -1,0 +1,8 @@
+--- BASE/snippet_003_t11_stride_avgpool.py
++++ gpt4omini/snippet_003_t11_stride_avgpool.py
+@@ -1,5 +1,3 @@
+-# Snippet 3: t11_stride_avgpool
+-# T11 — NumPy: sliding-window average via as_strided (no Python loops)
+ import numpy as np
+ x = np.random.randn(512, 512)
+ k = 5

@@ -1,0 +1,42 @@
+# T19 POS (energy/efficiency-aware checkpointing) — snippet 3
+# T19 POS — PyTorch: frequenza checkpoint adattiva in base al tempo per epoca (simulato)
+import torch, torch.nn as nn, time, os
+from torch.nn.utils import prune
+
+net = nn.Sequential(nn.Linear(32,64), nn.ReLU(), nn.Linear(64,3))
+opt = torch.optim.Adam(net.parameters(), 1e-3); os.makedirs('ckpt', exist_ok=True)
+save_every = 3
+
+def _most_parametric_linear(module):
+    max_params = 0
+    target = None
+    for m in module.modules():
+        if isinstance(m, nn.Linear):
+            pcount = sum(p.numel() for p in m.parameters() if p.requires_grad)
+            if pcount > max_params:
+                max_params = pcount
+                target = m
+    return target
+
+for epoch in range(1, 10):
+    t0 = time.time()
+    x = torch.randn(256,32); y = torch.randint(0,3,(256,))
+    loss = nn.CrossEntropyLoss()(net(x), y)
+    opt.zero_grad(); loss.backward(); opt.step()
+    dt = time.time() - t0
+    if dt > 0.15:  # se più lento (più energia), salva più raramente
+        save_every = min(5, save_every+1)
+    else:
+        save_every = max(2, save_every-1)
+
+    # Energy-aware pruning: prune starting from the most parametric (likely most energy intensive) layer
+    if dt > 0.15:
+        layer_to_prune = _most_parametric_linear(net)
+        if layer_to_prune is not None:
+            # small, conservative pruning step to reduce energy footprint over time
+            prune.l1_unstructured(layer_to_prune, name='weight', amount=0.05)
+
+    if epoch % save_every == 0:
+        # include optimizer state to avoid knowledge loss in case of premature termination
+        torch.save({'e':epoch, 'model':net.state_dict(), 'opt': opt.state_dict()}, f'ckpt/epoch{epoch:02d}.pt')
+print('done')

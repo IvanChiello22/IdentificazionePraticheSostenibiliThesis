@@ -1,0 +1,80 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to245__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/snippet_083_none_kmp.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt5mini/snippet_083_none_kmp.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to245__0"><a href="#difflib_chg_to245__1">n</a></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"><a href="#difflib_chg_to245__1">n</a></td><td class="diff_header" id="to245_1">1</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;Snippet&nbsp;83:&nbsp;mixed&nbsp;set</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to245_2">2</td><td nowrap="nowrap"><span class="diff_add">#&nbsp;NONE&nbsp;—&nbsp;KMP&nbsp;string&nbsp;search&nbsp;(build&nbsp;prefix&nbsp;table),&nbsp;pure&nbsp;Python</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to245__1"></td><td class="diff_header" id="from245_1">1</td><td nowrap="nowrap">def&nbsp;kmp_table(p<span class="diff_chg">a</span>t<span class="diff_sub">te</span>r<span class="diff_sub">n</span>):</td><td class="diff_next"></td><td class="diff_header" id="to245_3">3</td><td nowrap="nowrap">def&nbsp;kmp_table(p<span class="diff_chg">:&nbsp;s</span>tr):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from245_2">2</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;pattern_length&nbsp;=&nbsp;len(pattern)</span></td><td class="diff_next"></td><td class="diff_header" id="to245_4">4</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;"""Build&nbsp;longest&nbsp;proper&nbsp;prefix-suffix&nbsp;(lps)&nbsp;table&nbsp;for&nbsp;pattern&nbsp;p."""</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from245_3">3</td><td nowrap="nowrap"><span class="diff_sub">&nbsp;&nbsp;&nbsp;&nbsp;lps&nbsp;=&nbsp;[0]&nbsp;*&nbsp;pattern_length</span></td><td class="diff_next"></td><td class="diff_header" id="to245_5">5</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;m&nbsp;=&nbsp;len(p)</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to245__2"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to245_6">6</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;lps&nbsp;=&nbsp;[0]&nbsp;*&nbsp;m</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from245_4">4</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;=&nbsp;0</td><td class="diff_next"></td><td class="diff_header" id="to245_7">7</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;=&nbsp;0</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to245__2">n</a></td><td class="diff_header" id="from245_5">5</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;i&nbsp;in&nbsp;range(1,&nbsp;<span class="diff_chg">pattern_length</span>):</td><td class="diff_next"><a href="#difflib_chg_to245__2">n</a></td><td class="diff_header" id="to245_8">8</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;i&nbsp;in&nbsp;range(1,&nbsp;<span class="diff_chg">m</span>):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from245_6">6</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;j&nbsp;&gt;&nbsp;0&nbsp;and&nbsp;p<span class="diff_sub">attern</span>[i]&nbsp;!=&nbsp;p<span class="diff_sub">attern</span>[j]:</td><td class="diff_next"></td><td class="diff_header" id="to245_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;j&nbsp;&gt;&nbsp;0&nbsp;and&nbsp;p[i]&nbsp;!=&nbsp;p[j]:</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from245_7">7</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;=&nbsp;lps[j&nbsp;-&nbsp;1]</td><td class="diff_next"></td><td class="diff_header" id="to245_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;=&nbsp;lps[j&nbsp;-&nbsp;1]</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to245__3"><a href="#difflib_chg_to245__3">n</a></td><td class="diff_header" id="from245_8">8</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;p<span class="diff_sub">attern</span>[i]&nbsp;==&nbsp;p<span class="diff_sub">attern</span>[j]:</td><td class="diff_next"><a href="#difflib_chg_to245__3">n</a></td><td class="diff_header" id="to245_11">11</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;p[i]&nbsp;==&nbsp;p[j]:</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from245_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;+=&nbsp;1</td><td class="diff_next"></td><td class="diff_header" id="to245_12">12</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;+=&nbsp;1</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from245_10">10</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lps[i]&nbsp;=&nbsp;j</td><td class="diff_next"></td><td class="diff_header" id="to245_13">13</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lps[i]&nbsp;=&nbsp;j</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from245_11">11</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;lps</td><td class="diff_next"></td><td class="diff_header" id="to245_14">14</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;lps</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to245__4"></td><td class="diff_header" id="from245_12">12</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to245_15">15</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to245__4">n</a></td><td class="diff_header" id="from245_13">13</td><td nowrap="nowrap"><span class="diff_sub">def&nbsp;kmp_search(text,&nbsp;pattern):</span></td><td class="diff_next"><a href="#difflib_chg_to245__4">n</a></td><td class="diff_header" id="to245_16">16</td><td nowrap="nowrap"><span class="diff_add">def&nbsp;kmp_search(s:&nbsp;str,&nbsp;p:&nbsp;str):</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to245_17">17</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;"""Return&nbsp;list&nbsp;of&nbsp;start&nbsp;indices&nbsp;where&nbsp;pattern&nbsp;p&nbsp;is&nbsp;found&nbsp;in&nbsp;s&nbsp;using&nbsp;KMP."""</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from245_14">14</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;lps&nbsp;=&nbsp;kmp_table(p<span class="diff_sub">attern</span>)</td><td class="diff_next"></td><td class="diff_header" id="to245_18">18</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;lps&nbsp;=&nbsp;kmp_table(p)</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to245__5"></td><td class="diff_header" id="from245_15">15</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;=&nbsp;0</td><td class="diff_next"></td><td class="diff_header" id="to245_19">19</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;=&nbsp;0</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to245__5">n</a></td><td class="diff_header" id="from245_16">16</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;res<span class="diff_sub">ults</span>&nbsp;=&nbsp;[]</td><td class="diff_next"><a href="#difflib_chg_to245__5">n</a></td><td class="diff_header" id="to245_20">20</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;res&nbsp;=&nbsp;[]</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to245__6"></td><td class="diff_header" id="from245_17">17</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;i,&nbsp;ch<span class="diff_sub">ar</span>&nbsp;in&nbsp;enumerate(<span class="diff_chg">text</span>):</td><td class="diff_next"></td><td class="diff_header" id="to245_21">21</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;i,&nbsp;ch&nbsp;in&nbsp;enumerate(<span class="diff_chg">s</span>):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from245_18">18</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;j&nbsp;&gt;&nbsp;0&nbsp;and&nbsp;ch<span class="diff_sub">ar</span>&nbsp;!=&nbsp;p<span class="diff_sub">attern</span>[j]:</td><td class="diff_next"></td><td class="diff_header" id="to245_22">22</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;j&nbsp;&gt;&nbsp;0&nbsp;and&nbsp;ch&nbsp;!=&nbsp;p[j]:</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from245_19">19</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;=&nbsp;lps[j&nbsp;-&nbsp;1]</td><td class="diff_next"></td><td class="diff_header" id="to245_23">23</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;=&nbsp;lps[j&nbsp;-&nbsp;1]</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to245__7"><a href="#difflib_chg_to245__6">n</a></td><td class="diff_header" id="from245_20">20</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;ch<span class="diff_sub">ar</span>&nbsp;==&nbsp;p<span class="diff_sub">attern</span>[j]:</td><td class="diff_next"><a href="#difflib_chg_to245__6">n</a></td><td class="diff_header" id="to245_24">24</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;ch&nbsp;==&nbsp;p[j]:</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from245_21">21</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;+=&nbsp;1</td><td class="diff_next"></td><td class="diff_header" id="to245_25">25</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;+=&nbsp;1</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to245__7">n</a></td><td class="diff_header" id="from245_22">22</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;j&nbsp;==&nbsp;len(p<span class="diff_sub">attern</span>):</td><td class="diff_next"><a href="#difflib_chg_to245__7">n</a></td><td class="diff_header" id="to245_26">26</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;j&nbsp;==&nbsp;len(p):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from245_23">23</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;re<span class="diff_sub">sult</span>s.append(i&nbsp;-&nbsp;j&nbsp;+&nbsp;1)</td><td class="diff_next"></td><td class="diff_header" id="to245_27">27</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;res.append(i&nbsp;-&nbsp;j&nbsp;+&nbsp;1)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from245_24">24</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;=&nbsp;lps[j&nbsp;-&nbsp;1]</td><td class="diff_next"></td><td class="diff_header" id="to245_28">28</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;=&nbsp;lps[j&nbsp;-&nbsp;1]</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to245__top">t</a></td><td class="diff_header" id="from245_25">25</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;res<span class="diff_sub">ults</span></td><td class="diff_next"><a href="#difflib_chg_to245__top">t</a></td><td class="diff_header" id="to245_29">29</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;res</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from245_26">26</td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to245_30">30</td><td nowrap="nowrap"></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from245_27">27</td><td nowrap="nowrap">print(kmp_search("ababcabcabababd",&nbsp;"ababd"))</td><td class="diff_next"></td><td class="diff_header" id="to245_31">31</td><td nowrap="nowrap">print(kmp_search("ababcabcabababd",&nbsp;"ababd"))</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

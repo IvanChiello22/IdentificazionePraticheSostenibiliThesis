@@ -1,0 +1,73 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; border:medium}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    
+    <table class="diff" id="difflib_chg_to48__top"
+           cellspacing="0" cellpadding="0" rules="groups" >
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
+        <thead><tr><th class="diff_next"><br /></th><th colspan="2" class="diff_header">BASE/snippet_017_t19_manifest.py</th><th class="diff_next"><br /></th><th colspan="2" class="diff_header">gpt4omini/snippet_017_t19_manifest.py</th></tr></thead>
+        <tbody>
+            <tr><td class="diff_next" id="difflib_chg_to48__0"><a href="#difflib_chg_to48__1">n</a></td><td class="diff_header" id="from48_1">1</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;Snippet&nbsp;17:&nbsp;t19_manifest</span></td><td class="diff_next"><a href="#difflib_chg_to48__1">n</a></td><td class="diff_header" id="to48_1">1</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;torch</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from48_2">2</td><td nowrap="nowrap"><span class="diff_sub">#&nbsp;T19&nbsp;—&nbsp;Manifest&nbsp;JSON&nbsp;with&nbsp;metrics&nbsp;+&nbsp;size,&nbsp;keep&nbsp;top‑k&nbsp;by&nbsp;metric,&nbsp;delete&nbsp;rest</span></td><td class="diff_next"></td><td class="diff_header" id="to48_2">2</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;torch.nn&nbsp;as&nbsp;nn</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to48__1"></td><td class="diff_header" id="from48_3">3</td><td nowrap="nowrap"><span class="diff_sub">import&nbsp;torch,&nbsp;torch.nn&nbsp;as&nbsp;nn,&nbsp;os,&nbsp;json,&nbsp;glob</span></td><td class="diff_next"></td><td class="diff_header" id="to48_3">3</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;os</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to48_4">4</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;json</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to48_5">5</td><td nowrap="nowrap"><span class="diff_add">import&nbsp;glob</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to48_6">6</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to48__2"></td><td class="diff_header" id="from48_4">4</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td><td class="diff_next"></td><td class="diff_header" id="to48_7">7</td><td nowrap="nowrap">os.makedirs('ckpt',&nbsp;exist_ok=True)</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to48__2">n</a></td><td class="diff_header" id="from48_5">5</td><td nowrap="nowrap">m&nbsp;=&nbsp;nn.Sequential(nn.Linear(10,10),&nbsp;nn.ReLU(),&nbsp;nn.Linear(10,2))</td><td class="diff_next"><a href="#difflib_chg_to48__2">n</a></td><td class="diff_header" id="to48_8">8</td><td nowrap="nowrap">m<span class="diff_add">odel</span>&nbsp;=&nbsp;nn.Sequential(nn.Linear(10,<span class="diff_add">&nbsp;</span>10),&nbsp;nn.ReLU(),&nbsp;nn.Linear(10,<span class="diff_add">&nbsp;</span>2))</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to48_9">9</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from48_6">6</td><td nowrap="nowrap">for&nbsp;e&nbsp;in&nbsp;range(1,6):</td><td class="diff_next"></td><td class="diff_header" id="to48_10">10</td><td nowrap="nowrap">for&nbsp;e<span class="diff_add">poch</span>&nbsp;in&nbsp;range(1,<span class="diff_add">&nbsp;</span>6):</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from48_7">7</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;loss&nbsp;=&nbsp;float(torch.rand(1))</td><td class="diff_next"></td><td class="diff_header" id="to48_11">11</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;loss&nbsp;=&nbsp;float(torch.rand(1))</td></tr>
+            <tr><td class="diff_next" id="difflib_chg_to48__3"><a href="#difflib_chg_to48__3">n</a></td><td class="diff_header" id="from48_8">8</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;path&nbsp;=&nbsp;f'ckpt/e{e:02d}_{loss:.4f}.pt'</td><td class="diff_next"><a href="#difflib_chg_to48__3">n</a></td><td class="diff_header" id="to48_12">12</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;<span class="diff_add">checkpoint_</span>path&nbsp;=&nbsp;f'ckpt/e{e<span class="diff_add">poch</span>:02d}_{loss:.4f}.pt'</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from48_9">9</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;torch.save({'e':e,'loss':loss,'state':m.state_dict()},&nbsp;path)</td><td class="diff_next"></td><td class="diff_header" id="to48_13">13</td><td nowrap="nowrap">&nbsp;&nbsp;&nbsp;&nbsp;torch.save({'e':<span class="diff_add">&nbsp;</span>e<span class="diff_add">poch</span>,<span class="diff_add">&nbsp;</span>'loss':<span class="diff_add">&nbsp;</span>loss,<span class="diff_add">&nbsp;</span>'state':<span class="diff_add">&nbsp;</span>m<span class="diff_add">odel</span>.state_dict()},&nbsp;<span class="diff_add">checkpoint_</span>path)</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to48_14">14</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from48_10">10</td><td nowrap="nowrap">manifest&nbsp;=&nbsp;[{'file':p,&nbsp;'loss':&nbsp;float(p.split('_')[-1][:-3])}&nbsp;for&nbsp;p&nbsp;in&nbsp;sorted(glob.glob('ckpt/e*.pt'))]</td><td class="diff_next"></td><td class="diff_header" id="to48_15">15</td><td nowrap="nowrap">manifest&nbsp;=&nbsp;[{'file':<span class="diff_add">&nbsp;</span>p,&nbsp;'loss':&nbsp;float(p.split('_')[-1][:-3])}&nbsp;for&nbsp;p&nbsp;in&nbsp;sorted(glob.glob('ckpt/e*.pt'))]</td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from48_11">11</td><td nowrap="nowrap">manifest.sort(key=lambda&nbsp;x:&nbsp;x['loss'])</td><td class="diff_next"></td><td class="diff_header" id="to48_16">16</td><td nowrap="nowrap">manifest.sort(key=lambda&nbsp;x:&nbsp;x['loss'])</td></tr>
+            <tr><td class="diff_next"><a href="#difflib_chg_to48__top">t</a></td><td class="diff_header" id="from48_12">12</td><td nowrap="nowrap"><span class="diff_sub">for&nbsp;item&nbsp;in&nbsp;manifest[2:]:&nbsp;os.remove(item['file'])</span></td><td class="diff_next"><a href="#difflib_chg_to48__top">t</a></td><td class="diff_header" id="to48_17">17</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from48_13">13</td><td nowrap="nowrap"><span class="diff_sub">with&nbsp;open('ckpt/manifest.json','w')&nbsp;as&nbsp;f:&nbsp;json.dump(manifest[:2],&nbsp;f,&nbsp;indent=2)</span></td><td class="diff_next"></td><td class="diff_header" id="to48_18">18</td><td nowrap="nowrap"><span class="diff_add">for&nbsp;item&nbsp;in&nbsp;manifest[2:]:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to48_19">19</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;os.remove(item['file'])</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to48_20">20</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to48_21">21</td><td nowrap="nowrap"><span class="diff_add">with&nbsp;open('ckpt/manifest.json',&nbsp;'w')&nbsp;as&nbsp;f:</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to48_22">22</td><td nowrap="nowrap"><span class="diff_add">&nbsp;&nbsp;&nbsp;&nbsp;json.dump(manifest[:2],&nbsp;f,&nbsp;indent=2)</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header"></td><td nowrap="nowrap"></td><td class="diff_next"></td><td class="diff_header" id="to48_23">23</td><td nowrap="nowrap"><span class="diff_add">&nbsp;</span></td></tr>
+            <tr><td class="diff_next"></td><td class="diff_header" id="from48_14">14</td><td nowrap="nowrap">print('done')</td><td class="diff_next"></td><td class="diff_header" id="to48_24">24</td><td nowrap="nowrap">print('done')</td></tr>
+        </tbody>
+    </table>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legends </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colors </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Added&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Changed</td> </tr>
+                      <tr><td class="diff_sub">Deleted</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f)irst change</td> </tr>
+                      <tr><td>(n)ext change</td> </tr>
+                      <tr><td>(t)op</td> </tr>
+                  </table></td> </tr>
+    </table>
+</body>
+
+</html>

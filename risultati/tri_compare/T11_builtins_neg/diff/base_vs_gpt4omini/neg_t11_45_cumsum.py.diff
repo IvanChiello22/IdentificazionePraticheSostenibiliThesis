@@ -1,0 +1,12 @@
+--- BASE/neg_t11_45_cumsum.py
++++ gpt4omini/neg_t11_45_cumsum.py
+@@ -1,8 +1,2 @@
+-# 45) Somma cumulativa (prefix sum)
+-x = [1, 2, 3, 4, 5]
+-y = []
+-s = 0
+-for v in x:
+-    s += v
+-    y.append(s)
++y = list(itertools.accumulate(x))
+ print(y)

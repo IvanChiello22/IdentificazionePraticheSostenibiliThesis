@@ -1,0 +1,23 @@
+--- BASE/snippet_081_t11_stride_avgpool__t15_energy_conv_global_hooks__t19_atomic.py
++++ gpt5mini/snippet_081_t11_stride_avgpool__t15_energy_conv_global_hooks__t19_atomic.py
+@@ -26,11 +26,18 @@
+ def prune_out(conv, keep_ratio):
+     with torch.no_grad():
+         imp = conv.weight.detach().abs().view(conv.out_channels, -1).mean(1)
+-        e = torch.tensor(float(energy.get(conv.__class__.__name__, 1.0)))
++        # map module instance to recorded energy using attribute names in `energy`
++        name = next((n for n in energy.keys() if getattr(net, n, None) is conv), None)
++        e = torch.tensor(float(energy.get(name, 1.0)))
+         score = imp/(e+1e-9); k=max(1,int(keep_ratio*conv.out_channels))
+         keep = torch.topk(score,k).indices
+         conv.weight = nn.Parameter(conv.weight[keep].clone()); conv.out_channels = k
+-prune_out(net.c2, 0.7); print(net.c2.out_channels)
++# Prune starting from the most energy intensive layer
++for name, _ in sorted(energy.items(), key=lambda iv: -iv[1]):
++    mod = getattr(net, name, None)
++    if isinstance(mod, nn.Conv2d):
++        prune_out(mod, 0.7)
++print(net.c2.out_channels)
+ 
+ # T19 — Atomic checkpoint writes (write to tmp then rename), avoid partial files
+ import torch, torch.nn as nn, os, tempfile, shutil

@@ -1,0 +1,18 @@
+--- BASE/t15_energyaware_07.py
++++ gpt5mini/t15_energyaware_07.py
+@@ -18,7 +18,15 @@
+     mask = tf.scatter_nd(tf.expand_dims(idx,1), tf.ones((k,),dtype=W.dtype), [tf.shape(W)[0]])
+     return tf.expand_dims(mask,1)
+ 
++# checkpoint before pruning to avoid knowledge loss in case of interruption
++ckpt = tf.train.Checkpoint(model=model)
++ckpt.save('./ckpt_before')
++
+ W = d1.weights[0]
+ mask = energy_aware_mask(W, 0.6)
+ d1.set_weights([W.numpy() * mask.numpy(), d1.weights[1].numpy()])
++
++# checkpoint after pruning
++ckpt.save('./ckpt_after')
++
+ print('masked neurons:', int(tf.reduce_sum(mask)))
